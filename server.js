@@ -9,6 +9,8 @@ var jwt = require('jsonwebtoken');
 
 // models
 var User = require('./models/user');
+var Team = require('./models/team');
+var Department = require('./models/department');
 
 // mongodb
 mongoose.connect(config.database);
@@ -27,14 +29,34 @@ app.use(morgan('dev'));
 // start
 // todo refactor
 app.get('/setup', function(req, res) {
-  //   User.remove({}, function(err) {
-  //    console.log('User collection removed')
-  // });
+
+  var department = new Department({
+    name: "IT"
+  });
+  department.save(function(err) {
+    if (err) throw err;
+  });
+
+  var team = new Team({
+    name: "Giraffe"
+  });
+  team.save(function(err) {
+    if (err) throw err;
+  });
   // create a sample user
   var nick = new User({
-    username: 'Roman',
+    name: 'Roman',
+    lastname: 'Byakov',
+    username: 'roman',
     password: 'password',
-    admin: true
+    team: new Object ({
+      id: 123,
+      name: 'Giraffe'
+    }),
+    department: new Object ({
+      id: 666,
+      name: 'IT'
+    })
   });
   nick.save(function(err) {
     if (err) throw err;
@@ -46,7 +68,7 @@ app.get('/setup', function(req, res) {
   });
 });
 
-app.use('/authenticate', require('./routes/authenticate'));
+app.use('/auth', require('./routes/auth'));
 
 // check token
 app.use(function(req, res, next) {

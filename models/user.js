@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 // create a schema
 var userSchema = new Schema({
   name: String,
+  lastname: String,
   username: {
     type: String,
     required: true,
@@ -14,7 +15,8 @@ var userSchema = new Schema({
     type: String,
     required: true
   },
-  admin: Boolean
+  team: Object,
+  department: Object
 });
 
 // the schema is useless so far
