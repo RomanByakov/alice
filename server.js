@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var config = require('./config');
 var morgan = require('morgan');
+var path = require('path');
 
 var jwt = require('jsonwebtoken');
 
@@ -26,34 +27,37 @@ app.set('apliceSecret', config.token.secret);
 
 app.use(morgan('dev'));
 
+app.use("/", express.static(path.join(__dirname, 'public')));
+
 // start
 // todo refactor
 app.get('/setup', function(req, res) {
-
-  var department = new Department({
-    name: "IT"
-  });
-  department.save(function(err) {
-    if (err) throw err;
-  });
-
   var team = new Team({
     name: "Giraffe"
   });
-  team.save(function(err) {
-    if (err) throw err;
+  var department = new Department({
+    name: "IT",
+    teams: [new Object({
+      name: 'Giraffe'
+    })]
   });
+  // department.save(function(err) {
+  //   if (err) throw err;
+  // });
+  // team.save(function(err) {
+  //   if (err) throw err;
+  // });
   // create a sample user
   var nick = new User({
     name: 'Roman',
     lastname: 'Byakov',
     username: 'roman',
     password: 'password',
-    team: new Object ({
+    team: new Object({
       id: 123,
       name: 'Giraffe'
     }),
-    department: new Object ({
+    department: new Object({
       id: 666,
       name: 'IT'
     })
@@ -71,40 +75,38 @@ app.get('/setup', function(req, res) {
 app.use('/auth', require('./routes/auth'));
 
 // check token
-app.use(function(req, res, next) {
-
-  // check header or url parameters or post parameters for token
-  var token = req.body.token || req.param('token') || req.headers['x-access-token'];
-
-  // decode token
-  if (token) {
-
-    // verifies secret and checks exp
-    jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
-      if (err) {
-        return res.json({
-          success: false,
-          message: 'Failed to authenticate token.'
-        });
-      } else {
-        // if everything is good, save to request for use in other routes
-        req.decoded = decoded;
-        next();
-      }
-    });
-
-  } else {
-
-    // if there is no token
-    // return an error
-    return res.status(403).send({
-      success: false,
-      message: 'No token provided.'
-    });
-
-  }
-
-});
+// app.use(function(req, res, next) {
+//
+//   // check header or url parameters or post parameters for token
+//   var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+//
+//   // decode token
+//   if (token) {
+//
+//     // verifies secret and checks exp
+//     jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
+//       if (err) {
+//         return res.status(401).json({
+//           message: 'Failed to authenticate token.'
+//         });
+//       } else {
+//         // if everything is good, save to request for use in other routes
+//         req.decoded = decoded;
+//         next();
+//       }
+//     });
+//
+//   } else {
+//
+//     // if there is no token
+//     // return an error
+//     return res.status(401).send({
+//       message: 'Access is denied.'
+//     });
+//
+//   }
+//
+// });
 
 // routes
 app.use('/users', require('./routes/user'));
