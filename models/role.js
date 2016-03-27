@@ -11,15 +11,34 @@ var roleSchema = new mongoose.Schema({
 
 roleSchema.statics.checkAccess = function(userRole, checkingRole, callback) {
   if (userRole == null) {
-    return callback(new Error('Access Denied!'));
-  }
-  if (userRole.toLowerCase() == checkingRole.toLowerCase()) {
-    return true;
+    return callback(new Error('Access Denied'));
   }
 
-  role = this.findOne({name: userRole});
-  role = this.findOne({_id: role.child._id});
-  checkAccess(role.name, checkingRole, callback);
+  console.log("userRole = " + userRole + " checkingRole = " + checkingRole);
+  if (userRole == checkingRole) {
+    return callback(null);
+  }
+
+
+  this.findOne({name: userRole}, function (err, role) {
+    if (err) return callback(err);
+
+    if (role.child) {
+      this.findOne({_id: role.child._id}, function (err, role) {
+        if (err) return callback(err);
+
+        if (role) {
+          checkAccess(role.name, checkingRole, callback);
+        } else {
+          return callback(new Error('Access Denied'));
+        }
+      });
+    } else {
+      return callback(new Error('Access Denied'));
+    }
+  });
 };
 
-module.exports = restful.model('Roles', roleSchema);
+var Role = restful.model('Roles', roleSchema);
+
+module.exports = Role;

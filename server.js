@@ -92,7 +92,21 @@ app.get('/setup', function(req, res) {
     else console.log("roleAdmin save success!");
   });
 
-  User.createUser("test", "test", "test", "test", team, department, roleAdmin, function(err) {
+  User.createUser("test1", "tes1t", "test1", "test1", team, department, roleAdmin, function(err) {
+    if (err) {
+      throw err;
+    } else {
+      console.log("user save success!");
+    }
+  });
+  User.createUser("test2", "test2", "test2", "test2", team, department, roleUser, function(err) {
+    if (err) {
+      throw err;
+    } else {
+      console.log("user save success!");
+    }
+  });
+  User.createUser("test3", "test3", "test3", "test3", team, department, roleUser, function(err) {
     if (err) {
       throw err;
     } else {
@@ -103,15 +117,36 @@ app.get('/setup', function(req, res) {
 });
 
 app.get('/check-access-test', function(req, res) {
-  User.findOne({login: "test"}).then(function(user) {
-    console.log('user = ' + user);
-    user.checkAccess("Admin", function(err) {
-      if (err) throw err;
-      else {
-        console.log("access granted");
-        res.json({success: true});
-      };
-    });
+  User.findOne({username: "test1"}, function (err, user) {
+    if (err) throw err;
+
+    if (user != null) {
+      console.log('user = ' + user.name);
+
+      user.checkAccess("Admin", function (err) {
+        if (err) throw err;
+        else {
+          console.log("access granted");
+          res.json({success: true});
+        }
+      });
+    }
+  });
+
+  User.findOne({username: "test3"}, function (err, user) {
+    if (err) throw err;
+
+    if (user != null) {
+      console.log('user = ' + user.name);
+
+      user.checkAccess("Admin", function (err) {
+        if (err) throw err;
+        else {
+          console.log("access granted");
+          res.json({success: true});
+        }
+      });
+    }
   });
 });
 

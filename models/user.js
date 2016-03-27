@@ -22,10 +22,6 @@ var userSchema = new Schema({
 });
 
 userSchema.methods.checkAccess = function(role, callback) {
-  if (role = null) {
-    return callback(new Error('Access denied!'));
-  }
-
   Role.checkAccess(this.role.name, role, callback);
 };
 
