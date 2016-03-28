@@ -2,7 +2,7 @@ var service = angular.module('aliceApp.services',[]);
 
 // user service
 service.factory('User',function($resource){
-    return $resource('http://localhost:3000/api/users/:id',{id:'@_id'},{
+    return $resource('/api/users/:id',{id:'@_id'},{
         update: {
             method: 'PUT'
         },
@@ -18,7 +18,9 @@ service.factory('User',function($resource){
 
 // department service
 service.factory('Department',function($resource){
-    return $resource('http://localhost:3000/departments/:id',{id:'@_id'},{
+    return $resource('api/departments/:id',{id:'@_id'},{
+angular.module('aliceApp.services',[]).factory('User',function($resource){
+    return $resource('users/:id',{id:'@_id'},{
         update: {
             method: 'PUT'
         },

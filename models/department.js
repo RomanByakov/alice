@@ -7,7 +7,7 @@ var Team = require('./team');
 // schema
 var departmentSchema = new mongoose.Schema({
   name: String,
-  teams:[Team]
+  teams:[mongoose.Schema.Types.Mixed]
 });
 
 // return model
