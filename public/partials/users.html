@@ -4,11 +4,11 @@
         <td><h3>All Users</h3></td>
         <td></td>
     </tr>
-    <tr ng-repeat="user in users" ui-sref="viewUser({id:user._id})">
-        <td>{{user.name}}</td>
-        <td>{{user.lastname}}</td>
-        <td>{{user.department.name}}</td>
-        <td>{{user.team.name}}</td>
+    <tr ng-repeat="user in users">
+        <td ui-sref="viewUser({id:user._id})">{{user.name}}</td>
+        <td ui-sref="viewUser({id:user._id})">{{user.lastname}}</td>
+        <td ui-sref="viewUser({id:user._id})">{{user.department.name}}</td>
+        <td ui-sref="viewUser({id:user._id})">{{user.team.name}}</td>
         <td>
             <!-- <a class="btn btn-primary" ui-sref="viewUser({id:user._id})">View</a> -->
             <a class="btn btn-primary" ui-sref="editUser({id:user._id})">Edit</a>

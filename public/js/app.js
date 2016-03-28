@@ -16,7 +16,7 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
       templateUrl: 'partials/user-add.html',
       controller: 'UserCreateController'
     }).state('editUser', {
-      url: '/users/:id/edit',
+      url: '/users/edit/:id',
       templateUrl: 'partials/user-edit.html',
       controller: 'UserEditController'
     })

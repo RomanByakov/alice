@@ -187,7 +187,7 @@ app.use('/auth', require('./routes/auth'));
 // });
 
 // routes
-app.use('/users', require('./routes/user'));
+app.use('/api/users', require('./routes/user'));
 
 // start server
 app.listen(config.port);

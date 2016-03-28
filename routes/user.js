@@ -17,18 +17,19 @@ router.route('/')
     });
   })
   .post(function(req, res, next) {
-      var user = new User(req.body);
-      user.password = 123456;
-      // user.username = req.body.username;
-      // user.name = req.body.name;
-      // user.lastname = req.body.lastname;
-      // user.department = req.body.department;
-      // user.team = req.body.team;
-      user.save(function(err, user) {
-        if (err) throw err;
-        res.send(user);
-      });
+    var user = new User(req.body);
+    user.password = 123456;
+    user.username = (req.body.name[0] + req.body.lastname).toLowerCase();
+    // user.username = req.body.username;
+    // user.name = req.body.name;
+    // user.lastname = req.body.lastname;
+    // user.department = req.body.department;
+    // user.team = req.body.team;
+    user.save(function(err, user) {
+      if (err) throw err;
+      res.send(user);
     });
+  });
 
 router.route('/:id')
   .get(function(req, res, next) {
