@@ -39,7 +39,7 @@ router.route('/:id')
       // error
       if (err) throw err;
       // return user
-      //res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Origin", "*");
       res.send(user);
       console.log(user);
     });
