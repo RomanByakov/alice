@@ -1,9 +1,24 @@
-/**
- * Created by Sandeep on 01/06/14.
- */
+var service = angular.module('aliceApp.services',[]);
 
-angular.module('aliceApp.services',[]).factory('User',function($resource){
-    return $resource('http://localhost:3000/users/:id',{id:'@_id'},{
+// user service
+service.factory('User',function($resource){
+    return $resource('http://localhost:3000/api/users/:id',{id:'@_id'},{
+        update: {
+            method: 'PUT'
+        },
+        save: {
+          method: 'POST'
+        }
+    });
+}).service('popupService',function($window){
+    this.showPopup=function(message){
+        return $window.confirm(message);
+    }
+});
+
+// department service
+service.factory('Department',function($resource){
+    return $resource('http://localhost:3000/departments/:id',{id:'@_id'},{
         update: {
             method: 'PUT'
         },

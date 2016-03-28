@@ -1,17 +1,16 @@
 <a ui-sref="newUser" class="btn-primary btn-lg nodecoration">Add New User</a>
 <table class="table movietable">
     <tr>
-        <td><h3>All Movies</h3></td>
+        <td><h3>All Users</h3></td>
         <td></td>
     </tr>
-    <tr ng-repeat="user in users">
+    <tr ng-repeat="user in users" ui-sref="viewUser({id:user._id})">
         <td>{{user.name}}</td>
         <td>{{user.lastname}}</td>
-        <td>{{user.username}}</td>
         <td>{{user.department.name}}</td>
         <td>{{user.team.name}}</td>
         <td>
-            <a class="btn btn-primary" ui-sref="viewUser({id:user._id})">View</a>
+            <!-- <a class="btn btn-primary" ui-sref="viewUser({id:user._id})">View</a> -->
             <a class="btn btn-primary" ui-sref="editUser({id:user._id})">Edit</a>
             <a class="btn btn-danger"  ng-click="deleteUser(user)">Delete</a>
         </td>

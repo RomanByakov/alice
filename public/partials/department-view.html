@@ -1,0 +1,15 @@
+<table class="table movietable">
+  <tr>
+    <td>
+      <h3>Details for {{department.name + ' ' + department.lastname}}</h3></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Department name</td>
+    <td>{{department.name}}</td>
+  </tr>
+  <tr>
+    <td>Teams</td>
+    <td ng-repeat="team in department.teams">{{team.name}}</td>
+  </tr>
+</table>

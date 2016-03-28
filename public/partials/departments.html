@@ -1,0 +1,15 @@
+<a ui-sref="newDepartment" class="btn-primary btn-lg nodecoration">Add New Department</a>
+<table class="table movietable">
+    <tr>
+        <td><h3>All Departments</h3></td>
+        <td></td>
+    </tr>
+    <tr ng-repeat="department in departments" ui-sref="viewDepartment({id:department._id})">
+        <td>{{department.name}}</td>
+        <td ng-repeat="team in department.teams">{{team.name}},</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="editUser({id:department._id})">Edit</a>
+            <a class="btn btn-danger"  ng-click="deleteUser(department)">Delete</a>
+        </td>
+    </tr>
+</table>
