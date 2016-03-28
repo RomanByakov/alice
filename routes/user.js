@@ -11,7 +11,7 @@ router.route('/')
       // error
       if (err) throw err;
       // return users
-      //res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Origin", "*");
       res.send(users);
       console.log(users);
     });

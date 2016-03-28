@@ -195,7 +195,7 @@ console.log(' alice is running on port 3000');
 
 // error
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use('', function(err, req, res, next) {
     res.status(err.status || 500);
     res.json({
       message: err.message,

@@ -3,7 +3,7 @@
  */
 
 angular.module('aliceApp.services',[]).factory('User',function($resource){
-    return $resource('http://localhost:3000/users/:id',{id:'@_id'},{
+    return $resource('users/:id',{id:'@_id'},{
         update: {
             method: 'PUT'
         },
