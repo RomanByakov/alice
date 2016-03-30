@@ -33,6 +33,10 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
       url: '/departments/new',
       templateUrl: 'partials/department-add.html',
       controller: 'DepartmentCreateController'
+    }).state('editDepartment', {
+      url: '/departments/edit/:id',
+      templateUrl: 'partials/department-edit.html',
+      controller: 'DepartmentEditController'
     });
 
     //$locationProvider.html5Mode(true);

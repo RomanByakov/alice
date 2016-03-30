@@ -1,4 +1,4 @@
-var module = angular.module('aliceApp.controllers', []);
+var module = angular.module('aliceApp.controllers', ['ngTagsInput']);
 
 // users controllers
 module.controller('UserListController', function($scope, $state, popupService, $window, User) {
@@ -51,10 +51,11 @@ module.controller('DepartmentListController', function($scope, $state, popupServ
 
   $scope.departments = Department.query();
 
-  $scope.deleteUser = function(department) {
+  $scope.deleteDepartment = function(department) {
     if (popupService.showPopup('Really delete this?')) {
       department.$delete(function() {
-        $window.location.href = '';
+        //$window.location.href = '';
+        $state.go('departments');
       });
     }
   }
@@ -64,4 +65,30 @@ module.controller('DepartmentListController', function($scope, $state, popupServ
   $scope.department = Department.get({
     id: $stateParams.id
   });
+}).controller('DepartmentCreateController', function($scope, $state, $stateParams, Department) {
+
+  $scope.department = new Department();
+  $scope.department.teams = [];
+
+  $scope.addDepartment = function() {
+    $scope.department.$save(function() {
+      $state.go('departments');
+    });
+  }
+
+}).controller('DepartmentEditController', function($scope, $state, $stateParams, Department) {
+
+  $scope.updateDepartment = function() {
+    $scope.department.$update(function() {
+      $state.go('departments');
+    });
+  };
+
+  $scope.loadDepartment = function() {
+    $scope.department = Department.get({
+      id: $stateParams.id
+    });
+  };
+
+  $scope.loadDepartment();
 });

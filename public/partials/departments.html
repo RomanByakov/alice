@@ -4,12 +4,12 @@
         <td><h3>All Departments</h3></td>
         <td></td>
     </tr>
-    <tr ng-repeat="department in departments" ui-sref="viewDepartment({id:department._id})">
-        <td>{{department.name}}</td>
-        <td ng-repeat="team in department.teams">{{team.name}},</td>
+    <tr ng-repeat="department in departments">
+        <td ui-sref="viewDepartment({id:department._id})">{{department.name}}</td>
+        <td ui-sref="viewDepartment({id:department._id})" ng-repeat="team in department.teams">{{team.name}},</td>
         <td>
-            <a class="btn btn-primary" ui-sref="editUser({id:department._id})">Edit</a>
-            <a class="btn btn-danger"  ng-click="deleteUser(department)">Delete</a>
+            <a class="btn btn-primary" ui-sref="editDepartment({id:department._id})">Edit</a>
+            <a class="btn btn-danger"  ng-click="deleteDepartment(department)">Delete</a>
         </td>
     </tr>
 </table>
