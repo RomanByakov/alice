@@ -10,21 +10,15 @@ router.route('/')
     User.find({}, function(err, users) {
       // error
       if (err) throw err;
-      // return users
+
       res.header("Access-Control-Allow-Origin", "*");
       res.send(users);
-      console.log(users);
     });
   })
   .post(function(req, res, next) {
     var user = new User(req.body);
     user.password = 123456;
     user.username = (req.body.name[0] + req.body.lastname).toLowerCase();
-    // user.username = req.body.username;
-    // user.name = req.body.name;
-    // user.lastname = req.body.lastname;
-    // user.department = req.body.department;
-    // user.team = req.body.team;
     user.save(function(err, user) {
       if (err) throw err;
       res.send(user);

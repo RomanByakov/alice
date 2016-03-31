@@ -206,6 +206,7 @@ if (app.get('env') === 'development') {
       error: err,
       stack: err.stack
     });
+    console.log("Error handled");
   });
 } else {
   app.use(function(err, req, res, next) {
