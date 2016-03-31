@@ -14,6 +14,7 @@
     "jsonwebtoken": "^5.7.0",
     "mongoose": "^4.4.7",
     "morgan": "^1.7.0",
-    "node-restful": "^0.2.5"
+    "node-restful": "^0.2.5",
+    "connect-domain": "*"
   }
 }

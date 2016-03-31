@@ -5,11 +5,11 @@ var Team = require('./team');
 var User = require('./user');
 
 var departmentSchema = new mongoose.Schema({
-  name: [
+  name: {
     type: String,
     required: true,
     unique: true
-  ],
+  },
   teams:[mongoose.Schema.Types.Mixed]
 });
 

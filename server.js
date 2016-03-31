@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var morgan = require('morgan');
 var path = require('path');
+var connectDomain = require('connect-domain');
 
 var jwt = require('jsonwebtoken');
 
@@ -19,6 +20,7 @@ mongoose.connect(config.database);
 
 // express
 var app = express();
+app.use(connectDomain());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -197,12 +199,16 @@ console.log(' alice is running on port 3000');
 
 // error
 if (app.get('env') === 'development') {
-  app.use('', function(err, req, res, next) {
+  app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.json({
       message: err.message,
       error: err,
       stack: err.stack
     });
+  });
+} else {
+  app.use(function(err, req, res, next) {
+    res.send(500, "Something wrong...");
   });
 }

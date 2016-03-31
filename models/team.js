@@ -2,11 +2,11 @@ var restful = require('node-restful');
 var mongoose = restful.mongoose;
 
 var teamSchema = new mongoose.Schema({
-  name: [
+  name: {
     type: String,
     required: true,
     unique: true
-  ]
+  }
 });
 
 teamSchema.statics.createTeam = function(name, callback) {
