@@ -189,6 +189,7 @@ app.use('/auth', require('./routes/auth'));
 // routes
 app.use('/api/users', require('./routes/user'));
 app.use('/api/departments', require('./routes/department'));
+app.use('/api/teams', require('./routes/team'));
 
 // start server
 app.listen(config.port);

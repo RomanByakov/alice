@@ -6,7 +6,7 @@ var Department = require('../models/department');
 router.route('/')
   .get(function(req, res, next) {
     Department.find({}, function(err, departments) {
-      if (err) next();
+      if (err) throw err;
 
       res.header("Access-Control-Allow-Origin", "*");
       res.send(departments);
@@ -15,7 +15,7 @@ router.route('/')
   })
   .post(function(req, res, next) {
     Department.createDepartment(req.body.name, req.body.teams, function(err) {
-      if (err) next();
+      if (err) throw err;
       else {
         console.log('department saved');
         res.json({success: true});
@@ -28,7 +28,7 @@ router.route('/:id')
     Department.findOne({
       '_id': req.params.id
     }, function(err, department) {
-      if (err) next();
+      if (err) throw err;
       res.header("Access-Control-Allow-Origin", "*");
       res.json(department);
       console.log(department);
@@ -38,10 +38,10 @@ router.route('/:id')
     Department.findOne({
       '_id': req.body._id
     }, function(err, department) {
-      if (err) next();
+      if (err) throw err;
 
       department.updateDepartment(req.body.name, req.body.teams, function(err) {
-        if (err) next();
+        if (err) throw err;
         else {
           res.header("Access-Control-Allow-Origin", "*");
           res.json(department);
@@ -53,7 +53,7 @@ router.route('/:id')
     Department.remove({
       '_id': req.params.id
     }, function(err, removed/*what is?*/) {
-      if (err) next();
+      if (err) throw err;
 
       console.log('Department deleted successfully');
       res.json({success: true});

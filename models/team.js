@@ -1,11 +1,16 @@
-// dependencies
 var restful = require('node-restful');
 var mongoose = restful.mongoose;
 
-// schema
 var teamSchema = new mongoose.Schema({
-  name: String
+  name: [
+    type: String,
+    required: true,
+    unique: true
+  ]
 });
 
-// return model
+teamSchema.statics.createTeam = function(name, callback) {
+
+};
+
 module.exports = restful.model('Teams', teamSchema);
