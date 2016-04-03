@@ -1,6 +1,10 @@
 angular.module('aliceApp', ['ui.router', 'ngResource', 'aliceApp.controllers', 'aliceApp.services']);
 
 angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locationProvider) {
+  // $locationProvider.html5Mode({
+  //   enabled: true,
+  //   requireBase: false
+  // });
   $stateProvider
   // users
     .state('users', {
@@ -37,9 +41,13 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
       url: '/departments/edit/:id',
       templateUrl: 'partials/department-edit.html',
       controller: 'DepartmentEditController'
+    })
+    //auth
+    .state('login', {
+      url: 'login',
+      templateUrl: 'partials/login.html',
+      controller: 'LoginController'
     });
-
-    //$locationProvider.html5Mode(true);
 }).run(function($state) {
   $state.go('users');
 });

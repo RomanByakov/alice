@@ -92,3 +92,13 @@ module.controller('DepartmentListController', function($scope, $state, popupServ
 
   $scope.loadDepartment();
 });
+
+module.controller('LoginController', function($scope, $state, $stateParams, Login) {
+  $scope.user = new Login();
+
+  $scope.login = function() {
+    $scope.user.$save(function(response) {
+      //alert(JSON.stringify(response));
+    });
+  }
+});

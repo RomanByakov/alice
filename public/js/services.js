@@ -35,3 +35,11 @@ service.factory('Department', function($resource) {
     return $window.confirm(message);
   }
 });
+
+service.factory('Login', function($resource) {
+  return $resource('/auth', {
+      save: {
+        method: 'POST'
+      }
+  });
+});
