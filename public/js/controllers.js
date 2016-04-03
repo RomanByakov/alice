@@ -1,8 +1,33 @@
-var module = angular.module('aliceApp.controllers', ['ngTagsInput']);
+var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies']);
+
+//baaaaaaad
+var checkAccess = function($cookies, $state) {
+  if (!$cookies.get('user')) {
+    $state.go('login');
+  }
+};
+
+module.controller('NavBarController', function($scope, $state, $window, $cookies) {
+  $scope.user = {};
+
+  if (!$cookies.get('user')) {
+    $scope.user.role = 'guest';
+    //$window.location.href = '#/login';
+    //$state.go('login');
+  } else {
+    $scope.user = JSON.parse($cookies.get('user'));
+
+    $scope.logout = function() {
+      $cookies.remove('token');
+      $cookies.remove('user');
+      $scope.user.role = 'guest';
+    };
+  }
+});
 
 // users controllers
-module.controller('UserListController', function($scope, $state, popupService, $window, User) {
-
+module.controller('UserListController', function($scope, $state, popupService, $window, User, $cookies) {
+  checkAccess($cookies, $state);
   $scope.users = User.query();
 
   $scope.deleteUser = function(user) {
@@ -13,14 +38,14 @@ module.controller('UserListController', function($scope, $state, popupService, $
     }
   }
 
-}).controller('UserViewController', function($scope, $stateParams, User) {
-
+}).controller('UserViewController', function($scope, $state, $cookies, $stateParams, User) {
+  checkAccess($cookies, $state);
   $scope.user = User.get({
     id: $stateParams.id
   });
 
-}).controller('UserCreateController', function($scope, $state, $stateParams, User) {
-
+}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User) {
+  checkAccess($cookies, $state);
   $scope.user = new User();
 
   $scope.addUser = function() {
@@ -29,8 +54,8 @@ module.controller('UserListController', function($scope, $state, popupService, $
     });
   }
 
-}).controller('UserEditController', function($scope, $state, $stateParams, User) {
-
+}).controller('UserEditController', function($scope, $state, $soockies, $stateParams, User) {
+  checkAccess($cookies, $state);
   $scope.updateUser = function() {
     $scope.user.$update(function() {
       $state.go('users');
@@ -47,8 +72,8 @@ module.controller('UserListController', function($scope, $state, popupService, $
 });
 
 // departments controllers
-module.controller('DepartmentListController', function($scope, $state, popupService, $window, Department) {
-
+module.controller('DepartmentListController', function($scope, $state, $cookies, popupService, $window, Department) {
+  checkAccess($cookies, $state);
   $scope.departments = Department.query();
 
   $scope.deleteDepartment = function(department) {
@@ -60,13 +85,13 @@ module.controller('DepartmentListController', function($scope, $state, popupServ
     }
   }
 
-}).controller('DepartmentViewController', function($scope, $stateParams, Department) {
-
+}).controller('DepartmentViewController', function($scope, $cookies, $stateParams, Department) {
+  checkAccess($cookies, $state);
   $scope.department = Department.get({
     id: $stateParams.id
   });
-}).controller('DepartmentCreateController', function($scope, $state, $stateParams, Department) {
-
+}).controller('DepartmentCreateController', function($scope, $state, $cookies, $stateParams, Department) {
+  checkAccess($cookies, $state);
   $scope.department = new Department();
   $scope.department.teams = [];
 
@@ -76,8 +101,8 @@ module.controller('DepartmentListController', function($scope, $state, popupServ
     });
   }
 
-}).controller('DepartmentEditController', function($scope, $state, $stateParams, Department) {
-
+}).controller('DepartmentEditController', function($scope, $state, $cookies, $stateParams, Department) {
+  checkAccess($cookies, $state);
   $scope.updateDepartment = function() {
     $scope.department.$update(function() {
       $state.go('departments');
@@ -93,12 +118,14 @@ module.controller('DepartmentListController', function($scope, $state, popupServ
   $scope.loadDepartment();
 });
 
-module.controller('LoginController', function($scope, $state, $stateParams, Login) {
+module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {
   $scope.user = new Login();
 
   $scope.login = function() {
     $scope.user.$save(function(response) {
-      //alert(JSON.stringify(response));
+      $cookies.put('token', response.token);
+      $cookies.put('user', JSON.stringify(response.user));
+      $state.go('users');
     });
   }
 });

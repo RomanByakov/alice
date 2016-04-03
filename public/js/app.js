@@ -1,4 +1,4 @@
-angular.module('aliceApp', ['ui.router', 'ngResource', 'aliceApp.controllers', 'aliceApp.services']);
+angular.module('aliceApp', ['ui.router', 'ngResource', 'ngCookies', 'aliceApp.controllers', 'aliceApp.services']);
 
 angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locationProvider) {
   // $locationProvider.html5Mode({
@@ -48,6 +48,10 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
       templateUrl: 'partials/login.html',
       controller: 'LoginController'
     });
-}).run(function($state) {
-  $state.go('users');
+}).run(function($state, $cookies) {
+  if ($cookies.get('user')) {
+    $state.go('users');
+  } else {
+    $state.go('login');
+  }
 });
