@@ -10,7 +10,19 @@ var teamSchema = new mongoose.Schema({
 });
 
 teamSchema.statics.createTeam = function(name, callback) {
+  var team = new Team({
+    name: name
+  });
 
+  team.save(function (err) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, team);
+    }
+  });
 };
 
-module.exports = restful.model('Teams', teamSchema);
+var Team = restful.model('Teams', teamSchema);
+
+module.exports = Team;

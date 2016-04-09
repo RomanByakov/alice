@@ -10,7 +10,7 @@ router.route('/')
 
       res.header("Access-Control-Allow-Origin", "*");
       res.send(departments);
-      console.log(departments);
+      //console.log(departments);
     });
   })
   .post(function(req, res, next) {
@@ -31,7 +31,7 @@ router.route('/:id')
       if (err) throw err;
       res.header("Access-Control-Allow-Origin", "*");
       res.json(department);
-      console.log(department);
+      //console.log(department);
     });
   })
   .put(function(req, res, next) {
@@ -45,7 +45,7 @@ router.route('/:id')
         else {
           res.header("Access-Control-Allow-Origin", "*");
           res.json(department);
-          console.log(department);
+          //console.log(department);
         }
       });
     });

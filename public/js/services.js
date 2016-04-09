@@ -20,7 +20,7 @@ service.factory('User', function($resource, $cookies) {
 });
 
 // department service
-service.factory('Department', function($resource. $cookies) {
+service.factory('Department', function($resource, $cookies) {
   return $resource('/api/departments/:id', {
     id: '@_id',
     token: $cookies.get('token')
