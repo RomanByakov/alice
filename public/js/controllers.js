@@ -74,9 +74,7 @@ module.controller('UserListController', function($scope, $state, popupService, $
 // departments controllers
 module.controller('DepartmentListController', function($scope, $state, $cookies, popupService, $window, Department) {
   checkAccess($cookies, $state);
-  $scope.departments = Department.query({
-    token: $cookies.get('token')
-  });
+  $scope.departments = Department.query();
 
   $scope.deleteDepartment = function(department) {
     if (popupService.showPopup('Really delete this?')) {
