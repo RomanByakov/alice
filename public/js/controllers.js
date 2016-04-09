@@ -2,7 +2,7 @@ var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies']
 
 //baaaaaaad
 var checkAccess = function($cookies, $state) {
-  if (!$cookies.get('user')) {
+  if (!$cookies.get('user') || !$cookies.get('token')) {
     $state.go('login');
   }
 };
@@ -74,7 +74,9 @@ module.controller('UserListController', function($scope, $state, popupService, $
 // departments controllers
 module.controller('DepartmentListController', function($scope, $state, $cookies, popupService, $window, Department) {
   checkAccess($cookies, $state);
-  $scope.departments = Department.query();
+  $scope.departments = Department.query({
+    token: $cookies.get('token')
+  });
 
   $scope.deleteDepartment = function(department) {
     if (popupService.showPopup('Really delete this?')) {

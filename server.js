@@ -39,39 +39,38 @@ app.get('/check-access-test', setup.checkAccessTest);
 
 app.use('/auth', require('./routes/auth'));
 
-// check token
-// app.use(function(req, res, next) {
-//
-//   // check header or url parameters or post parameters for token
-//   var token = req.body.token || req.param('token') || req.headers['x-access-token'];
-//
-//   // decode token
-//   if (token) {
-//
-//     // verifies secret and checks exp
-//     jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
-//       if (err) {
-//         return res.status(401).json({
-//           message: 'Failed to authenticate token.'
-//         });
-//       } else {
-//         // if everything is good, save to request for use in other routes
-//         req.decoded = decoded;
-//         next();
-//       }
-//     });
-//
-//   } else {
-//
-//     // if there is no token
-//     // return an error
-//     return res.status(401).send({
-//       message: 'Access is denied.'
-//     });
-//
-//   }
-//
-// });
+//check token
+app.use(function(req, res, next) {
+
+  // check header or url parameters or post parameters for token
+  var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+
+  // decode token
+  if (token) {
+    // verifies secret and checks exp
+    jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
+      if (err) {
+        return res.status(401).json({
+          message: 'Failed to authenticate token.'
+        });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+
+  } else {
+
+    // if there is no token
+    // return an error
+    return res.status(401).json({
+      message: 'Access is denied.'
+    });
+
+  }
+
+});
 
 // routes
 app.use('/api/users', require('./routes/user'));
