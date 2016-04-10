@@ -126,6 +126,9 @@ module.controller('LoginController', function($scope, $state, $stateParams, $coo
       $cookies.put('token', response.token);
       $cookies.put('user', JSON.stringify(response.user));
       $state.go('users');
+    }, function(err) {
+      $scope.error = err.data.message;
     });
+
   }
 });
