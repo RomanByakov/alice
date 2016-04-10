@@ -1,10 +1,12 @@
 angular.module('aliceApp', ['ui.router', 'ngResource', 'ngCookies', 'aliceApp.controllers', 'aliceApp.services']);
 
-angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locationProvider) {
+angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locationProvider, $urlRouterProvider) {
   // $locationProvider.html5Mode({
   //   enabled: true,
   //   requireBase: false
   // });
+  $urlRouterProvider.otherwise("/users");
+
   $stateProvider
   // users
     .state('users', {
