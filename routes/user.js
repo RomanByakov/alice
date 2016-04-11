@@ -4,6 +4,7 @@ var router = express.Router();
 
 // models
 var User = require('../models/user');
+var fs = require('fs');
 
 router.route('/')
   .get(function(req, res, next) {
@@ -16,13 +17,60 @@ router.route('/')
     });
   })
   .post(function(req, res, next) {
-    var user = new User(req.body);
-    user.password = 123456;
-    user.username = (req.body.name[0] + req.body.lastname).toLowerCase();
-    user.save(function(err, user) {
-      if (err) throw err;
-      res.send(user);
-    });
+    // var user = new User(req.body);
+    // user.password = 123456;
+    // user.username = (req.body.name[0] + req.body.lastname).toLowerCase();
+    // user.save(function(err, user) {
+    //   if (err) throw err;
+    //   res.send(user);
+    // });
+
+    console.log(req);
+
+    console.log(req.body);
+
+    User.createUser(
+      req.body.name,
+      req.body.lastname,
+      req.body.login,
+      req.body.password,
+      req.body.team,
+      req.body.department,
+      req.body.role,
+      function (err) {
+        if (err) {
+          throw err;
+        } else {
+          if (!req.files) {
+            res.json({success: true});
+            return;
+          }
+
+          console.log(req.files);
+
+          fs.readFile(req.files.avatar.path, function (err, data) {
+            if (err) {
+              //avatar is not required, so if it's empty then send success response
+              res.json({success: true});
+            } else {
+              var path = __dirname + "../public/img/avatars/" + this._id;
+              fs.writeFile(path, data, function (err) {
+                if (err) {
+                  throw err;
+                }
+              });
+
+              this.save(function(err) {
+                if (err) {
+                  throw err;
+                } else {
+                  res.json({success: true});
+                }
+              })
+            }
+          });
+        }
+      });
   });
 
 router.route('/:id')

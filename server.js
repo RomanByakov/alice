@@ -5,6 +5,7 @@ var config = require('./config');
 var morgan = require('morgan');
 var path = require('path');
 var connectDomain = require('connect-domain');
+var multer = require('multer');
 
 var setup = require('./modules/setup');
 
@@ -22,6 +23,7 @@ mongoose.connect(config.database);
 // express
 var app = express();
 app.use(connectDomain());
+//app.use(multer);
 app.use(bodyParser.urlencoded({
   extended: true
 }));

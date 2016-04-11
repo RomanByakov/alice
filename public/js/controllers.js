@@ -65,7 +65,7 @@ $scope.deleteUser = function(user) {
 
   $scope.addUser = function() {
     $scope.user.$save(function() {
-      $window.location.href = '';
+      //$window.location.href = '';
     });
   }
 

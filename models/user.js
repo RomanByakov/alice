@@ -1,7 +1,10 @@
 // dependencies
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
 var Role = require('./role');
+var Team = require('./team');
+var Department = require('./department');
 
 // create a schema
 var userSchema = new Schema({
@@ -18,7 +21,8 @@ var userSchema = new Schema({
   },
   team: Schema.Types.Mixed,
   department: Schema.Types.Mixed,
-  role: Schema.Types.Mixed
+  role: Schema.Types.Mixed,
+  avatar: String
 });
 
 userSchema.methods.checkAccess = function(role, callback) {
@@ -45,6 +49,10 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   } else if (role instanceof Role) {
     user.role = role;
   }
+
+  // if (avatar) {
+  //
+  // }
 
   user.save(callback);
 };
