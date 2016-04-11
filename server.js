@@ -16,11 +16,18 @@ var Team = require('./models/team');
 var Department = require('./models/department');
 var Role = require('./models/role');
 
+var app = express();
+
+if (app.get('env') === 'development') {
+  //dev config
+} else {
+  //prod config
+}
+
 // mongodb
 mongoose.connect(config.database);
 
 // express
-var app = express();
 app.use(connectDomain());
 //app.use(multer);
 app.use(bodyParser.urlencoded({
@@ -108,4 +115,4 @@ if (app.get('env') === 'development') {
 
 // start server
 app.listen(config.port);
-console.log(' alice is running on port 3000');
+console.log('alice is running on port ' + config.port);
