@@ -27,16 +27,31 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
 
 // users controllers
 module.controller('UserListController', function($scope, $state, popupService, $window, User, $cookies) {
+  $scope.initMaterializeUI = function() {
+    $('.tooltipped').tooltip({delay: 150});
+    $('.modal-trigger').leanModal();
+  };
   checkAccess($cookies, $state);
   $scope.users = User.query();
 
-  $scope.deleteUser = function(user) {
-    if (popupService.showPopup('Really delete this?')) {
-      user.$delete(function() {
-        $window.location.href = '';
-      });
-    }
-  }
+  // $scope.deleteUser = function(user) {
+  //   if (popupService.showPopup('Really delete this?')) {
+  //     user.$delete(function() {
+  //       $window.location.href = '';
+  //     });
+  //   }
+  // }
+
+  $scope.openModal = function(user) {
+    $scope.user = user;
+  };
+
+$scope.deleteUser = function(user) {
+  user.$delete(function()
+  {
+      $window.location.href = '';
+  });
+}
 
 }).controller('UserViewController', function($scope, $state, $cookies, $stateParams, User) {
   checkAccess($cookies, $state);
@@ -44,13 +59,13 @@ module.controller('UserListController', function($scope, $state, popupService, $
     id: $stateParams.id
   });
 
-}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User) {
+}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window) {
   checkAccess($cookies, $state);
   $scope.user = new User();
 
   $scope.addUser = function() {
     $scope.user.$save(function() {
-      $state.go('users');
+      $window.location.href = '';
     });
   }
 
