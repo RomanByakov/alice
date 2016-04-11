@@ -5,6 +5,14 @@ var router = express.Router();
 // models
 var User = require('../models/user');
 var fs = require('fs');
+//
+// var multer = require('multer');
+// var upload = multer();
+
+var multiparty = require('connect-multiparty');
+var multipartyMiddleware = multiparty({
+  uploadDir: __dirname + "/../public/img/tmp/"
+});
 
 router.route('/')
   .get(function(req, res, next) {
@@ -16,18 +24,7 @@ router.route('/')
       res.send(users);
     });
   })
-  .post(function(req, res, next) {
-    // var user = new User(req.body);
-    // user.password = 123456;
-    // user.username = (req.body.name[0] + req.body.lastname).toLowerCase();
-    // user.save(function(err, user) {
-    //   if (err) throw err;
-    //   res.send(user);
-    // });
-
-    console.log(req);
-
-    console.log(req.body);
+  .post(multipartyMiddleware, function(req, res, next) {
 
     User.createUser(
       req.body.name,
@@ -37,36 +34,33 @@ router.route('/')
       req.body.team,
       req.body.department,
       req.body.role,
-      function (err) {
+      function (err, user) {
         if (err) {
           throw err;
         } else {
-          if (!req.files) {
+          var file = req.files.file;
+
+          if (!file.avatar) {
             res.json({success: true});
             return;
           }
 
-          console.log(req.files);
+          //todo: extension
+          var path = __dirname + "/../public/img/avatars/" + user._id + ".png";
 
-          fs.readFile(req.files.avatar.path, function (err, data) {
+          fs.rename(file.avatar.path, path, function(err) {
             if (err) {
-              //avatar is not required, so if it's empty then send success response
-              res.json({success: true});
+              throw err;
             } else {
-              var path = __dirname + "../public/img/avatars/" + this._id;
-              fs.writeFile(path, data, function (err) {
-                if (err) {
-                  throw err;
-                }
-              });
+              user.avatar = path;
 
-              this.save(function(err) {
+              user.save(function(err) {
                 if (err) {
                   throw err;
                 } else {
-                  res.json({success: true});
+                  res.json(user);
                 }
-              })
+              });
             }
           });
         }

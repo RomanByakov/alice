@@ -1,4 +1,4 @@
-var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies']);
+var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies', 'ngFileUpload']);
 
 //baaaaaaad
 var checkAccess = function($cookies, $state) {
@@ -59,13 +59,26 @@ $scope.deleteUser = function(user) {
     id: $stateParams.id
   });
 
-}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window) {
+}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window, Upload) {
   checkAccess($cookies, $state);
   $scope.user = new User();
+  $scope.avatar = null;
 
-  $scope.addUser = function() {
-    $scope.user.$save(function() {
-      //$window.location.href = '';
+  $scope.addUser = function(avatar) {
+    Upload.upload({
+      url: '/api/users',
+      data: {
+        name: $scope.user.name,
+        lastname: $scope.user.lastname,
+        login: $scope.user.login,
+        password: $scope.user.password,
+        department: $scope.user.department,
+        team: $scope.user.team,
+        role: $scope.user.role
+      },
+      file: {
+        avatar: avatar
+      }
     });
   }
 

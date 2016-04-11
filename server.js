@@ -5,7 +5,6 @@ var config = require('./config');
 var morgan = require('morgan');
 var path = require('path');
 var connectDomain = require('connect-domain');
-var multer = require('multer');
 
 var setup = require('./modules/setup');
 

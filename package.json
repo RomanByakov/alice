@@ -16,6 +16,7 @@
     "morgan": "^1.7.0",
     "node-restful": "^0.2.5",
     "connect-domain": "*",
-    "multer": "*"
+    "multer": "*",
+    "connect-multiparty": "*"
   }
 }
