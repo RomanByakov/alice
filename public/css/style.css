@@ -6,9 +6,64 @@
  * Made By MaterializeCSS.com
  */
 
+ body
+ {
+     background: #F9F8F8;
+ }
+
+  .brand-logo
+  {
+    vertical-align: top;
+
+  }
+
+ .brand-logo:before
+ {
+   content:"";
+   background: url("../img/alice.png") no-repeat;
+   width: 164px;
+   height: 87px;
+   display: block;
+   margin: 8px 0 0 0;
+   vertical-align: top;
+   position: absolute;
+
+ }
+
 .icon-block {
   padding: 0 15px;
 }
 .icon-block .material-icons {
 	font-size: inherit;
+}
+
+.card-login
+{
+  margin: 0 auto 0 auto;
+
+}
+
+.card-login_block
+{
+  min-height: 600px;
+}
+
+.user-cards
+{
+  margin: 50px auto 0 auto;
+}
+
+.user-cards_card
+{
+  margin: 0 23px 23px 0;
+}
+.user-cards_card .user-detales
+{
+  margin: 40px 0 0 0;
+  border: 0;
+}
+
+.user-cards .card-action a
+{
+  margin: 0 10px 0 0;
 }
