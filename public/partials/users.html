@@ -1,6 +1,6 @@
 <!-- <a class="btn-primary btn-lg nodecoration">Add New User</a> -->
 <h3>All Users</h3>
-
+<label>Search: <input ng-model="searchText"></label>
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
   <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal2"><i class="material-icons">add</i></a>
 </div>
@@ -23,7 +23,7 @@
   </div>
 </div>
 <div class="user-cards row">
-  <div class="card hoverable col s12 l3 user-cards_card" ng-repeat="user in users">
+  <div class="card hoverable col s12 l3 user-cards_card" ng-repeat="user in users | filter:searchText">
       <div class="card-image waves-effect waves-block waves-light">
         <img class="activator" src="{{user.avatar != null ? user.avatar : '../img/empty-img.jpg'}}">
       </div>
