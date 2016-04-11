@@ -5,7 +5,7 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
   //   enabled: true,
   //   requireBase: false
   // });
-  $urlRouterProvider.otherwise("/users");
+  //$urlRouterProvider.otherwise("/users");
 
   $stateProvider
   // users
