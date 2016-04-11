@@ -10,8 +10,14 @@ var crypto = require('crypto');
 var util = require('util');
 
 var userSchema = new Schema({
-  name: String,
-  lastname: String,
+  name: {
+    type: String,
+    default: 'Unnamed'
+  },
+  lastname: {
+    type: String,
+    default: 'Orphan'
+  },
   username: {
     type: String,
     required: true,
@@ -33,7 +39,10 @@ var userSchema = new Schema({
     type: Schema.Types.Mixed,
     default: null
   },
-  avatar: String,
+  avatar: {
+    type: String,
+    default: '../img/empty-img.jpg'
+  },
   skype: {
     type: String,
     default: 'Unknown'
@@ -49,7 +58,7 @@ userSchema.methods.checkAccess = function(role, callback) {
 };
 
 userSchema.statics.createUser = function(firstName, lastName, login, password, team, department, role, callback) {
-  //todo: check team, department.
+  //todo: validate first and last name for emptyness (spaces only).
   var user = new User({
     name: firstName,
     lastname: lastName,

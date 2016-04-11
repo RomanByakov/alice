@@ -25,7 +25,7 @@
 <div class="user-cards row">
   <div class="card hoverable col s12 l3 user-cards_card" ng-repeat="user in users">
       <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator" src="{{user.avatar != null ? user.avatar : '../img/empty-img.jpg'}}">
+        <img class="activator" ng-src="{{user.avatar}}">
       </div>
       <div class="card-content">{{initMaterializeUI()}}
         <span class="card-title activator grey-text text-darken-4">{{user.name}}<i class="material-icons right">more_vert</i></span>
