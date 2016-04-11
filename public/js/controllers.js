@@ -31,16 +31,9 @@ module.controller('UserListController', function($scope, $state, popupService, $
     $('.tooltipped').tooltip({delay: 150});
     $('.modal-trigger').leanModal();
   };
+
   checkAccess($cookies, $state);
   $scope.users = User.query();
-
-  // $scope.deleteUser = function(user) {
-  //   if (popupService.showPopup('Really delete this?')) {
-  //     user.$delete(function() {
-  //       $window.location.href = '';
-  //     });
-  //   }
-  // }
 
   $scope.openModal = function(user) {
     $scope.user = user;
@@ -59,13 +52,13 @@ $scope.deleteUser = function(user) {
     id: $stateParams.id
   });
 
-}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window, Upload) {
+}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window, Upload, $timeout) {
   checkAccess($cookies, $state);
   $scope.user = new User();
   $scope.avatar = null;
 
   $scope.addUser = function(avatar) {
-    Upload.upload({
+    avatar.upload = Upload.upload({
       url: '/api/users',
       data: {
         name: $scope.user.name,
@@ -80,9 +73,15 @@ $scope.deleteUser = function(user) {
         avatar: avatar
       }
     });
+
+    avatar.upload.then(function(response) {
+      $timeout(function () {
+        $window.location.href = '';
+      });
+    });
   }
 
-}).controller('UserEditController', function($scope, $state, $soockies, $stateParams, User) {
+}).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User) {
   checkAccess($cookies, $state);
   $scope.updateUser = function() {
     $scope.user.$update(function() {

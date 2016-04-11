@@ -46,13 +46,15 @@ router.route('/')
           }
 
           //todo: extension
-          var path = __dirname + "/../public/img/avatars/" + user._id + ".png";
+          var extension = ".png";
+
+          var path = __dirname + "/../public/img/avatars/" + user._id + extension;
 
           fs.rename(file.avatar.path, path, function(err) {
             if (err) {
               throw err;
             } else {
-              user.avatar = path;
+              user.avatar = "../img/avatars/" + user._id + extension;
 
               user.save(function(err) {
                 if (err) {
