@@ -4,6 +4,15 @@ var router = express.Router();
 
 // models
 var User = require('../models/user');
+var fs = require('fs');
+//
+// var multer = require('multer');
+// var upload = multer();
+
+var multiparty = require('connect-multiparty');
+var multipartyMiddleware = multiparty({
+  uploadDir: __dirname + "/../public/img/tmp/"
+});
 
 router.route('/')
   .get(function(req, res, next) {
@@ -15,14 +24,49 @@ router.route('/')
       res.send(users);
     });
   })
-  .post(function(req, res, next) {
-    var user = new User(req.body);
-    user.password = 123456;
-    user.username = (req.body.name[0] + req.body.lastname).toLowerCase();
-    user.save(function(err, user) {
-      if (err) throw err;
-      res.send(user);
-    });
+  .post(multipartyMiddleware, function(req, res, next) {
+
+    User.createUser(
+      req.body.name,
+      req.body.lastname,
+      req.body.login,
+      req.body.password,
+      req.body.team,
+      req.body.department,
+      req.body.role,
+      function (err, user) {
+        if (err) {
+          throw err;
+        } else {
+          var file = req.files.file;
+
+          if (!file.avatar) {
+            res.json({success: true});
+            return;
+          }
+
+          //todo: extension
+          var extension = ".png";
+
+          var path = __dirname + "/../public/img/avatars/" + user._id + extension;
+
+          fs.rename(file.avatar.path, path, function(err) {
+            if (err) {
+              throw err;
+            } else {
+              user.avatar = "../img/avatars/" + user._id + extension;
+
+              user.save(function(err) {
+                if (err) {
+                  throw err;
+                } else {
+                  res.json(user);
+                }
+              });
+            }
+          });
+        }
+      });
   });
 
 router.route('/:id')
