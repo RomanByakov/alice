@@ -14,20 +14,34 @@
   .brand-logo
   {
     vertical-align: top;
+    position: relative;
+  }
 
+  .brand-logo span
+  {
+    position: absolute;
+    font-size: 11px;
+    color: #EAEAEA;
+    top: -11px;
+    left: 46px;
   }
 
  .brand-logo:before
  {
    content:"";
    background: url("../img/alice.png") no-repeat;
-   width: 164px;
-   height: 87px;
+   width: 83px;
+   height: 36px;
    display: block;
-   margin: 8px 0 0 0;
+   margin: 14px 0 0 0;
    vertical-align: top;
    position: absolute;
+   left: -44px;
+ }
 
+ .main-menu
+ {
+   margin: 0 20px 0 0;
  }
 
 .icon-block {
@@ -50,12 +64,11 @@
 
 .user-cards
 {
-  margin: 50px auto 0 auto;
+  margin: 14px 0;
 }
 
 .user-cards_card
 {
-  margin: 0 23px 23px 0;
 }
 .user-cards_card .user-detales
 {
@@ -66,4 +79,33 @@
 .user-cards .card-action a
 {
   margin: 0 10px 0 0;
+}
+
+
+.user-chip
+{
+  float:right
+}
+
+.search-wrapper
+{
+
+}
+
+.search-wrapper input, .search-wrapper input:active
+{
+  border: 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.search-wrapper i
+{
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  font-size: 2.5rem;
+  color: #ccc;
 }

@@ -1,6 +1,10 @@
 <!-- <a class="btn-primary btn-lg nodecoration">Add New User</a> -->
 <h3>All Users</h3>
-<label>Search: <input ng-model="searchText"></label>
+<!-- <label>Search: <input ng-model="searchText"></label> -->
+<div class="search-wrapper card">
+    <input type="text" ng-model="searchText">
+    <i class="material-icons">search</i>
+</div>
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
   <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal2"><i class="material-icons">add</i></a>
 </div>
@@ -23,27 +27,29 @@
   </div>
 </div>
 <div class="user-cards row">
-  <div class="card hoverable col s12 l3 user-cards_card" ng-repeat="user in users | filter:searchText">
-      <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator" ng-src="{{user.avatar}}">
-      </div>
-      <div class="card-content">{{initMaterializeUI()}}
-        <span class="card-title activator grey-text text-darken-4">{{user.name}}<i class="material-icons right">more_vert</i></span>
-        <p><a href="">{{user.department.name}}</a></p>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">{{user.name}}<i class="material-icons right">close</i></span>
-        <ul class="collection user-detales">
+  <div class="user-cards_card col s12 l4" ng-repeat="user in users | filter:searchText">
+    <div class="card hoverable">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" ng-src="{{user.avatar}}">
+        </div>
+        <div class="card-content">{{initMaterializeUI()}}
+          <span class="card-title activator grey-text text-darken-4">{{user.name}}<i class="material-icons right">more_vert</i></span>
+          <p><a href="">{{user.department.name}}</a></p>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">{{user.name}}<i class="material-icons right">close</i></span>
+          <ul class="collection user-detales">
 
-          <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Full name"><div><a href="#!" class="secondary-content"><i class="material-icons">perm_identity</i></a>{{user.name}} {{user.lastname}}</div></li>
-          <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Team name"><div><a href="#!" class="secondary-content"><i class="material-icons">supervisor_account</i></a>{{user.team.name}}</div></li>
-          <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Department"><div><a href="#!" class="secondary-content"><i class="material-icons">business</i></a>{{user.department.name}}</div></li>
-        </ul>
-      </div>
-      <div class="card-action">
-        <a class="btn btn-primary " ui-sref="editUser({id:user._id})">Edit</a>
-        <!-- <a class="btn btn-danger"  ng-click="deleteUser(user)">Delete</a> -->
-          <a class="waves-effect waves-light deep-orange accent-2 btn modal-trigger" ng-click="openModal(user)" href="#modal1">Delete</a>
-      </div>
+            <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Full name"><div><a href="#!" class="secondary-content"><i class="material-icons">perm_identity</i></a>{{user.name}} {{user.lastname}}</div></li>
+            <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Team name"><div><a href="#!" class="secondary-content"><i class="material-icons">supervisor_account</i></a>{{user.team.name}}</div></li>
+            <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Department"><div><a href="#!" class="secondary-content"><i class="material-icons">business</i></a>{{user.department.name}}</div></li>
+          </ul>
+        </div>
+        <div class="card-action">
+          <a class="btn btn-primary " ui-sref="editUser({id:user._id})">Edit</a>
+          <!-- <a class="btn btn-danger"  ng-click="deleteUser(user)">Delete</a> -->
+            <a class="waves-effect waves-light deep-orange accent-2 btn modal-trigger" ng-click="openModal(user)" href="#modal1">Delete</a>
+        </div>
+    </div>
   </div>
 </div>

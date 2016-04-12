@@ -14,9 +14,16 @@
 </head>
 
 <body>
-  <nav class="orange" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" ui-sref="users" class="brand-logo"></a>
-      <ul class="right hide-on-med-and-down">
+  <nav class="orange" role="navigation" ng-controller="NavBarController">
+    <div class="nav-wrapper container">
+      <a id="logo-container" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+      <div class="user-chip right">
+        <div class="chip">
+          <img ng-src="{{user.avatar}}" alt="Contact Person">
+          {{user.username}}
+        </div>
+      </div>
+      <ul class="hide-on-med-and-down left main-menu">
           <li><a ui-sref="departments" href="#">Departments</a></li>
       </ul>
 
@@ -24,12 +31,18 @@
         <li><a ui-sref="departments" href="#">Departments</a></li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
     </div>
   </nav>
   <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
+    <div class="container row">
       <!-- partitial -->
-      <div ui-view></div>
+      <div class="col s3 hide-on-med-and-down">
+        <div class="example-block">
+
+        </div>
+      </div>
+      <div ui-view class="col s10"></div>
       <!-- partitial -->
     </div>
 
