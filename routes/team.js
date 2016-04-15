@@ -5,6 +5,12 @@ var Team = require('../models/team');
 
 router.route('/')
   .get(function(req, res, next) {
+    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
+
     Team.find({}, function(err, teams) {
       if (err) throw err;
 
@@ -14,6 +20,12 @@ router.route('/')
     });
   })
   .post(function(req, res, next) {
+    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
+
     var team = new Team(req.body);
     team.save(function(err, team) {
         if (err) throw err;
@@ -27,6 +39,12 @@ router.route('/')
 
 router.route('/:id')
   .get(function(req, res, next) {
+    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
+
     Team.findOne({
       '_id': req.params.id
   }, function(err, team) {
@@ -37,6 +55,12 @@ router.route('/:id')
     });
   })
   .put(function(req, res, next) {
+    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
+
     Team.findOne({
       '_id': req.body._id
   }, function(err, team) {
@@ -53,14 +77,20 @@ router.route('/:id')
       });
       });
     }).delete(function(req, res, next) {
-        Team.remove({
-          '_id': req.params.id
-        }, function(err, removed/*what is?*/) {
-          if (err) throw err;
-
-          console.log('Team deleted successfully');
-          res.json({success: true});
-        });
+      User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
+          if (err) {
+            throw err;
+          }
       });
+
+      Team.remove({
+        '_id': req.params.id
+      }, function(err, removed/*what is?*/) {
+        if (err) throw err;
+
+        console.log('Team deleted successfully');
+        res.json({success: true});
+      });
+    });
 
 module.exports = router;

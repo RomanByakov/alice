@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var Department = require('../models/department');
+var Role = require('../models/role');
 
-router.route('/', function (req, res, next) {
+router.route('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 })
@@ -14,12 +14,12 @@ router.route('/', function (req, res, next) {
         }
     });
 
-    Department.find({}, function(err, departments) {
+    Role.find({}, function(err, roles) {
       if (err) {
-        throw err;
-      }
+         throw err;
+       }
 
-      res.send(departments);
+      res.json(roles);
     });
   })
   .post(function(req, res, next) {
@@ -28,17 +28,10 @@ router.route('/', function (req, res, next) {
           throw err;
         }
     });
-
-    Department.createDepartment(req.body.name, req.body.teams, function(err, department) {
-      if (err) {
-        throw err;
-      } else {
-        res.json(department);
-      }
-    });
+    //todo: implement
   });
 
-router.route('/:id', function (req, res, next) {
+router.route('/:id', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 })
@@ -49,13 +42,14 @@ router.route('/:id', function (req, res, next) {
         }
     });
 
-    Department.findOne({
+    Role.findOne({
       '_id': req.params.id
-    }, function(err, department) {
+    }, function(err, role) {
       if (err) {
         throw err;
       }
-      res.json(department);
+
+      res.json(role);
     });
   })
   .put(function(req, res, next) {
@@ -64,38 +58,14 @@ router.route('/:id', function (req, res, next) {
           throw err;
         }
     });
-
-    Department.findOne({
-      '_id': req.body._id
-    }, function(err, department) {
-      if (err) {
-        throw err;
-      }
-
-      department.updateDepartment(req.body.name, req.body.teams, function(err) {
-        if (err) {
-          throw err;
-        } else {
-          res.json(department);
-        }
-      });
-    });
+    //todo: implement
   }).delete(function(req, res, next) {
     User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
         if (err) {
           throw err;
         }
     });
-
-    Department.remove({
-      '_id': req.params.id
-    }, function(err, removed/*what is?*/) {
-      if (err) {
-        throw err;
-      }
-
-      res.json({success: true});
-    });
+    //todo: implement
   });
 
 module.exports = router;

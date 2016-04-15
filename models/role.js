@@ -14,7 +14,7 @@ roleSchema.statics.checkAccess = function(userRole, checkingRole, callback) {
     return callback(new Error('Access Denied'));
   }
 
-  console.log("userRole = " + userRole + " checkingRole = " + checkingRole);
+  //console.log("userRole = " + userRole + " checkingRole = " + checkingRole);
   if (userRole == checkingRole) {
     return callback(null);
   }

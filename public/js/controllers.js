@@ -86,16 +86,11 @@ $scope.deleteUser = function(user) {
 
 }).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User, Upload, $timeout) {
   checkAccess($cookies, $state);
-  // $scope.updateUser = function() {
-  //   $scope.user.$update(function() {
-  //     $state.go('users');
-  //   });
-  // };
-  //
 
   $scope.user = new User();
   $scope.avatar = null;
 
+  //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
   $scope.updateUser = function(avatar) {
     avatar.upload = Upload.upload({
       url: '/api/users/' + $scope.user._id,
@@ -120,7 +115,7 @@ $scope.deleteUser = function(user) {
 
     avatar.upload.then(function(response) {
       $timeout(function () {
-        $window.location.href = '';
+        $state.go('users');
       });
     });
   };

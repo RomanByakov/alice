@@ -1,8 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var config = require('./config');
-var morgan = require('morgan');
 var path = require('path');
 var connectDomain = require('connect-domain');
 
@@ -19,25 +17,20 @@ var Role = require('./models/role');
 var app = express();
 
 if (app.get('env') === 'development') {
-  //dev config
+  var config = require('./config');
 } else {
-  //prod config
+  var config = require('./config-prod');
 }
 
-// mongodb
 mongoose.connect(config.database);
 
-// express
 app.use(connectDomain());
-//app.use(multer);
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
 // api secret
 app.set('apliceSecret', config.token.secret);
-
-app.use(morgan('dev'));
 
 app.use("/", express.static(path.join(__dirname, 'public')));
 
@@ -62,14 +55,13 @@ app.use(function(req, res, next) {
           message: 'Failed to authenticate token.'
         });
       } else {
-        // if everything is good, save to request for use in other routes
         req.decoded = decoded;
+        req.currentUser = decoded._doc;
         next();
       }
     });
 
   } else {
-
     // if there is no token
     // return an error
     return res.status(401).json({
@@ -84,6 +76,7 @@ app.use(function(req, res, next) {
 app.use('/api/users', require('./routes/user'));
 app.use('/api/departments', require('./routes/department'));
 app.use('/api/teams', require('./routes/team'));
+app.use('/api/roles', require('./routes/role'));
 
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {

@@ -7,26 +7,37 @@ var User = require('../models/user');
 var fs = require('fs');
 
 var upload = require('../modules/upload');
-//
-// var multer = require('multer');
-// var upload = multer();
 
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty({
   uploadDir: __dirname + "/../public/img/tmp/"
 });
 
-router.route('/')
+router.route('/', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+})
   .get(function(req, res, next) {
+    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
+
     User.find({}, function(err, users) {
       // error
-      if (err) throw err;
-
-      res.header("Access-Control-Allow-Origin", "*");
+      if (err) {
+         throw err;
+       }
       res.send(users);
     });
   })
   .post(multipartyMiddleware, function(req, res, next) {
+    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
 
     User.createUser(
       req.body.name,
@@ -51,19 +62,35 @@ router.route('/')
       });
   });
 
-router.route('/:id')
+router.route('/:id', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+})
   .get(function(req, res, next) {
+    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
+
     User.findOne({
       '_id': req.params.id
     }, function(err, user) {
-      // error
-      if (err) throw err;
-      // return user
-      res.header("Access-Control-Allow-Origin", "*");
+      if (err) {
+        throw err;
+      }
       res.send(user);
     });
   })
   .put(multipartyMiddleware, function(req, res, next) {
+    if (req.currentUser._id != req.body._id) {
+      User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
+          if (err) {
+            throw err;
+          }
+      });
+    }
+
     User.findOne({
       '_id': req.body._id
     }, function(err, user) {
@@ -95,6 +122,13 @@ router.route('/:id')
         );
     });
   }).delete(function(req, res, next) {
+    //А реально дублирование кода скотское. Потом перепилить по людски, сочненько.
+    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
+        if (err) {
+          throw err;
+        }
+    });
+
     User.remove({
       '_id': req.params.id
     }, function(err, removed) {

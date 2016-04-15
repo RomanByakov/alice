@@ -61,6 +61,10 @@ userSchema.methods.checkAccess = function(role, callback) {
   Role.checkAccess(this.role.name, role, callback);
 };
 
+userSchema.statics.checkAccess = function(userRole, role, callback) {
+  Role.checkAccess(userRole, role, callback);
+};
+
 userSchema.statics.createUser = function(firstName, lastName, login, password, team, department, role, callback) {
   //todo: validate first and last name for emptyness (spaces only).
   var user = new User({
