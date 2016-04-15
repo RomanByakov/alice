@@ -84,21 +84,54 @@ $scope.deleteUser = function(user) {
     });
   }
 
-}).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User) {
+}).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User, Upload, $timeout) {
   checkAccess($cookies, $state);
-  $scope.updateUser = function() {
-    $scope.user.$update(function() {
-      $state.go('users');
+  // $scope.updateUser = function() {
+  //   $scope.user.$update(function() {
+  //     $state.go('users');
+  //   });
+  // };
+  //
+
+  $scope.user = new User();
+  $scope.avatar = null;
+
+  $scope.updateUser = function(avatar) {
+    avatar.upload = Upload.upload({
+      url: '/api/users/' + $scope.user._id,
+      data: {
+        _id: $scope.user._id,
+        name: $scope.user.name,
+        lastname: $scope.user.lastname,
+        username: $scope.user.username,
+        password: $scope.user.password,
+        department: $scope.user.department,
+        team: $scope.user.team,
+        role: $scope.user.role
+      },
+      headers: {
+        'x-access-token': $cookies.get('token')
+      },
+      file: {
+        avatar: avatar
+      },
+      method: 'PUT'
+    });
+
+    avatar.upload.then(function(response) {
+      $timeout(function () {
+        $window.location.href = '';
+      });
     });
   };
 
-  $scope.loadUser = function() {
-    $scope.user = User.get({
-      id: $stateParams.id
-    });
-  };
+    $scope.loadUser = function() {
+      $scope.user = User.get({
+        id: $stateParams.id
+      });
+    };
 
-  $scope.loadUser();
+    $scope.loadUser();
 });
 
 // departments controllers

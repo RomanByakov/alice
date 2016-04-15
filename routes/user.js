@@ -74,7 +74,7 @@ router.route('/:id')
       user.updateUser(
           req.body.name,
           req.body.lastname,
-          req.body.login,
+          req.body.username,
           req.body.password,
           req.body.team,
           req.body.department,
@@ -93,20 +93,6 @@ router.route('/:id')
             }
           }
         );
-
-      user.username = req.body.username;
-      user.name = req.body.name;
-      user.lastname = req.body.lastname;
-      user.department = req.body.department;
-      user.team = req.body.team;
-
-      user.save(function(err) {
-        if (err) throw err;
-
-        res.json({
-          success: true
-        });
-      });
     });
   }).delete(function(req, res, next) {
     User.remove({

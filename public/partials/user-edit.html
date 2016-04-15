@@ -1,3 +1,69 @@
-<form class="form-horizontal" role="form" ng-submit="updateUser()">
-    <div ng-include="'partials/_form.html'"></div>
+<form class="form-horizontal" role="form" ng-submit="updateUser(avatar)">
+  <div class="form-group">
+      <label for="year" class="col-sm-2 control-label">Name</label>
+      <div class="col-sm-10">
+          <input type="text" ng-model="user.name" class="form-control" id="name" placeholder="name"/>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="director" class="col-sm-2 control-label">Lastname</label>
+      <div class="col-sm-10">
+          <input type="text" ng-model="user.lastname" class="form-control" id="lastname" placeholder="lastname"/>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="plot" class="col-sm-2 control-label">Login</label>
+      <div class="col-sm-10">
+          <input type="text" ng-model="user.username" class="form-control" id="username" placeholder="username"/>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="plot" class="col-sm-2 control-label">Password</label>
+      <div class="col-sm-10">
+          <input type="password" ng-model="user.password" class="form-control" id="password" placeholder="password"/>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="plot" class="col-sm-2 control-label">Department</label>
+      <div class="col-sm-10">
+          <input type="text" ng-model="user.department.name" class="form-control" id="department" placeholder="department"/>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="plot" class="col-sm-2 control-label">Team</label>
+      <div class="col-sm-10">
+          <input type="text" ng-model="user.team.name" class="form-control" id="team" placeholder="team"/>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="plot" class="col-sm-2 control-label">Role</label>
+      <div class="col-sm-10">
+          <input type="text" ng-model="user.role.name" class="form-control" id="role" placeholder="role"/>
+      </div>
+  </div>
+
+  <div class="file-field input-field">
+    <div class="btn">
+      <span>Avatar</span>
+      <input type="file" ngf-select ng-model="avatar" name="file"
+               accept="image/*" ngf-max-size="2MB"
+               ngf-model-invalid="errorFile" id="avatar-input">
+    </div>
+    <div class="file-path-wrapper">
+      <input class="file-path validate" type="text">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+          <input type="submit" ng-click="addUser(avatar)" class="btn btn-primary" value="Save"/>
+      </div>
+  </div>
+
 </form>
