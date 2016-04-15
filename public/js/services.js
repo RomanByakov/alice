@@ -38,6 +38,21 @@ service.factory('Department', function($resource, $cookies) {
   }
 });
 
+//role service
+service.factory('Role', function($resource, $cookies) {
+  return $resource('/api/roles/:id', {
+    id: '@_id',
+    token: $cookies.get('token')
+  }, {
+    update: {
+      method: 'PUT'
+    },
+    save: {
+      method: 'POST'
+    }
+  });
+});
+
 service.factory('Login', function($resource) {
   return $resource('/auth', {
       save: {
