@@ -1,0 +1,79 @@
+<md-dialog aria-label="Add user" ng-controller="UserCreateController"  ng-cloak>
+  <form ng-submit="addUser(avatar)">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add user</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
+          <div>
+            <md-input-container>
+              <label>Username</label>
+              <input ng-model="user.username">
+            </md-input-container>
+            <md-input-container>
+              <label>Password</label>
+              <input ng-model="user.password" type="password">
+            </md-input-container>
+          </div>
+        </md-content>
+        <md-content layout-padding>
+          <div layout-gt-xs="row">
+              <md-input-container class="md-block" flex-gt-sm>
+              <label>First name</label>
+              <input ng-model="user.name">
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Last name</label>
+              <input ng-model="user.lastname">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Department</label>
+              <md-select ng-model="user.department">
+                <md-option ng-repeat="department in [IT, HR]" value="" ng-bind="department">
+
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Teams</label>
+              <md-select ng-model="user.team">
+                <md-option ng-repeat="team in user.department.teams" value="" ng-bind="team">
+
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Role</label>
+              <md-select ng-model="user.role">
+                <md-option ng-repeat="role in [User, Admin]" value="" ng-bind="role">
+
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Department</label>
+              <input ng-model="user.name">
+            </md-input-container>
+          </div>
+          <md-input-container class="md-block">
+            <label>Avatar</label>
+            <input type="file" ngf-select ng-model="avatar" name="file"
+                     accept="image/*" ngf-max-size="2MB" required
+                     ngf-model-invalid="errorFile" id="avatar-input">
+          </md-input-container>
+        </md-content>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <input type="submit" class="md-button" value="Save"/>
+
+    </md-dialog-actions>
+  </form>
+</md-dialog>
