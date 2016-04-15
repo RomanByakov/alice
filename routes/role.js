@@ -8,12 +8,6 @@ router.route('/', function(req, res, next) {
   next();
 })
   .get(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     Role.find({}, function(err, roles) {
       if (err) {
          throw err;
@@ -23,11 +17,6 @@ router.route('/', function(req, res, next) {
     });
   })
   .post(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
     //todo: implement
   });
 
@@ -36,12 +25,6 @@ router.route('/:id', function(req, res, next) {
   next();
 })
   .get(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     Role.findOne({
       '_id': req.params.id
     }, function(err, role) {
@@ -53,18 +36,8 @@ router.route('/:id', function(req, res, next) {
     });
   })
   .put(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
     //todo: implement
   }).delete(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
     //todo: implement
   });
 

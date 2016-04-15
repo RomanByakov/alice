@@ -175,8 +175,16 @@ userSchema.statics.hashPassword = function(password) {
   return password;
 }
 
-userSchema.methods.getSafeFields = function() {
+userSchema.methods.populate = function() {
   //todo: delete not safe fields based on model config.
+  this.username = null;
+  this.password = null;
+};
+
+userSchema.statics.populateRecords = function(users) {
+  users.forEach(function(user) {
+    user.populate();
+  });
 };
 
 var User = mongoose.model('User', userSchema);

@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
 var connectDomain = require('connect-domain');
+var url = require('url');
+var accessConfig = require('./access-config');
 
 var setup = require('./modules/setup');
 
@@ -42,34 +44,31 @@ app.use('/auth', require('./routes/auth'));
 
 //check token
 app.use(function(req, res, next) {
-
-  // check header or url parameters or post parameters for token
   var token = req.body.token || req.param('token') || req.headers['x-access-token'];
 
-  // decode token
   if (token) {
-    // verifies secret and checks exp
     jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
       if (err) {
         return res.status(401).json({
           message: 'Failed to authenticate token.'
         });
       } else {
-        req.decoded = decoded;
+        var parsedUrl = url.parse(req.url, true);
+        var pathname = parsedUrl.pathname;
+        //console.log('Url' + parsedUrl.pathname);
+        //req.decoded = decoded;
+        //console.log(req.method);
         req.currentUser = decoded._doc;
+        accessConfig[req.method](req.currentUser.role.name);
         next();
       }
     });
 
   } else {
-    // if there is no token
-    // return an error
     return res.status(401).json({
       message: 'Access is denied.'
     });
-
   }
-
 });
 
 // routes

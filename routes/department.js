@@ -8,12 +8,6 @@ router.route('/', function (req, res, next) {
   next();
 })
   .get(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     Department.find({}, function(err, departments) {
       if (err) {
         throw err;
@@ -23,12 +17,6 @@ router.route('/', function (req, res, next) {
     });
   })
   .post(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     Department.createDepartment(req.body.name, req.body.teams, function(err, department) {
       if (err) {
         throw err;
@@ -43,12 +31,6 @@ router.route('/:id', function (req, res, next) {
   next();
 })
   .get(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     Department.findOne({
       '_id': req.params.id
     }, function(err, department) {
@@ -59,12 +41,6 @@ router.route('/:id', function (req, res, next) {
     });
   })
   .put(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     Department.findOne({
       '_id': req.body._id
     }, function(err, department) {
@@ -81,12 +57,6 @@ router.route('/:id', function (req, res, next) {
       });
     });
   }).delete(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     Department.remove({
       '_id': req.params.id
     }, function(err, removed/*what is?*/) {

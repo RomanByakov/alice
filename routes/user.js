@@ -18,18 +18,14 @@ router.route('/', function (req, res, next) {
   next();
 })
   .get(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     User.find({}, function(err, users) {
       // error
       if (err) {
          throw err;
        }
-      res.send(users);
+
+       User.populateRecords(users);
+      res.json(users);
     });
   })
   .post(multipartyMiddleware, function(req, res, next) {
@@ -55,6 +51,7 @@ router.route('/', function (req, res, next) {
 
           upload.avatar(file, user, function(user) {
             if (user) {
+              user.populate();
               res.json(user);
             }
           });
@@ -67,19 +64,15 @@ router.route('/:id', function(req, res, next) {
   next();
 })
   .get(function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'User', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     User.findOne({
       '_id': req.params.id
     }, function(err, user) {
       if (err) {
         throw err;
       }
-      res.send(user);
+
+      user.populate();
+      res.json(user);
     });
   })
   .put(multipartyMiddleware, function(req, res, next) {
@@ -114,6 +107,7 @@ router.route('/:id', function(req, res, next) {
 
               upload.avatar(file, user, function(user) {
                 if (user) {
+                  user.populate();
                   res.json(user);
                 }
               });
@@ -122,12 +116,6 @@ router.route('/:id', function(req, res, next) {
         );
     });
   }).delete(function(req, res, next) {
-    //А реально дублирование кода скотское. Потом перепилить по людски, сочненько.
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
 
     User.remove({
       '_id': req.params.id
