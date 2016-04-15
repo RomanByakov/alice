@@ -9,12 +9,103 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <!-- Angular Material CSS now available via Google CDN; version 0.9.4 used here -->
+  <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+
 </head>
 
 <body>
-  <nav class="orange" role="navigation" ng-controller="NavBarController">
+  <div ng-controller="NavBarController" ng-cloak class="nav-bar">
+    <md-toolbar md-scroll-shrink ng-if="true" class="md-primary">
+      <div class="md-toolbar-tools">
+        <a id="logo-container" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+        <ul class="info-menu">
+          <li>
+            <a href="#">About </a>
+          </li>
+          <li>
+            <a href="#">How to use</a>
+          </li>
+        </ul>
+        <md-chips class="md-contact-chips curent-user">
+          <md-chip ng-controller="NavBarController">
+            <md-chip-template ng-model="user.showTooltip">
+              <div class="md-contact-avatar">
+                <img ng-src="{{user.avatar}}" alt="Contact Person">
+              </div>
+              <div class="md-contact-name" class="md-headline" ng-bind="user.username"></div>
+            </md-chip-template>
+            <md-tooltip md-visible="user.showTooltip" md-direction="{{demo.tipDirection}}">
+              This is tooltype
+            </md-tooltip>
+          </md-chip>
+        </md-ships>
+
+      </div>
+    </md-toolbar>
+  </div>
+  <div class="content">
+  <section layout="row" ng-controller="SideBarController" flex>
+    <md-sidenav
+        class="md-sidenav-left sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-disable-backdrop>
+      <!-- <md-toolbar class="md-theme-indigo">
+
+      </md-toolbar> -->
+      <md-content ng-controller="LeftCtrl">
+        <!--<md-button ng-click="close()" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button>
+        <p hide-md show-gt-md>
+          This sidenav is locked open on your device. To go back to the default behavior,
+          narrow your display.
+        </p>-->
+
+        <!-- Curent User
+        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" ng-controller="NavBarController" md-theme-watch>
+          <md-card-title>
+            <md-card-title-media>
+              <div class="curent-user_avatar">
+                <img ng-src="{{user.avatar}}" alt="Contact Person">
+              </div>
+            </md-card-title-media>
+            <md-card-title-text>
+              <span class="md-headline" ng-bind="user.username"></span>
+              <span class="md-subhead" ng-bind="user.department"></span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button>Edit profile</md-button>
+            <md-button ng-click="logout()">Sign out</md-button>
+          </md-card-actions>
+        </md-card>-->
+        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" ng-controller="NavBarController" md-theme-watch>
+          <md-card-title>
+            <md-card-title-text>
+              <ul class="main-menu">
+                <li>
+                  <a ui-sref="users" title="Users" class="md-button md-ink-ripple">Users</a>
+                </li>
+                <li>
+                  <a ui-sref="departments" title="Departments" class="md-button md-ink-ripple">Departments</a>
+                </li>
+              </ul>
+            </md-card-title-text>
+          </md-card-title>
+        </md-card>
+      </md-content>
+    </md-sidenav>
+    <md-content>
+      <div class="main-content" ui-view>
+      </div>
+    </md-content>
+  </section>
+
+</div>
+  <!-- <nav class="orange" role="navigation" ng-controller="NavBarController">
     <div class="nav-wrapper container">
       <a id="logo-container" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
       <div class="user-chip right">
@@ -33,18 +124,7 @@
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
 
     </div>
-  </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container row">
-      <!-- partitial -->
-      <div class="col s3 hide-on-med-and-down">
-        <div class="example-block">
-
-        </div>
-      </div>
-      <div ui-view class="col s10"></div>
-      <!-- partitial -->
-    </div>
+  </nav>  -->
 
     <!--  Scripts-->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -57,11 +137,15 @@
     <script type="text/javascript" src="js/filters.js"></script>
     <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="lib/angular-resource.min.js"></script>
-    <script src="lib/materialize.js"></script>
     <script src="lib/init.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="lib/ng-file-upload-shim.min.js"></script>
     <script src="lib/ng-file-upload.min.js"></script>
+    <!-- **** Angular material **** -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 </body>
 
 </html>
