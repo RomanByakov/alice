@@ -69,6 +69,9 @@ $scope.deleteUser = function(user) {
         team: $scope.user.team,
         role: $scope.user.role
       },
+      headers: {
+        'x-access-token': $cookies.get('token')
+      },
       file: {
         avatar: avatar
       }

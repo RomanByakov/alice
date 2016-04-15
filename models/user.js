@@ -50,6 +50,10 @@ var userSchema = new Schema({
   phone: {
     type: Number,
     default: 0
+  },
+  telegram: {
+    type: String,
+    default: 'Unknown'
   }
 });
 
@@ -101,6 +105,51 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   }
 
   user.save(callback);
+};
+
+userSchema.methods.updateUser = function(firstName, lastName, login, password, team, department, role, callback) {
+  this.username = login;
+  this.name = firstName;
+  this.lastname = lastName;
+  this.password = User.hashPassword(password);
+
+  this.setDepartment(department, team);
+
+  if (util.isString(role)) {
+    Role.findOne({name: role}, function(err, model) {
+      if (model) {
+        this.role = model;
+
+        this.save();
+      }
+    });
+  } else if (role instanceof Role) {
+    this.role = role;
+  }
+
+  this.save(callback);
+};
+
+userSchema.methods.setDepartment = function(department, team) {
+  if (util.isString(department.name)) {
+    var self = this;
+
+    Department.findOne({name: department.name}, function(err, model) {
+      if (model) {
+        self.department = department;
+
+        self.setTeam(team.name);
+
+        self.save();
+      }
+    });
+  } else if (department instanceof Department) {
+    this.department = department;
+
+    this.setTeam(team);
+
+    this.save();
+  }
 };
 
 userSchema.methods.setTeam = function(team) {
