@@ -29,6 +29,18 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
     };
   }
 
+  // User popup init
+
+  $('.top-bar_user .teal')
+  .popup({
+    popup : $('.user-menu'),
+    on: 'click',
+    position : 'bottom left'
+  })
+;
+
+
+
   // $scope.user.delayTooltip = undefined;
   // $scope.$watch('user.delayTooltip',function(val) {
   //   $scope.user.delayTooltip = parseInt(val, 10) || 0;
@@ -73,10 +85,12 @@ $scope.deleteUser = function(user) {
     id: $stateParams.id
   });
 
-}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window, Upload, $timeout) {
+}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window, Upload, $timeout, Department) {
   checkAccess($cookies, $state);
   $scope.user = new User();
   $scope.avatar = null;
+
+  $scope.departments = Department.query();
 
   $scope.addUser = function(avatar) {
     avatar.upload = Upload.upload({
@@ -123,6 +137,11 @@ $scope.deleteUser = function(user) {
 module.controller('DepartmentListController', function($scope, $state, $cookies, popupService, $window, Department) {
   checkAccess($cookies, $state);
   $scope.departments = Department.query();
+
+  $scope.departmentSelect = function() {
+    alert('asdaswd');
+    $scope.$apply();
+  };
 
   $scope.deleteDepartment = function(department) {
     if (popupService.showPopup('Really delete this?')) {

@@ -1,3 +1,42 @@
+<div class="user-add-button">
+  <button ui-sref="newUser" class="circular ui icon button addpopup" data-content="Hello. This is an inverted popup" data-variation="inverted" data-position="left">
+    <i class="icon add user large"></i>
+  </button>
+</div>
+
+<h3 class="ui header">All users</h3>
+<div class="ui link cards">
+  <div class="card" ng-repeat="user in users | filter:searchText">
+    <div class="image">
+      <img ng-src="{{user.avatar}}" alt="{{user.name}}">
+    </div>
+    <div class="content">
+      <div class="header"><span ng-bind="user.name"></span> <span ng-bind="user.lastname"></span></div>
+      <div class="meta">
+        <a ng-bind="user.department.name"></a>
+      </div>
+      <div class="description">
+        Matthew is an interior designer living in New York.
+      </div>
+    </div>
+    <div class="extra content">
+      <span class="right floated">
+        Joined in 2013
+      </span>
+      <!-- <span>
+        <i class="user icon"></i>
+        75 Friends
+      </span> -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
 <!-- <a class="btn-primary btn-lg nodecoration">Add New User</a> -->
 
 <!-- <label>Search: <input ng-model="searchText"></label> -->
@@ -20,16 +59,15 @@
     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
   </div>
 </div> -->
-
-
-
 <!--<div class="search-wrapper md-whiteframe-1dp">
   <input type="text" ng-model="searchText">
   <i class="material-icons">search</i>
 </div>-->
+<!--
 <md-button class="md-fab md-primary fixed-bottom-right" ng-click="openModal(user)" aria-label="Add user">
            <md-icon><i class="material-icons" style="color:#fff">add</i></md-icon>
 </md-button>
+
   <div layout="row" layout-sm="column" layout-xs="column" >
 
       <md-card class="user-cards" ng-repeat="user in users | filter:searchText">
@@ -61,7 +99,7 @@
           </md-button>
         </md-card-actions>
       </md-card>
-  </div>
+  </div> -->
 
 
 <!-- ### Angular material test ### -->
