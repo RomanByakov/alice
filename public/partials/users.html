@@ -19,8 +19,7 @@
         Matthew is an interior designer living in New York.
       </div>
     </div>
-    <div class="extra content">
-      {{user.department}} + {{user.team}}
+    <div class="extra content" ng-bind="getFullDepartment(user)">
       <span class="right floated">
         Joined in 2013
       </span>

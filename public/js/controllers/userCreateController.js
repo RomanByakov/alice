@@ -35,7 +35,7 @@ angular.module('aliceApp')
 
     avatar.upload.then(function(response) {
       $timeout(function() {
-        //$window.location.href = '';
+        $state.go('users');
       });
     });
   }
