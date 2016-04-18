@@ -32,30 +32,27 @@
         <div class="three fields">
           <div class="field">
             <label>Departments</label>
-            <select class="ui fluid dropdown" ng-model="user.department">
+            <select class="ui fluid dropdown" ng-change="update(user.department)" ng-model="user.department" required>
               <option ng-repeat="department in departments" value="{{department}}" ng-bind="department.name"></option>
             </select>
           </div>
           <div class="field">
             <label>Team</label>
-            <select class="ui fluid dropdown" ng-model="user.team.name">
-              <!-- <option ng-repeat="team in user.department.teams" value="team" ng-bind="team.name"></option> -->
-              <option value="">Хуй</option>
-              <option value="23">Ссанина</option>
+            <select class="ui fluid dropdown" ng-model="user.team.name" required>
+              <option ng-repeat="team in teams" value="{{team}}" ng-bind="team.name"></option>
             </select>
           </div>
           <div class="field">
             <label>Role</label>
-            <select class="ui fluid dropdown" ng-model="user.role">
-              <option value="">User</option>
-              <option value="1">Admin</option>
+            <select class="ui fluid dropdown" ng-model="user.role" required>
+              <option ng-repeat="role in roles" value="{{role.name}}" ng-bind="role.name" required></option>
             </select>
           </div>
         </div>
         <div class="field">
           <label>Avatar</label>
           <input type="file" ngf-select ng-model="avatar" name="file"
-                   accept="image/*" ngf-max-size="2MB" required
+                   accept="image/*" ngf-max-size="2MB"
                    ngf-model-invalid="errorFile" id="avatar-input">
         </div>
         <div class="form-group">
@@ -63,6 +60,8 @@
         </div>
 
     </form>
-
+    <pre>
+        {{ user | json }}
+    </pre>
   </div>
 </div>

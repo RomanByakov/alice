@@ -18,142 +18,77 @@
 
 <body>
   <div ng-controller="NavBarController" class="top-bar">
-      <div class="item top-bar_logo">
-        <a id="logo-container" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
-      </div>
-      <div class="item top-bar_search">
-        <div class="ui icon input">
-          <input type="text" ng-model="searchText" placeholder="Search...">
-          <i class="search icon"></i>
-        </div>
-      </div>
-      <div class="item top-bar_user">
-        <a class="ui teal image label">
-          <img ng-src="{{user.avatar}}" alt="Contact Person">
-          <span ng-bind="user.username"></span>
-          <div class="detail" ng-bind="user.role.name"></div>
-        </a>
-        <div class="ui transition hidden popup user-menu">
-          <a class="item teal">
-            <i class="setting icon teal"></i>
-            <span class="teal">Settings</span>
-          </a>
-          <a class="item teal">
-            <i class="sign out icon teal" ng-click="logout()"></i>
-            <span class="teal">Sign Out</span>
-          </a>
-        </div>
-      </div>
-  </div>
-
-    <div class="wrapper-block ui bottom attached segment pushable">
-      <div class="ui visible inverted left vertical sidebar menu">
-        <a class="item" ui-sref="users">
-          <i class="users icon"></i>
-          Users
-        </a>
-        <a class="item" ui-sref="departments">
-          <i class="building outline icon"></i>
-          Departments
-        </a>
-        <a class="item" ui-sref="roles">
-          <i class="handicap icon"></i>
-          Roles
-        </a>
-      </div>
-      <div class="pusher">
-        <div class="ui basic segment content-block" >
-          <div class="" ui-view></div>
-        </div>
+    <div class="item top-bar_logo">
+      <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+    </div>
+    <div class="item top-bar_search">
+      <div class="ui icon input">
+        <input type="text" ng-model="search" placeholder="Search...">
+        <i class="search icon"></i>
       </div>
     </div>
-
-  <!-- <div ng-controller="NavBarController" ng-cloak class="nav-bar">
-    <md-toolbar md-scroll-shrink ng-if="true" class="md-primary">
-      <div class="md-toolbar-tools">
-
-        <ul class="info-menu">
-          <li>
-            <a href="#">About </a>
-          </li>
-          <li>
-            <a href="#">How to use</a>
-          </li>
-        </ul>
-        <md-chips class="md-contact-chips curent-user">
-          <md-chip ng-controller="NavBarController">
-            <md-chip-template ng-model="user.showTooltip">
-              <div class="md-contact-avatar">
-                <img ng-src="{{user.avatar}}" alt="Contact Person">
-              </div>
-              <div class="md-contact-name" class="md-headline" ng-bind="user.username"></div>
-            </md-chip-template>
-            <md-tooltip md-visible="user.showTooltip" md-direction="{{demo.tipDirection}}">
-              This is tooltype
-            </md-tooltip>
-          </md-chip>
-        </md-ships>
-
+    <div class="item top-bar_user">
+      <a class="ui teal image label">
+        <img ng-src="{{user.avatar}}" alt="Contact Person">
+        <span ng-bind="user.username"></span>
+        <div class="detail" ng-bind="user.role.name"></div>
+      </a>
+      <div class="ui transition hidden popup user-menu">
+        <a class="item teal">
+          <i class="setting icon teal"></i>
+          <span class="teal">Settings</span>
+        </a>
+        <a class="item teal">
+          <i class="sign out icon teal" ng-click="logout()"></i>
+          <span class="teal">Sign Out</span>
+        </a>
       </div>
-    </md-toolbar>
+    </div>
   </div>
-  <div class="content">
-  <section layout="row" ng-controller="SideBarController" flex>
-    <md-sidenav
-        class="md-sidenav-left sidenav-left"
-        md-component-id="left"
-        md-is-locked-open="$mdMedia('gt-md')"
-        md-disable-backdrop>
-      <md-content ng-controller="LeftCtrl">
-        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" ng-controller="NavBarController" md-theme-watch>
-          <md-card-title>
-            <md-card-title-text>
-              <ul class="main-menu">
-                <li>
-                  <a ui-sref="users" title="Users" class="md-button md-ink-ripple">Users</a>
-                </li>
-                <li>
-                  <a ui-sref="departments" title="Departments" class="md-button md-ink-ripple">Departments</a>
-                </li>
-              </ul>
-            </md-card-title-text>
-          </md-card-title>
-        </md-card>
-      </md-content>
-    </md-sidenav>
-    <md-content>
-      <div class="main-content" ui-view>
+
+  <div class="wrapper-block ui bottom attached segment pushable">
+    <div class="ui visible inverted left vertical sidebar menu">
+      <a class="item" ui-sref="users">
+        <i class="users icon"></i> Users
+      </a>
+      <a class="item" ui-sref="departments">
+        <i class="building outline icon"></i> Departments
+      </a>
+      <a class="item" ui-sref="roles">
+        <i class="handicap icon"></i> Roles
+      </a>
+    </div>
+    <div class="pusher">
+      <div class="ui basic segment content-block">
+        <div class="" ui-view></div>
       </div>
-    </md-content>
-  </section>
+    </div>
+  </div>
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="lib/angular.min.js"></script>
+  <script src="lib/ng-tags-input.min.js"></script>
+  <script src="lib/angular-cookies.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/controllers/controllers.js"></script>
+  <script type="text/javascript" src="js/controllers/userListController.js"></script>
+  <script type="text/javascript" src="js/controllers/userCreateController.js"></script>
+  <script type="text/javascript" src="js/services.js"></script>
+  <script type="text/javascript" src="js/filters.js"></script>
+  <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="lib/angular-resource.min.js"></script>
+  <script src="lib/init.js"></script>
+  <script src="lib/ng-file-upload-shim.min.js"></script>
+  <script src="lib/ng-file-upload.min.js"></script>
+  <!-- **** Semantic UI **** -->
 
-</div> -->
-
-
-    <!--  Scripts-->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="lib/angular.min.js"></script>
-    <script src="lib/ng-tags-input.min.js"></script>
-    <script src="lib/angular-cookies.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/controllers.js"></script>
-    <script type="text/javascript" src="js/services.js"></script>
-    <script type="text/javascript" src="js/filters.js"></script>
-    <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="lib/angular-resource.min.js"></script>
-    <script src="lib/init.js"></script>
-    <script src="lib/angular.min.js"></script>
-    <script src="lib/ng-file-upload-shim.min.js"></script>
-    <script src="lib/ng-file-upload.min.js"></script>
-    <!-- **** Semantic UI **** -->
-
-    <script src="js/semantic/semantic.min.js"></script>
-    <script src="js/semantic/components/form.js"></script>
-    <!-- **** Angular material **** -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+  <script src="js/semantic/semantic.min.js"></script>
+  <script src="js/semantic/components/form.js"></script>
+  <!-- **** Angular material **** -->
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script> -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 </body>
 
 </html>
