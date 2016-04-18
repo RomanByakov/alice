@@ -38,8 +38,8 @@
           </div>
           <div class="field">
             <label>Team</label>
-            <select class="ui fluid dropdown" ng-model="user.team.name" required>
-              <option ng-repeat="team in teams" value="{{team}}" ng-bind="team.name"></option>
+            <select class="ui fluid dropdown" ng-model="user.team" required>
+              <option ng-repeat="team in teams" value="{{team.name}}" ng-bind="team.name"></option>
             </select>
           </div>
           <div class="field">

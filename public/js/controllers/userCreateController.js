@@ -21,7 +21,7 @@ angular.module('aliceApp')
         lastname: $scope.user.lastname,
         login: $scope.user.login,
         password: $scope.user.password,
-        department: $scope.user.department,
+        department: JSON.parse($scope.user.department).name,
         team: $scope.user.team,
         role: $scope.user.role
       },
