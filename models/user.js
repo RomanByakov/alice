@@ -171,8 +171,8 @@ userSchema.methods.setTeam = function(team) {
 
 //todo: make it work.
 userSchema.statics.hashPassword = function(password) {
-  //return crypto.createHash('md5').update(password).digest('hex');
-  return password;
+  return crypto.createHash('md5').update(password).digest('hex');
+  //return password;
 }
 
 userSchema.methods.populate = function() {
