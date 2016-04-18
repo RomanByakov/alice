@@ -9,17 +9,26 @@ var throwErr = function(err) {
   }
 };
 
-var checkAdmin = function(role) {
-  Role.checkAccess(role, AdminRole, throwErr);
+var checkAdminOrSelf = function(user, id) {
+  if (user._id != id) {
+    checkAdmin(user);
+  } else {
+    return true;
+  }
 };
 
-var checkUser = function(role) {
-  Role.checkAccess(role, UserRole, throwErr);
+var checkAdmin = function(user) {
+  Role.checkAccess(user.role.name, AdminRole, throwErr);
+};
+
+var checkUser = function(user) {
+  Role.checkAccess(user.role.name, UserRole, throwErr);
 }
 
 module.exports = {
   'GET': checkUser,
   'POST': checkAdmin,
   'PUT': checkAdmin,
-  'DELETE': checkAdmin
+  'DELETE': checkAdmin,
+  'SELF': checkAdminOrSelf
 };

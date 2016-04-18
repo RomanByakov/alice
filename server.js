@@ -56,10 +56,19 @@ app.use(function(req, res, next) {
         var parsedUrl = url.parse(req.url, true);
         var pathname = parsedUrl.pathname;
         //console.log('Url' + parsedUrl.pathname);
-        //req.decoded = decoded;
+        //console.log('Query: ' + JSON.stringify(req.params));
+        //console.log('Parsed: ' + JSON.stringify(parsedUrl));
+        req.decoded = decoded;
         //console.log(req.method);
         req.currentUser = decoded._doc;
-        accessConfig[req.method](req.currentUser.role.name);
+
+        //temp crutch, refactor to access module
+        if (pathname == '/api/users' && req.params.id != null) {
+          accessConfig['SELF'](req.currentUser, req.params.id);
+        } else {
+          accessConfig[req.method](req.currentUser);
+        }
+
         next();
       }
     });
@@ -79,31 +88,23 @@ app.use('/api/roles', require('./routes/role'));
 
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    console.log('test');
-    if (err) {
-      res.status(err.status || 500);
-      res.json({
-        message: err.message,
-        error: err,
-        stack: err.stack
-      });
-      console.log("Error handled");
-    } else {
-      res.json({success: true});
-    }
+    res.status(err.status || 500);
+    res.json({
+      message: err.message,
+      error: err,
+      stack: err.stack
+    });
   });
 } else {
   app.use(function(err, req, res, next) {
-    if (err) {
-      res.status(err.status || 500);
-      res.json({message: "Something wrong..."});
-      console.log(err.message);
-      console.log(err.stack);
-    } else {
-      res.json({success: true});
-    }
+    res.status(err.status || 500);
+    res.json({message: "Something wrong..."});
   });
 }
+
+process.on('uncaughtException', function (err, req, res) {
+  console.log('Something wrong...');
+});
 
 // start server
 app.listen(config.port);

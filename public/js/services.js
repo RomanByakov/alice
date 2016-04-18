@@ -4,7 +4,7 @@ var service = angular.module('aliceApp.services', ['ngCookies']);
 service.factory('User', function($resource, $cookies) {
   return $resource('/api/users/:id', {
     id: '@_id',
-    token: $cookies.get('token')
+    token: function() { return $cookies.get('token'); }
   }, {
     update: {
       method: 'PUT'
@@ -23,7 +23,7 @@ service.factory('User', function($resource, $cookies) {
 service.factory('Department', function($resource, $cookies) {
   return $resource('/api/departments/:id', {
     id: '@_id',
-    token: $cookies.get('token')
+    token: function() { return $cookies.get('token'); }
   }, {
     update: {
       method: 'PUT'
@@ -42,7 +42,7 @@ service.factory('Department', function($resource, $cookies) {
 service.factory('Role', function($resource, $cookies) {
   return $resource('/api/roles/:id', {
     id: '@_id',
-    token: $cookies.get('token')
+    token: function() { return $cookies.get('token'); }
   }, {
     update: {
       method: 'PUT'
