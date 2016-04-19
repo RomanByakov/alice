@@ -8,7 +8,7 @@ angular.module('aliceApp')
 
     $scope.getFullDepartment = function(user) {
       if (user.department) {
-        return user.department.name + ' + ' + user.team.name;
+        return JSON.parse(user.department).name + ' + ' + JSON.parse(user.team).name;
       } else {
         return '';
       }
