@@ -1,13 +1,21 @@
-<div class="user-add-button">
-  <button ui-sref="newUser" class="circular ui icon button addpopup" data-content="Hello. This is an inverted popup" data-variation="inverted" data-position="left">
-    <i class="icon add user large"></i>
-  </button>
+
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    User Edit
+  </div>
+  <div class="content" ng-include="user-edit.html">
+
+  </div>
 </div>
 
 <h3 class="ui header">All users</h3>
-<div class="ui link cards">
-  <div class="card" ng-repeat="user in users | filter:search">
-    <div class="image">
+<div class="ui link cards user-cards">
+  <div class="card" ng-repeat="user in users | filter:search" ui-sref="editUser({id:user._id})">
+    <div class="blurring dimmable image">
+      <div class="user-edit-button hidden">
+         <button class="ui button"><i class="file icon"></i></button>
+      </div>
       <img ng-src="{{user.avatar}}" alt="{{user.name}}">
     </div>
     <div class="content">
