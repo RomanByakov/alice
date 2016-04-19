@@ -8,7 +8,8 @@ var departmentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   logo: {
     type: String,
@@ -68,6 +69,6 @@ departmentSchema.statics.createDepartment = function(name, teams, callback) {
   department.save(callback);
 };
 
-var Department = restful.model('Departments', departmentSchema)
+var Department = mongoose.model('Departments', departmentSchema)
 
 module.exports = Department;

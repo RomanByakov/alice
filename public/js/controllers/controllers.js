@@ -80,7 +80,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
         });
       });
     } else {
-      $scope.user.department = $scope.user.department.name;
+      $scope.user.department = JSON.parse($scope.user.department).name;
       alert($scope.user.department);
 
       $scope.user.$update({

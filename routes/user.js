@@ -4,6 +4,7 @@ var router = express.Router();
 
 // models
 var User = require('../models/user');
+var Department = require('../models/department');
 var fs = require('fs');
 
 var upload = require('../modules/upload');
@@ -29,12 +30,6 @@ router.route('/', function (req, res, next) {
     });
   })
   .post(multipartyMiddleware, function(req, res, next) {
-    User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-        if (err) {
-          throw err;
-        }
-    });
-
     User.createUser(
       req.body.name,
       req.body.lastname,
@@ -51,12 +46,11 @@ router.route('/', function (req, res, next) {
             var file = req.files.file;
 
             upload.avatar(file, user, function(user) {
-              if (user) {
-                user.populate();
-              }
+
             });
           }
 
+          user.populate();
           res.json(user);
         }
       });
@@ -79,14 +73,6 @@ router.route('/:id', function(req, res, next) {
     });
   })
   .put(multipartyMiddleware, function(req, res, next) {
-    if (req.currentUser._id != req.body._id) {
-      User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
-          if (err) {
-            throw err;
-          }
-      });
-    }
-
     User.findOne({
       '_id': req.body._id
     }, function(err, user) {
@@ -94,6 +80,7 @@ router.route('/:id', function(req, res, next) {
         throw err;
       }
 
+      console.log(req.body.department);
       console.log(req.body.team);
       user.updateUser(
           req.body.name,
