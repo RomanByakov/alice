@@ -1,3 +1,67 @@
-<form class="form-horizontal" role="form" ng-submit="addUser()">
-    <div ng-include="'partials/_form.html'"></div>
-</form>
+<div class="user-form">
+  <div class="ui piled segment">
+    <h4 class="ui header">Add new user</h4>
+    <form role="form" class="ui form" ng-submit="addUser(avatar)">
+        <!-- <div ng-include="'partials/_form.html'"></div> -->
+        <div class="ui inverted segment">
+          <div class="ui inverted form">
+            <div class="two fields">
+              <div class="field">
+                <label>Login</label>
+                <input placeholder="User login" ng-model="user.login" type="text">
+              </div>
+              <div class="field">
+                <label>Password</label>
+                <input placeholder="Write pass" ng-model="user.password" type="password">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Name</label>
+          <div class="two fields">
+            <div class="field">
+              <input type="text" name="shipping[first-name]" ng-model="user.name" placeholder="First Name">
+            </div>
+            <div class="field">
+              <input type="text" name="shipping[last-name]" ng-model="user.lastname" placeholder="Last Name">
+            </div>
+          </div>
+        </div>
+        <div class="three fields">
+          <div class="field">
+            <label>Departments</label>
+            <select class="ui fluid dropdown" ng-change="update(user.department)" ng-model="user.department" required>
+              <option ng-repeat="department in departments" value="{{department}}" ng-bind="department.name"></option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Team</label>
+            <select class="ui fluid dropdown" ng-model="user.team" required>
+              <option ng-repeat="team in teams" value="{{team.name}}" ng-bind="team.name"></option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Role</label>
+            <select class="ui fluid dropdown" ng-model="user.role" required>
+              <option ng-repeat="role in roles" value="{{role.name}}" ng-bind="role.name" required></option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Avatar</label>
+          <input type="file" ngf-select ng-model="avatar" name="file"
+                   accept="image/*" ngf-max-size="2MB"
+                   ngf-model-invalid="errorFile" id="avatar-input">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="ui primary button">Save</button>
+        </div>
+
+    </form>
+    <pre>
+        {{ user | json }}
+    </pre>
+  </div>
+</div>

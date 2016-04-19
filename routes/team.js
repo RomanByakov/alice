@@ -53,14 +53,20 @@ router.route('/:id')
       });
       });
     }).delete(function(req, res, next) {
-        Team.remove({
-          '_id': req.params.id
-        }, function(err, removed/*what is?*/) {
-          if (err) throw err;
-
-          console.log('Team deleted successfully');
-          res.json({success: true});
-        });
+      User.checkAccess(req.currentUser.role.name, 'Admin', function (err) {
+          if (err) {
+            throw err;
+          }
       });
+
+      Team.remove({
+        '_id': req.params.id
+      }, function(err, removed/*what is?*/) {
+        if (err) throw err;
+
+        console.log('Team deleted successfully');
+        res.json({success: true});
+      });
+    });
 
 module.exports = router;
