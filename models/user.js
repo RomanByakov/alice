@@ -1,4 +1,3 @@
-// dependencies
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -21,11 +20,13 @@ var userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   team: {
     type: Schema.Types.Mixed,
