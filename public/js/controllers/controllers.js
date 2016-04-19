@@ -29,14 +29,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
     };
   }
 
-  // User popup init
 
-  $('.top-bar_user .teal')
-    .popup({
-      popup: $('.user-menu'),
-      on: 'click',
-      position: 'bottom left'
-    });
 
 }).controller('UserViewController', function($scope, $state, $cookies, $stateParams, User) {
   checkAccess($cookies, $state);
@@ -44,17 +37,53 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
     id: $stateParams.id
   });
 
-}).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User, Upload, $timeout) {
+}).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User, Upload, $timeout, Department, Role) {
   checkAccess($cookies, $state);
-
-  $scope.user = new User();
   $scope.avatar = null;
+
+  $scope.departments = Department.query();
+  $scope.roles = Role.query();
+  $scope.teams = [];
+
+  $scope.update = function(department) {
+    $scope.teams = JSON.parse(department).teams;
+  }
 
   //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
   $scope.updateUser = function(avatar) {
-    avatar.upload = Upload.upload({
-      url: '/api/users/' + $scope.user._id,
-      data: {
+    //alert($scope.user.department.name);
+    if (avatar) {
+      avatar.upload = Upload.upload({
+        url: '/api/users/' + $scope.user._id,
+        data: {
+          _id: $scope.user._id,
+          name: $scope.user.name,
+          lastname: $scope.user.lastname,
+          username: $scope.user.username,
+          password: $scope.user.password,
+          department: $scope.user.department.name,
+          team: $scope.user.team,
+          role: $scope.user.role
+        },
+        headers: {
+          'x-access-token': $cookies.get('token')
+        },
+        file: {
+          avatar: avatar
+        },
+        method: 'PUT'
+      });
+
+      avatar.upload.then(function(response) {
+        $timeout(function() {
+          $state.go('users');
+        });
+      });
+    } else {
+      $scope.user.department = $scope.user.department.name;
+      alert($scope.user.department);
+
+      $scope.user.$update({
         _id: $scope.user._id,
         name: $scope.user.name,
         lastname: $scope.user.lastname,
@@ -63,28 +92,20 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
         department: $scope.user.department,
         team: $scope.user.team,
         role: $scope.user.role
-      },
-      headers: {
-        'x-access-token': $cookies.get('token')
-      },
-      file: {
-        avatar: avatar
-      },
-      method: 'PUT'
-    });
-
-    avatar.upload.then(function(response) {
-      $timeout(function() {
+      }, function() {
         $state.go('users');
       });
-    });
+    }
   };
 
   $scope.loadUser = function() {
     $scope.user = User.get({
       id: $stateParams.id
+    }, function() {
+      $scope.teams = $scope.user.department.teams;
     });
   };
+
 
   $scope.loadUser();
 });

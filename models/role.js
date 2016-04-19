@@ -4,7 +4,8 @@ var mongoose = restful.mongoose;
 var roleSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true
+    unique: true,
+    index: true
   },
   child: {
     type: mongoose.Schema.Types.Mixed,

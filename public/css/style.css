@@ -15,9 +15,9 @@
  }
 
 
-body,html,md-content
+body,html
 {
-   background: #ECECEC;
+   background: #ECECEC !important;
 }
 
 @font-face {
@@ -131,13 +131,14 @@ body,html,md-content
 .wrapper-block
 {
   border: 0 !important;
+  height: auto !important;
+  min-height: 100%;
 }
 
 .content-block
 {
-  border: 0;
-  position: relative !important;
   padding: 40px 0 0 40px !important;
+  max-width: 1280px;
 }
 
 .content-block h3
@@ -271,10 +272,15 @@ body,html,md-content
 /* Users - start */
 .user-add-button
 {
-  position: fixed;
-  top: 20px;
-  right: 300px;
+  bottom: 20px !important;
+  right: 20px !important;
 }
+.user-add-button button
+{
+  padding: 20px !important;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.42) !important;
+}
+
 
 .user-add-button i
 {
@@ -288,4 +294,9 @@ body,html,md-content
 .user-form
 {
   max-width: 700px;
+}
+
+.hidden
+{
+  display: none;
 }
