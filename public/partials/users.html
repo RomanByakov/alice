@@ -1,93 +1,32 @@
-<!-- <a class="btn-primary btn-lg nodecoration">Add New User</a> -->
-
-<!-- <label>Search: <input ng-model="searchText"></label> -->
-
-<!-- <div id="modal1" class="modal">
-  <div class="modal-content">
-    <h4>Delete fucking {{user.name}}?</h4>
-    <p>Attention!!!! Ahtung!!!! Don`t delete all users</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat " ng-click="deleteUser(user)">I`m crazy, delete</a>
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-  </div>
+<div class="user-add-button">
+  <button ui-sref="newUser" class="circular ui icon button addpopup" data-content="Hello. This is an inverted popup" data-variation="inverted" data-position="left">
+    <i class="icon add user large"></i>
+  </button>
 </div>
-<div id="modal2" class="modal" ng-controller="UserCreateController">
-  <div class="modal-content">
-    <div ng-include="'partials/user-add.html'"></div>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-  </div>
-</div> -->
 
-
-
-<!--<div class="search-wrapper md-whiteframe-1dp">
-  <input type="text" ng-model="searchText">
-  <i class="material-icons">search</i>
-</div>-->
-<md-button class="md-fab md-primary fixed-bottom-right" ng-click="openModal(user)" aria-label="Add user">
-           <md-icon><i class="material-icons" style="color:#fff">add</i></md-icon>
-</md-button>
-  <div layout="row" layout-sm="column" layout-xs="column" >
-
-      <md-card class="user-cards" ng-repeat="user in users | filter:searchText">
-        <div class="user-cards_img">
-          <img ng-src="{{user.avatar}}" class="md-card-image" alt="Washed Out">
-        </div>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">{{user.name}}</span>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-          <ul class="user-details">
-            <li>
-              <div class="user-details_left">{{user.name}} {{user.lastname}}</div>
-              <div class="user-details_right"><i class="material-icons">account_circle</i></div>
-            </li>
-          </ul>
-        </md-card-content>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button class="md-icon-button" aria-label="Favorite">
-            <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-          </md-button>
-          <md-button class="md-icon-button" aria-label="Settings">
-            <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-          </md-button>
-          <md-button class="md-icon-button" aria-label="Share">
-            <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-          </md-button>
-        </md-card-actions>
-      </md-card>
-  </div>
-
-
-<!-- ### Angular material test ### -->
-<!-- <div class="user-cards row">
-  <div class="user-cards_card col s12 l4" ng-repeat="user in users | filter:searchText">
-    <div class="card hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" ng-src="{{user.avatar}}">
-        </div>
-        <div class="card-content">{{initMaterializeUI()}}
-          <span class="card-title activator grey-text text-darken-4">{{user.name}}<i class="material-icons right">more_vert</i></span>
-          <p><a href="">{{user.department.name}}</a></p>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">{{user.name}}<i class="material-icons right">close</i></span>
-          <ul class="collection user-detales">
-
-            <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Full name"><div><a href="#!" class="secondary-content"><i class="material-icons">perm_identity</i></a>{{user.name}} {{user.lastname}}</div></li>
-            <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Team name"><div><a href="#!" class="secondary-content"><i class="material-icons">supervisor_account</i></a>{{user.team.name}}</div></li>
-            <li class="collection-item dismissable tooltipped" data-position="right" data-tooltip="Department"><div><a href="#!" class="secondary-content"><i class="material-icons">business</i></a>{{user.department.name}}</div></li>
-          </ul>
-        </div>
-        <div class="card-action">
-          <a class="btn btn-primary " ui-sref="editUser({id:user._id})">Edit</a>
-            <a class="waves-effect waves-light deep-orange accent-2 btn modal-trigger" ng-click="openModal(user)" href="#modal1">Delete</a>
-        </div>
+<h3 class="ui header">All users</h3>
+<div class="ui link cards">
+  <div class="card" ng-repeat="user in users | filter:search">
+    <div class="image">
+      <img ng-src="{{user.avatar}}" alt="{{user.name}}">
+    </div>
+    <div class="content">
+      <div class="header"><span ng-bind="user.name"></span> <span ng-bind="user.lastname"></span></div>
+      <div class="meta">
+        <a ng-bind="user.department.name"></a>
+      </div>
+      <div class="description">
+        Matthew is an interior designer living in New York.
+      </div>
+    </div>
+    <div class="extra content" ng-bind="getFullDepartment(user)">
+      <span class="right floated">
+        Joined in 2013
+      </span>
+      <!-- <span>
+        <i class="user icon"></i>
+        75 Friends
+      </span> -->
     </div>
   </div>
-</div> -->
+</div>

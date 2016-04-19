@@ -50,11 +50,19 @@ var userSchema = new Schema({
   phone: {
     type: Number,
     default: 0
+  },
+  telegram: {
+    type: String,
+    default: 'Unknown'
   }
 });
 
 userSchema.methods.checkAccess = function(role, callback) {
   Role.checkAccess(this.role.name, role, callback);
+};
+
+userSchema.statics.checkAccess = function(userRole, role, callback) {
+  Role.checkAccess(userRole, role, callback);
 };
 
 userSchema.statics.createUser = function(firstName, lastName, login, password, team, department, role, callback) {
@@ -70,12 +78,12 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   //console.log(typeof department.name);
   //console.log(department);
   //todo: refactor, check for reflection, synchronize.
-  if (util.isString(department.name)) {
-    Department.findOne({name: department.name}, function(err, model) {
+  if (util.isString(department)) {
+    Department.findOne({name: department}, function(err, model) {
       if (model) {
         user.department = model;
 
-        user.setTeam(team.name);
+        user.setTeam(team);
 
         user.save();
       }
@@ -83,7 +91,7 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   } else if (department instanceof Department) {
     user.department = department;
 
-    user.setTeam(team.name);
+    user.setTeam(team);
   }
 
   if (util.isString(role)) {
@@ -103,6 +111,51 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   user.save(callback);
 };
 
+userSchema.methods.updateUser = function(firstName, lastName, login, password, team, department, role, callback) {
+  this.username = login;
+  this.name = firstName;
+  this.lastname = lastName;
+  this.password = User.hashPassword(password);
+
+  this.setDepartment(department, team);
+
+  if (util.isString(role)) {
+    Role.findOne({name: role}, function(err, model) {
+      if (model) {
+        this.role = model;
+
+        this.save();
+      }
+    });
+  } else if (role instanceof Role) {
+    this.role = role;
+  }
+
+  this.save(callback);
+};
+
+userSchema.methods.setDepartment = function(department, team) {
+  if (util.isString(department)) {
+    var self = this;
+
+    Department.findOne({name: department}, function(err, model) {
+      if (model) {
+        self.department = department;
+
+        self.setTeam(team);
+
+        self.save();
+      }
+    });
+  } else if (department instanceof Department) {
+    this.department = department;
+
+    this.setTeam(team);
+
+    this.save();
+  }
+};
+
 userSchema.methods.setTeam = function(team) {
   var self = this;
 
@@ -118,12 +171,20 @@ userSchema.methods.setTeam = function(team) {
 
 //todo: make it work.
 userSchema.statics.hashPassword = function(password) {
-  //return crypto.createHash('md5').update(password).digest('hex');
-  return password;
+  return crypto.createHash('md5').update(password).digest('hex');
+  //return password;
 }
 
-userSchema.methods.getSafeFields = function() {
+userSchema.methods.populate = function() {
   //todo: delete not safe fields based on model config.
+  this.username = null;
+  this.password = null;
+};
+
+userSchema.statics.populateRecords = function(users) {
+  users.forEach(function(user) {
+    user.populate();
+  });
 };
 
 var User = mongoose.model('User', userSchema);

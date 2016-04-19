@@ -15,8 +15,6 @@
  }
 
 
-
-
 body,html,md-content
 {
    background: #ECECEC;
@@ -59,20 +57,53 @@ body,html,md-content
   font-feature-settings: 'liga';
 }
 
-.nav-bar
+.top-bar
 {
-  background: none;
+  background-color: rgb(0,137,123);
+  height: 70px;
 }
 
+.top-bar_logo
+{float: left;}
 
-/* Sidebar - start */
+.top-bar_search
+{
+  padding: 17px 0 0 0;
+  margin: 0 0 0 110px;
+  float: left;
+  width: 400px;
+}
+
+.top-bar_user
+{
+  float:right;
+  margin: 22px 65px 0 0;
+}
+
+.user-menu
+{
+
+}
+
+.user-menu .item
+{
+  display: block;
+  margin: 3px 0px 5px 0;
+  cursor:pointer;
+  color: #00b5ad;
+}
+
+.user-menu .item:hover span, .user-menu .item:hover i
+{
+  color: #333 !important;
+}
 
 .brand-logo
 {
   position: relative;
   width: 128px;
-  margin: 14px 0;
-  float:left
+  float:left;
+  margin: 16px;
 }
 
 .brand-logo span
@@ -95,36 +126,30 @@ body,html,md-content
  top: 0;
 }
 
-.main-menu
+/* Content - start */
+
+.wrapper-block
 {
- margin: 0 20px 0 0;
+  border: 0 !important;
 }
 
-.main-menu li
+.content-block
 {
-
+  border: 0;
+  position: relative !important;
+  padding: 40px 0 0 40px !important;
 }
 
-.main-menu li a
+.content-block h3
 {
-  width: 100%;
-  text-align: left;
-  padding: 4px 10px;
+  margin: 0 0 10px 0 !important;
 }
 
-.info-menu
-{float: right;margin: 0 auto;}
+/* Content - finish */
 
-.info-menu li
-{
-  float: left;margin: 0 10px 0 0;
-  list-style: none;
-}
 
-.info-menu li a:hover
-{
-  color:#ccc;
-}
+/* Sidebar - start */
+
 
 /* User */
 
@@ -241,4 +266,26 @@ body,html,md-content
   top: 13px;
   font-size: 2.5rem;
   color: #ccc;
+}
+
+/* Users - start */
+.user-add-button
+{
+  position: fixed;
+  top: 20px;
+  right: 300px;
+}
+
+.user-add-button i
+{
+
+}
+
+/* Users - finish */
+
+/* Form */
+
+.user-form
+{
+  max-width: 700px;
 }
