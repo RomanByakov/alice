@@ -14,6 +14,9 @@ var multipartyMiddleware = multiparty({
   uploadDir: __dirname + "/../public/img/tmp/"
 });
 
+var logger = require('../modules/alice-logger');
+var Q = require('q');
+
 router.route('/', function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
@@ -37,23 +40,28 @@ router.route('/', function (req, res, next) {
       req.body.password,
       req.body.team,
       req.body.department,
-      req.body.role,
-      function (err, user) {
-        if (err) {
-          throw err;
-        } else {
-          if (req.files) {
-            var file = req.files.file;
+      req.body.role
+    )
+    .then(function(user) {
+      if (req.files) {
+        var file = req.files.file;
 
-            upload.avatar(file, user, function(user) {
-
-            });
+        upload.avatar(file, user)
+        .then(function(result) {
+          if (result instanceof User) {
+            result.populate();
+            res.send(result);
+          } else {
+            user.populate();
+            res.send(user);
           }
-
-          user.populate();
-          res.json(user);
-        }
-      });
+        });
+      } else {
+        user.populate();
+        res.send(user);
+      }
+    })
+    .catch((err) => { throw err ;});
   });
 
 router.route('/:id', function(req, res, next) {
@@ -73,15 +81,11 @@ router.route('/:id', function(req, res, next) {
     });
   })
   .put(multipartyMiddleware, function(req, res, next) {
-    User.findOne({
-      '_id': req.body._id
-    }, function(err, user) {
-      if (err) {
-        throw err;
-      }
+    logger.debug('[User::PUT] Department is ' + req.body.department);
+    logger.debug(req.body);
 
-      console.log(req.body.department);
-      console.log(req.body.team);
+    User.findOne({'_id': req.body._id})
+    .then(function(user) {
       user.updateUser(
           req.body.name,
           req.body.lastname,
@@ -89,26 +93,29 @@ router.route('/:id', function(req, res, next) {
           req.body.password,
           req.body.team,
           req.body.department,
-          req.body.role,
-          function (err, user) {
-            if (err) {
-              throw err;
-            } else {
-              if (req.files) {
-                var file = req.files.file;
+          req.body.role
+        )
+        .then(function(user) {
+          //todo: not saving user, without causes
+          if (req.files) {
+            var file = req.files.file;
 
-                upload.avatar(file, user, function(user) {
-                  if (user) {
-                    user.populate();
-                    res.json(user);
-                  }
-                });
+            upload.avatar(file, user)
+            .then(function(result) {
+              if (result instanceof User) {
+                result.populate();
+                res.send(result);
+              } else {
+                user.populate();
+                res.send(user);
               }
-
-              res.json(user);
-            }
+            });
+          } else {
+            user.populate();
+            res.send(user);
           }
-        );
+        })
+        .catch((err) => { throw err;});
     });
   }).delete(function(req, res, next) {
 

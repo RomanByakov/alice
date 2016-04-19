@@ -4,6 +4,9 @@ var mongoose = restful.mongoose;
 var Team = require('./team');
 var User = require('./user');
 
+var Q = require('q');
+var logger = require('../modules/alice-logger');
+
 var departmentSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -69,6 +72,7 @@ departmentSchema.statics.createDepartment = function(name, teams, callback) {
   department.save(callback);
 };
 
-var Department = mongoose.model('Departments', departmentSchema)
+var Department = mongoose.model('Departments', departmentSchema);
+//Department.findOne = Q.nbind(Department.findOne.bind(Department));
 
 module.exports = Department;

@@ -17,6 +17,7 @@
     "connect-domain": "*",
     "connect-multiparty": "*",
     "crypto": "*",
-    "winston": "*"
+    "winston": "*",
+    "q": "1.0.1"
   }
 }

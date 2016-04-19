@@ -53,6 +53,8 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.updateUser = function(avatar) {
     //alert($scope.user.department.name);
     if (avatar) {
+      $scope.user.department = $scope.user.department.name;
+
       avatar.upload = Upload.upload({
         url: '/api/users/' + $scope.user._id,
         data: {
@@ -61,8 +63,8 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
           lastname: $scope.user.lastname,
           username: $scope.user.username,
           password: $scope.user.password,
-          department: $scope.user.department.name,
-          team: $scope.user.team,
+          department: $scope.user.department,
+          team: $scope.user.team.name,
           role: $scope.user.role
         },
         headers: {
@@ -80,8 +82,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
         });
       });
     } else {
-      $scope.user.department = JSON.parse($scope.user.department).name;
-      alert($scope.user.department);
+      $scope.user.department = $scope.user.department.name;
 
       $scope.user.$update({
         _id: $scope.user._id,

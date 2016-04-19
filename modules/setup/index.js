@@ -68,12 +68,17 @@ module.exports.init = function(req, res, next) {
           throw err;
         }
 
-        User.createUser("Alice", "Simpson", "Alice", "Sochno", null, null, roleGod, function(err, next) {
-          if (err) {
-            throw err;
-          }
+        // User.createUser("Alice", "Simpson", "Alice", "Sochno", null, null, roleGod, function(err, next) {
+        //   if (err) {
+        //     throw err;
+        //   }
+        //
+        //   res.json({success:true});
+        // });
 
-          res.json({success:true});
+        User.createUser("Alice", "Simpson", "Alice", "Sochno", null, null, "God")
+        .then(function() {
+          res.json({success: true});
         });
       });
     });

@@ -1,6 +1,10 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var Q = require('q');
+
+mongoose.Promise = Q.Promise;
+
 var path = require('path');
 var connectDomain = require('connect-domain');
 var url = require('url');
@@ -89,14 +93,20 @@ app.use(function(req, res, next) {
         //console.log(req.method);
         req.currentUser = decoded._doc;
 
-        //temp crutch, refactor to access module
-        if (pathname == '/api/users' && req.params.id != null) {
-          accessConfig['SELF'](req.currentUser, req.params.id);
-        } else {
-          accessConfig[req.method](req.currentUser);
-        }
-
-        next();
+        return Q.fcall(function() {
+          //temp crutch, refactor to access module
+          if (pathname == '/api/users' && req.params.id != null) {
+            return accessConfig['SELF'](req.currentUser, req.params.id);
+          } else {
+            return accessConfig[req.method](req.currentUser);
+          }
+        })
+        .then(function() {
+          next();
+        })
+        .catch(function(err) {
+          throw err;
+        });
       }
     });
 
