@@ -48,7 +48,7 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
     .state('roles', {
       url: '/roles',
       templateUrl: 'partials/roles.html',
-      controller: 'RolestListController'
+      controller: 'RolesListController'
     })
     //auth
     .state('login', {
