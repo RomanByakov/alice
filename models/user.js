@@ -81,6 +81,7 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   //todo: refactor, check for reflection, synchronize.
   if (util.isString(department)) {
     Department.findOne({name: department}, function(err, model) {
+      console.log('[createUser] findOne ...');
       if (model) {
         user.department = model;
 
@@ -113,6 +114,7 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
 };
 
 userSchema.methods.updateUser = function(firstName, lastName, login, password, team, department, role, callback) {
+  console.log('[updateUser] call with ' + department + ', ' + team + ', ' + role);
   this.username = login === null ? this.username : login;
   this.name = firstName;
   this.lastname = lastName;
@@ -121,7 +123,9 @@ userSchema.methods.updateUser = function(firstName, lastName, login, password, t
   this.setDepartment(department, team);
 
   if (util.isString(role)) {
+    console.log('[updateUser] role is string');
     Role.findOne({name: role}, function(err, model) {
+      console.log('[updateUser] role is found');
       if (model) {
         this.role = model;
 
@@ -136,33 +140,44 @@ userSchema.methods.updateUser = function(firstName, lastName, login, password, t
 };
 
 userSchema.methods.setDepartment = function(department, team) {
+  console.log('[setDepartment] call with ' + department + ', ' + team);
   if (util.isString(department)) {
     var self = this;
+    console.log('[setDepartment] department is string');
 
     Department.findOne({name: department}, function(err, model) {
+      console.log('[setDepartment]::[findOne]');
+
       if (model) {
-        self.department = department;
+        this.department = department;
 
-        self.setTeam(team);
+        this.setTeam(team);
 
-        self.save();
+        this.save();
       }
     });
   } else if (department instanceof Department) {
+    console.log('[setDepartment] department is Department');
     this.department = department;
 
     this.setTeam(team);
 
     this.save();
   }
+
+  console.log('[setDepartment] end');
 };
 
 userSchema.methods.setTeam = function(team) {
+  console.log('[setTeam] call with ' + team);
+
+  var self = this;
+
   this.department.teams.forEach(function(item) {
     //console.log(item);
     if (item.name == team) {
       //console.log('team is found');
-      this.team = item;
+      self.team = item;
       return true;
     }
   });

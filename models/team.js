@@ -28,6 +28,6 @@ teamSchema.statics.createTeam = function(name, callback) {
   });
 };
 
-var Team = restful.model('Teams', teamSchema);
+var Team = mongoose.model('Teams', teamSchema);
 
 module.exports = Team;

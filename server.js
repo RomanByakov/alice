@@ -129,9 +129,9 @@ if (app.get('env') === 'development') {
   });
 }
 
-process.on('uncaughtException', function (err, req, res) {
-  console.log('Something wrong...');
-});
+// process.on('uncaughtException', function (err, req, res) {
+//   console.log(JSON.stringify(err));
+// });
 
 // start server
 app.listen(config.port);

@@ -69,6 +69,6 @@ departmentSchema.statics.createDepartment = function(name, teams, callback) {
   department.save(callback);
 };
 
-var Department = restful.model('Departments', departmentSchema)
+var Department = mongoose.model('Departments', departmentSchema)
 
 module.exports = Department;
