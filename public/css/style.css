@@ -6,57 +6,221 @@
  * Made By MaterializeCSS.com
  */
 
- body
+
+ .fixed-bottom-right
  {
-     background: #F9F8F8;
+   position: fixed !important;
+   right: 10px;
+   bottom: 10px;
  }
 
-  .brand-logo
-  {
-    vertical-align: top;
 
-  }
-
- .brand-logo:before
- {
-   content:"";
-   background: url("../img/alice.png") no-repeat;
-   width: 164px;
-   height: 87px;
-   display: block;
-   margin: 8px 0 0 0;
-   vertical-align: top;
-   position: absolute;
-
- }
-
-.icon-block {
-  padding: 0 15px;
-}
-.icon-block .material-icons {
-	font-size: inherit;
-}
-
-.card-login
+body,html,md-content
 {
-  margin: 0 auto 0 auto;
-
+   background: #ECECEC;
 }
 
-.card-login_block
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../font/material-design-icons/Material-Design-Icons.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('Material-Design-Icons'),
+       url(../font/material-design-icons/Material-Design-Icons.woff2) format('woff2'),
+       url(../font/material-design-icons/Material-Design-Icons.woff) format('woff'),
+       url(../font/material-design-icons/Material-Design-Icons.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.top-bar
 {
-  min-height: 600px;
+  background-color: rgb(0,137,123);
+  height: 70px;
 }
 
+.top-bar_logo
+{float: left;}
+
+.top-bar_search
+{
+  padding: 17px 0 0 0;
+  margin: 0 0 0 110px;
+  float: left;
+  width: 400px;
+}
+
+.top-bar_user
+{
+  float:right;
+  margin: 22px 65px 0 0;
+}
+
+.user-menu
+{
+
+}
+
+.user-menu .item
+{
+  display: block;
+  margin: 3px 0px 5px 0;
+  cursor:pointer;
+  color: #00b5ad;
+}
+
+.user-menu .item:hover span, .user-menu .item:hover i
+{
+  color: #333 !important;
+}
+
+.brand-logo
+{
+  position: relative;
+  width: 128px;
+  float:left;
+  margin: 16px;
+}
+
+.brand-logo span
+{
+  position: absolute;
+  font-size: 11px;
+  color: #EAEAEA;
+  top: -1px;
+  left: 88px;
+}
+
+.brand-logo:before
+{
+ content:"";
+ background: url("../img/alice.png") no-repeat;
+ width: 83px;
+ height: 36px;
+ display: block;
+ vertical-align: top;
+ top: 0;
+}
+
+/* Content - start */
+
+.wrapper-block
+{
+  border: 0 !important;
+}
+
+.content-block
+{
+  border: 0;
+  position: relative !important;
+  padding: 40px 0 0 40px !important;
+}
+
+.content-block h3
+{
+  margin: 0 0 10px 0 !important;
+}
+
+/* Content - finish */
+
+
+/* Sidebar - start */
+
+
+/* User */
+
+.curent-user
+{
+  float:right;
+}
+
+.curent-user md-chips-wrap
+{
+  box-shadow: none;
+}
+
+.sidenav-left
+{
+  background-color: rgb(236, 236, 236);
+  padding: 10px 0 0 0;
+}
+
+.sidenav-left md-content
+{
+  background: none;
+}
+
+.curent-user_avatar img
+{
+  width: 140px;
+}
+
+/* Sidebar - finish */
+.content
+{
+
+}
+
+.clear-all::after
+{
+  content:"";
+  display:block;
+  clear:both;
+}
+
+.content::after
+{
+  content:"";
+  display:block;
+  clear:both;
+}
+.main-content
+{
+  max-width: 1280px;
+  background-color: rgb(236, 236, 236);
+  margin: 0 0 0 20px;
+  padding: 10px 0 0 0;
+}
+
+.main-content h3
+{
+  margin:0;
+  padding: 0;
+}
 .user-cards
 {
-  margin: 50px auto 0 auto;
+
 }
 
-.user-cards_card
+.user-cards_img
 {
-  margin: 0 23px 23px 0;
+  height: 300px;
 }
+
 .user-cards_card .user-detales
 {
   margin: 40px 0 0 0;
@@ -66,4 +230,62 @@
 .user-cards .card-action a
 {
   margin: 0 10px 0 0;
+}
+
+.user-cards .md-card-image
+{
+
+}
+
+
+.user-chip
+{
+  float:right
+}
+
+.search-wrapper
+{
+  position: relative;
+  background: #fff
+}
+
+.search-wrapper input, .search-wrapper input:focus
+{
+  border: 0 !important;
+  display: inline-block;
+  vertical-align: top;
+  box-shadow: none !important;
+}
+
+.search-wrapper i
+{
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  font-size: 2.5rem;
+  color: #ccc;
+}
+
+/* Users - start */
+.user-add-button
+{
+  position: fixed;
+  top: 20px;
+  right: 300px;
+}
+
+.user-add-button i
+{
+
+}
+
+/* Users - finish */
+
+/* Form */
+
+.user-form
+{
+  max-width: 700px;
 }

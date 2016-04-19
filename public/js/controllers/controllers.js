@@ -8,7 +8,12 @@ var checkAccess = function($cookies, $state) {
 };
 
 module.controller('NavBarController', function($scope, $state, $window, $cookies) {
-  $scope.user = {};
+
+
+  $scope.user = {
+    showTooltip: false,
+    tipDirection: ''
+  };
 
   if (!$cookies.get('user')) {
     $scope.user.role = 'guest';
@@ -23,28 +28,15 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
       $scope.user.role = 'guest';
     };
   }
-});
 
-// users controllers
-module.controller('UserListController', function($scope, $state, popupService, $window, User, $cookies) {
-  $scope.initMaterializeUI = function() {
-    $('.tooltipped').tooltip({delay: 150});
-    $('.modal-trigger').leanModal();
-  };
+  // User popup init
 
-  checkAccess($cookies, $state);
-  $scope.users = User.query();
-
-  $scope.openModal = function(user) {
-    $scope.user = user;
-  };
-
-$scope.deleteUser = function(user) {
-  user.$delete(function()
-  {
-      $window.location.href = '';
-  });
-}
+  $('.top-bar_user .teal')
+    .popup({
+      popup: $('.user-menu'),
+      on: 'click',
+      position: 'bottom left'
+    });
 
 }).controller('UserViewController', function($scope, $state, $cookies, $stateParams, User) {
   checkAccess($cookies, $state);
@@ -52,40 +44,39 @@ $scope.deleteUser = function(user) {
     id: $stateParams.id
   });
 
-}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window, Upload, $timeout) {
+}).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User, Upload, $timeout) {
   checkAccess($cookies, $state);
+
   $scope.user = new User();
   $scope.avatar = null;
 
-  $scope.addUser = function(avatar) {
+  //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
+  $scope.updateUser = function(avatar) {
     avatar.upload = Upload.upload({
-      url: '/api/users',
+      url: '/api/users/' + $scope.user._id,
       data: {
+        _id: $scope.user._id,
         name: $scope.user.name,
         lastname: $scope.user.lastname,
-        login: $scope.user.login,
+        username: $scope.user.username,
         password: $scope.user.password,
         department: $scope.user.department,
         team: $scope.user.team,
         role: $scope.user.role
       },
+      headers: {
+        'x-access-token': $cookies.get('token')
+      },
       file: {
         avatar: avatar
-      }
+      },
+      method: 'PUT'
     });
 
     avatar.upload.then(function(response) {
-      $timeout(function () {
-        $window.location.href = '';
+      $timeout(function() {
+        $state.go('users');
       });
-    });
-  }
-
-}).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User) {
-  checkAccess($cookies, $state);
-  $scope.updateUser = function() {
-    $scope.user.$update(function() {
-      $state.go('users');
     });
   };
 
@@ -102,6 +93,11 @@ $scope.deleteUser = function(user) {
 module.controller('DepartmentListController', function($scope, $state, $cookies, popupService, $window, Department) {
   checkAccess($cookies, $state);
   $scope.departments = Department.query();
+
+  $scope.departmentSelect = function() {
+    alert('asdaswd');
+    $scope.$apply();
+  };
 
   $scope.deleteDepartment = function(department) {
     if (popupService.showPopup('Really delete this?')) {

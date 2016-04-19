@@ -6,7 +6,11 @@ var teamSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true
-  }
+  },
+  logo: {
+    type: String,
+    default: '../img/empty-img.jpg'
+  },
 });
 
 teamSchema.statics.createTeam = function(name, callback) {
@@ -14,7 +18,7 @@ teamSchema.statics.createTeam = function(name, callback) {
     name: name
   });
 
-  team.save(function (err) {
+  team.save(function (err, team) {
     if (err) {
       callback(err);
     } else {
