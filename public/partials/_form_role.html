@@ -1,0 +1,25 @@
+<div class="form-group">
+  <label for="name" class="col-sm-2 control-label">Name</label>
+  <div class="col-sm-10">
+    <input type="text" ng-model="role.name" class="form-control" id="name" placeholder="name" />
+  </div>
+</div>
+<div class="form-group">
+  <label for="name" class="col-sm-2 control-label">Child</label>
+  <div class="col-sm-10">
+    <select type="text" ng-model="role.child.name" class="form-control" id="name" placeholder="name">
+    <option ng-repeat="role in roles" value="{{role.name}}">{{role.name}}</option>
+  </select>
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <input type="submit" class="btn btn-primary" value="Save" />
+  </div>
+</div>
+<div class="row center">
+  <label id="message" class="red-text">{{error}}</label>
+</div>
+<pre>
+    {{ role | json }}
+</pre>
