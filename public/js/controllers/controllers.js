@@ -11,8 +11,8 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
 
 
   $scope.user = {
-    showTooltip : false,
-    tipDirection : ''
+    showTooltip: false,
+    tipDirection: ''
   };
 
   if (!$cookies.get('user')) {
@@ -32,92 +32,17 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   // User popup init
 
   $('.top-bar_user .teal')
-  .popup({
-    popup : $('.user-menu'),
-    on: 'click',
-    position : 'bottom left'
-  })
-;
-
-
-
-  // $scope.user.delayTooltip = undefined;
-  // $scope.$watch('user.delayTooltip',function(val) {
-  //   $scope.user.delayTooltip = parseInt(val, 10) || 0;
-  // });
-  // $scope.$watch('user.tipDirection',function(val) {
-  //   if (val && val.length ) {
-  //     $scope.user.showTooltip = true;
-  //   }
-
-});
-
-// users controllers
-module.controller('UserListController', function($scope, $state, popupService, $window, User, $cookies, $mdDialog) {
-
-  checkAccess($cookies, $state);
-  $scope.users = User.query();
-
-  $scope.openModal = function(user) {
-    $mdDialog.show({
-      templateUrl: '../partials/user-form.html',
-      parent: angular.element(document.body),
-      clickOutsideToClose:true
-    }
-
-      // .parent(angular.element(document.querySelector('#popupContainer')))
-      // .title('This is an alert title')
-      // .textContent('You can specify some description text in here.')
-    );
-    $scope.user = user;
-  };
-
-$scope.deleteUser = function(user) {
-  user.$delete(function()
-  {
-      $window.location.href = '';
-  });
-}
+    .popup({
+      popup: $('.user-menu'),
+      on: 'click',
+      position: 'bottom left'
+    });
 
 }).controller('UserViewController', function($scope, $state, $cookies, $stateParams, User) {
   checkAccess($cookies, $state);
   $scope.user = User.get({
     id: $stateParams.id
   });
-
-}).controller('UserCreateController', function($scope, $state, $cookies, $stateParams, User, $window, Upload, $timeout, Department) {
-  checkAccess($cookies, $state);
-  $scope.user = new User();
-  $scope.avatar = null;
-
-  $scope.departments = Department.query();
-
-  $scope.addUser = function(avatar) {
-    avatar.upload = Upload.upload({
-      url: '/api/users',
-      data: {
-        name: $scope.user.name,
-        lastname: $scope.user.lastname,
-        login: $scope.user.login,
-        password: $scope.user.password,
-        department: $scope.user.department,
-        team: $scope.user.team,
-        role: $scope.user.role
-      },
-      headers: {
-        'x-access-token': $cookies.get('token')
-      },
-      file: {
-        avatar: avatar
-      }
-    });
-
-    avatar.upload.then(function(response) {
-      $timeout(function () {
-        $window.location.href = '';
-      });
-    });
-  }
 
 }).controller('UserEditController', function($scope, $state, $cookies, $stateParams, User, Upload, $timeout) {
   checkAccess($cookies, $state);
@@ -149,19 +74,19 @@ $scope.deleteUser = function(user) {
     });
 
     avatar.upload.then(function(response) {
-      $timeout(function () {
+      $timeout(function() {
         $state.go('users');
       });
     });
   };
 
-    $scope.loadUser = function() {
-      $scope.user = User.get({
-        id: $stateParams.id
-      });
-    };
+  $scope.loadUser = function() {
+    $scope.user = User.get({
+      id: $stateParams.id
+    });
+  };
 
-    $scope.loadUser();
+  $scope.loadUser();
 });
 
 // departments controllers
@@ -230,44 +155,3 @@ module.controller('LoginController', function($scope, $state, $stateParams, $coo
 
   }
 });
-
-module.controller('SideBarController', function($scope, $state, $window, $cookies, $timeout, $mdSidenav) {
-  var buildDelayedToggler = function(navID) {
-    return debounce(function() {
-      $mdSidenav(navID)
-        .toggle();
-    }, 200);
-  }
-  var buildToggler = function(navID) {
-    return function() {
-      $mdSidenav(navID)
-        .toggle();
-    }
-  }
-
-  $scope.toggleLeft = buildDelayedToggler('left');
-  $scope.toggleRight = buildToggler('right');
-  $scope.isOpenRight = function() {
-    return $mdSidenav('right').isOpen();
-  };
-
-  function debounce(func, wait, context) {
-    var timer;
-    return function debounced() {
-      var context = $scope,
-          args = Array.prototype.slice.call(arguments);
-      $timeout.cancel(timer);
-      timer = $timeout(function() {
-        timer = undefined;
-        func.apply(context, args);
-      }, wait || 10);
-    };
-  }
-
-
-})
-.controller('LeftCtrl', function ($scope, $timeout, $mdSidenav) {
-    $scope.close = function () {
-      $mdSidenav('left').close();
-    };
-  });

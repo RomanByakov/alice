@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var uploadAvatar = function (file, user, callback) {
-  if (!file.avatar) {
+  if (!file || !file.avatar) {
     return;
   }
 

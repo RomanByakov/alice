@@ -78,12 +78,12 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   //console.log(typeof department.name);
   //console.log(department);
   //todo: refactor, check for reflection, synchronize.
-  if (util.isString(department.name)) {
-    Department.findOne({name: department.name}, function(err, model) {
+  if (util.isString(department)) {
+    Department.findOne({name: department}, function(err, model) {
       if (model) {
         user.department = model;
 
-        user.setTeam(team.name);
+        user.setTeam(team);
 
         user.save();
       }
@@ -91,7 +91,7 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   } else if (department instanceof Department) {
     user.department = department;
 
-    user.setTeam(team.name);
+    user.setTeam(team);
   }
 
   if (util.isString(role)) {
@@ -135,14 +135,14 @@ userSchema.methods.updateUser = function(firstName, lastName, login, password, t
 };
 
 userSchema.methods.setDepartment = function(department, team) {
-  if (util.isString(department.name)) {
+  if (util.isString(department)) {
     var self = this;
 
-    Department.findOne({name: department.name}, function(err, model) {
+    Department.findOne({name: department}, function(err, model) {
       if (model) {
         self.department = department;
 
-        self.setTeam(team.name);
+        self.setTeam(team);
 
         self.save();
       }
@@ -171,8 +171,8 @@ userSchema.methods.setTeam = function(team) {
 
 //todo: make it work.
 userSchema.statics.hashPassword = function(password) {
-  //return crypto.createHash('md5').update(password).digest('hex');
-  return password;
+  return crypto.createHash('md5').update(password).digest('hex');
+  //return password;
 }
 
 userSchema.methods.populate = function() {
