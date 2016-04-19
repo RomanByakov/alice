@@ -26,6 +26,13 @@ if (app.get('env') === 'development') {
 
 mongoose.connect(config.database);
 
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
+
 app.use(connectDomain());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -36,9 +43,29 @@ app.set('apliceSecret', config.token.secret);
 
 app.use("/", express.static(path.join(__dirname, 'public')));
 
-//setup
-app.use('/setup', setup.init);
-app.get('/check-access-test', setup.checkAccessTest);
+app.use('/', function(req, res, next) {
+  var parsedUrl = url.parse(req.url, true);
+  var pathname = parsedUrl.pathname;
+
+  // if (pathname == '/favicon.ico') {
+  //   res.json({favicon: empty});
+  // } else {
+  //   console.log(pathname);
+  //   next();
+  // }
+  next();
+});
+
+app.use('/favicon.ico', function(req, res, next) {
+  res.json({favicon: 'empty'});
+});
+
+if (app.get('env') === 'development') {
+  //setup
+  app.use('/drop', setup.drop);
+  app.use('/setup', setup.init);
+  app.get('/check-access-test', setup.checkAccessTest);
+}
 
 app.use('/auth', require('./routes/auth'));
 

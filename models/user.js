@@ -1,4 +1,3 @@
-// dependencies
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -21,11 +20,13 @@ var userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   team: {
     type: Schema.Types.Mixed,
@@ -112,10 +113,10 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
 };
 
 userSchema.methods.updateUser = function(firstName, lastName, login, password, team, department, role, callback) {
-  this.username = login;
+  this.username = login === null ? this.username : login;
   this.name = firstName;
   this.lastname = lastName;
-  this.password = User.hashPassword(password);
+  this.password = password === null ? this.password : User.hashPassword(password);
 
   this.setDepartment(department, team);
 
@@ -157,13 +158,11 @@ userSchema.methods.setDepartment = function(department, team) {
 };
 
 userSchema.methods.setTeam = function(team) {
-  var self = this;
-
   this.department.teams.forEach(function(item) {
     //console.log(item);
     if (item.name == team) {
       //console.log('team is found');
-      self.team = item;
+      this.team = item;
       return true;
     }
   });
