@@ -47,14 +47,17 @@ router.route('/', function (req, res, next) {
         if (err) {
           throw err;
         } else {
-          var file = req.files.file;
+          if (req.files) {
+            var file = req.files.file;
 
-          upload.avatar(file, user, function(user) {
-            if (user) {
-              user.populate();
-              res.json(user);
-            }
-          });
+            upload.avatar(file, user, function(user) {
+              if (user) {
+                user.populate();
+              }
+            });
+          }
+
+          res.json(user);
         }
       });
   });
@@ -91,6 +94,7 @@ router.route('/:id', function(req, res, next) {
         throw err;
       }
 
+      console.log(req.body.team);
       user.updateUser(
           req.body.name,
           req.body.lastname,
@@ -103,14 +107,18 @@ router.route('/:id', function(req, res, next) {
             if (err) {
               throw err;
             } else {
-              var file = req.files.file;
+              if (req.files) {
+                var file = req.files.file;
 
-              upload.avatar(file, user, function(user) {
-                if (user) {
-                  user.populate();
-                  res.json(user);
-                }
-              });
+                upload.avatar(file, user, function(user) {
+                  if (user) {
+                    user.populate();
+                    res.json(user);
+                  }
+                });
+              }
+
+              res.json(user);
             }
           }
         );
