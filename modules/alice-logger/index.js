@@ -10,7 +10,7 @@ module.exports = new winston.Logger({
       name: 'info-file',
       level: 'info',
       silent: false,
-      maxsize: 2048,
+      maxsize: 1048576,
       filename: 'logs/info.log'
     }),
     new (winston.transports.File)({
@@ -18,21 +18,21 @@ module.exports = new winston.Logger({
       level: 'debug',
       colorize: true,
       silent: false,
-      maxsize: 2048,
+      maxsize: 1048576,
       filename: 'logs/debug.log'
     }),
     new (winston.transports.File)({
       name: 'warning-file',
       level: 'warn',
       silent: false,
-      maxsize: 2048,
+      maxsize: 1048576,
       filename: 'logs/warning.log'
     }),
     new (winston.transports.File)({
       name: 'error-file',
       level: 'error',
       silent: false,
-      maxsize: 2048,
+      maxsize: 1048576,
       filename: 'logs/error.log'
     })
   ]

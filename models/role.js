@@ -15,27 +15,34 @@ var roleSchema = new mongoose.Schema({
 });
 
 roleSchema.statics.createRole = function(name, child, callback) {
+  logger.debug('[Role::createRole] call with ' + name + ', ' + child);
   var role = new Role({
     name: name
   });
 
   setChildAndSave(role, child, callback)
+  logger.debug('[Role::createRole] end');
 };
 
 roleSchema.methods.updateRole = function(name, child, callback) {
+  logger.debug('[Role::updateRole] call with ' + name + ', ' + child);
   this.name = name;
 
   setChildAndSave(this, child, callback);
+  logger.debug('[Role::updateRole] call end');
 };
 
 var setChildAndSave = function(role, child, callback) {
+  logger.debug('[Role::setChildAndSave] call');
   if (child != null) {
     Role.findOne({name: child}, function(err, model) {
+      logger.debug('[Role::setChildAndSave] findOne callback');
       if (model) {
+        logger.debug('[Role::setChildAndSave] child role find');
         role.child = model;
-
-        role.save(callback);
       }
+
+      role.save(callback);
     });
   } else {
     role.save(callback);
