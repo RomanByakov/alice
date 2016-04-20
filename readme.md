@@ -4,7 +4,10 @@ Alice now is a prototype of complex office system (or a basic site template if y
 ###Requirements
 - NodeJS ~ 5.*
 - MongoDB ~ 3.*
-- ImageMagick ~ 6.9.* [official site](http://www.imagemagick.org/script/binary-releases.php)
+- ImageMagick ~ 6.9.*
+
+####ImageMagic Details
+For binary releases see [official site](http://www.imagemagick.org/script/binary-releases.php)
 
 On Ubuntu
 ```
