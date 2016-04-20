@@ -6,13 +6,13 @@ angular.module('aliceApp')
 
     $scope.users = User.query();
 
-    $scope.getFullDepartment = function(user) {
-      if (user.department) {
-        return JSON.parse(user.department).name + ' + ' + JSON.parse(user.team).name;
-      } else {
-        return '';
-      }
-    }
+    // $scope.getFullDepartment = function(user) {
+    //   if (user.department) {
+    //     return JSON.parse(user.department).name + ' + ' + JSON.parse(user.team).name;
+    //   } else {
+    //     return '';
+    //   }
+    // }
 
     $scope.deleteUser = function(user) {
       user.$delete(function() {

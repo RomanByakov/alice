@@ -108,6 +108,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
 
 
   $scope.loadUser();
+  $('.ui.dropdown').dropdown();
 });
 
 // departments controllers
