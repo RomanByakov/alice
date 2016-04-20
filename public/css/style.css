@@ -289,6 +289,15 @@ body,html
 
 /* Users - finish */
 
+/* Departments - Start */
+
+.department-cards .card
+{
+  margin: 17px 10px 17px 0 !important;
+}
+
+/* Departments - Finish */
+
 /* Form */
 
 .user-form
@@ -299,4 +308,9 @@ body,html
 .hidden
 {
   display: none;
+}
+
+.department-button
+{
+  margin: 20px 0 0 -5px;
 }

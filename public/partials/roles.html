@@ -1,14 +1,18 @@
-<a ui-sref="newRole" class="btn-primary btn-lg nodecoration">Add New role</a>
-<table class="table movietable">
-    <tr>
-        <td><h3>All Roles</h3></td>
-        <td></td>
-    </tr>
-    <tr ng-repeat="role in roles">
-        <td>{{role.name}}</td>
-        <td>
-            <a class="btn btn-primary" ui-sref="editRole({id:role._id})">Edit</a>
-            <a class="btn btn-danger"  ng-click="deleteRole(role)">Delete</a>
-        </td>
-    </tr>
-</table>
+<h4 class="header">All Roles</h4>
+<div class="ui cards">
+  <div class="ui card" ng-repeat="role in roles">
+    <div class="content">
+      <div class="header" ng-bind="role.name"></div>
+      <div class="description">
+        <p></p>
+      </div>
+    </div>
+    <div class="extra content">
+      <a class="left floated like" ui-sref="editRole({id:role._id})"><i class="edit icon"></i> Edit </a>
+      <a class="right floated star" ng-click="deleteRole(role)"><i class="delete icon"></i> Delete </a>
+    </div>
+  </div>
+</div>
+<div style="margin: 20px 0 0 0;">
+  <button class="ui button teal" ui-sref="newRole">Add New role</button>
+</div>
