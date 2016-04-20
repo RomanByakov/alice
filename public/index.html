@@ -13,7 +13,6 @@
   <!-- Angular Material CSS now available via Google CDN; version 0.9.4 used here -->
 
   <link rel="stylesheet" type="text/css" href="js/semantic/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="js/semantic/components/form.min.css">
 </head>
 
 <body>
@@ -35,7 +34,7 @@
       </a>
       <div class="ui transition hidden popup user-menu">
         <a class="item teal">
-          <i class="setting icon teal"></i>
+          <i class="setting icon teal" ng-click=""></i>
           <span class="teal">Settings</span>
         </a>
         <a class="item teal">
@@ -89,7 +88,13 @@
   <!-- **** Semantic UI **** -->
 
   <script src="js/semantic/semantic.min.js"></script>
-  <script src="js/semantic/components/form.js"></script>
+  <script type="text/javascript">
+  $('.ui.dropdown').on('click', function() {
+    this.dropdown();
+  });
+  $('.ui.dropdown')
+    .dropdown();
+  </script>
 </body>
 
 </html>
