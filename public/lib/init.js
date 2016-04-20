@@ -1,23 +1,12 @@
 (function($){
-
   $(function(){
-
-
-
-    
-
-
-
     // User popup init
-
-
     $('.top-bar_user .teal')
       .popup({
         popup: $('.user-menu'),
         on: 'click',
         position: 'bottom left'
       });
-
 
     var $document = $(document),
         $element = $('#some-element'),

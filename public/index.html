@@ -13,6 +13,7 @@
   <!-- Angular Material CSS now available via Google CDN; version 0.9.4 used here -->
 
   <link rel="stylesheet" type="text/css" href="js/semantic/semantic.min.css">
+  <link href="css/ng-img-crop.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -75,9 +76,7 @@
   <script type="text/javascript" src="js/controllers/controllers.js"></script>
   <script type="text/javascript" src="js/controllers/userListController.js"></script>
   <script type="text/javascript" src="js/controllers/userCreateController.js"></script>
-  <script type="text/javascript" src="js/controllers/rolesCreateController.js"></script>
   <script type="text/javascript" src="js/controllers/rolesListController.js"></script>
-  <script type="text/javascript" src="js/controllers/rolesEditController.js"></script>
   <script type="text/javascript" src="js/services.js"></script>
   <script type="text/javascript" src="js/filters.js"></script>
   <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
@@ -85,13 +84,12 @@
   <script src="lib/init.js"></script>
   <script src="lib/ng-file-upload-shim.min.js"></script>
   <script src="lib/ng-file-upload.min.js"></script>
+  <script src="lib/ng-img-crop.js"></script>
   <!-- **** Semantic UI **** -->
 
   <script src="js/semantic/semantic.min.js"></script>
   <script type="text/javascript">
-  $('.ui.dropdown').on('click', function() {
-    this.dropdown();
-  });
+
   $('.ui.dropdown')
     .dropdown();
   </script>
