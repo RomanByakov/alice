@@ -8,9 +8,10 @@ $scope.role = new Role();
 
   $scope.addRole = function() {
     $scope.role.$save(function() {
-      $state.go('roles');
     }, function(err) {
       $scope.error = err.data.message;
+    }).then(function() {
+      $state.go('roles');
     });
   }
 })

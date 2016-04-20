@@ -1,14 +1,16 @@
 (function($){
+
   $(function(){
 
-    $('.addpopup')
-    .popup()
-    ;
+
+
+    
+
 
 
     // User popup init
 
-  
+
     $('.top-bar_user .teal')
       .popup({
         popup: $('.user-menu'),

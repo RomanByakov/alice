@@ -45,7 +45,7 @@ var userSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: '../img/empty-img.jpg'
+    default: '../img/empty-img.png'
   },
   skype: {
     type: String,
