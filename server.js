@@ -1,6 +1,10 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var Q = require('q');
+
+mongoose.Promise = Q.Promise;
+
 var path = require('path');
 var connectDomain = require('connect-domain');
 var url = require('url');
@@ -10,11 +14,19 @@ var setup = require('./modules/setup');
 
 var jwt = require('jsonwebtoken');
 
+const throng = require('throng');
+
 // models
 var User = require('./models/user');
 var Team = require('./models/team');
 var Department = require('./models/department');
 var Role = require('./models/role');
+
+// throng({
+//   workers: 2,
+//   http://stackoverflow.com/questions/35799948/how-do-you-deploy-throng-or-cluster-with-angular-fullstack
+//   lifetime: Infinity
+// }, () => { console.log('Throng on!'); });
 
 var app = express();
 
@@ -64,6 +76,7 @@ if (app.get('env') === 'development') {
   //setup
   app.use('/drop', setup.drop);
   app.use('/setup', setup.init);
+  app.use('/fill', setup.fillUsers);
   app.get('/check-access-test', setup.checkAccessTest);
 }
 
@@ -89,14 +102,20 @@ app.use(function(req, res, next) {
         //console.log(req.method);
         req.currentUser = decoded._doc;
 
-        //temp crutch, refactor to access module
-        if (pathname == '/api/users' && req.params.id != null) {
-          accessConfig['SELF'](req.currentUser, req.params.id);
-        } else {
-          accessConfig[req.method](req.currentUser);
-        }
-
-        next();
+        return Q.fcall(function() {
+          //temp crutch, refactor to access module
+          if (pathname == '/api/users' && req.params.id != null) {
+            return accessConfig['SELF'](req.currentUser, req.params.id);
+          } else {
+            return accessConfig[req.method](req.currentUser);
+          }
+        })
+        .then(function() {
+          next();
+        })
+        .catch(function(err) {
+          throw err;
+        });
       }
     });
 
@@ -116,11 +135,12 @@ app.use('/api/roles', require('./routes/role'));
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.json({
-      message: err.message,
-      error: err,
-      stack: err.stack
-    });
+    // res.json({
+    //   message: err.message,
+    //   error: err,
+    //   stack: err.stack
+    // });
+    res.send(err);
   });
 } else {
   app.use(function(err, req, res, next) {
@@ -129,9 +149,9 @@ if (app.get('env') === 'development') {
   });
 }
 
-process.on('uncaughtException', function (err, req, res) {
-  console.log('Something wrong...');
-});
+// process.on('uncaughtException', function (err, req, res) {
+//   console.log(JSON.stringify(err));
+// });
 
 // start server
 app.listen(config.port);

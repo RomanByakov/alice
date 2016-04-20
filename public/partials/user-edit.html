@@ -66,18 +66,45 @@
 
           </div>
         </div>
-        <div class="field">
-          <label>Avatar</label>
-          <input type="file" ngf-select ng-model="avatar" name="file"
-                   accept="image/*" ngf-max-size="2MB"
-                   ngf-model-invalid="errorFile" id="avatar-input">
+        <div class="three fields">
+          <div class="field">
+            <label>Avatar</label>
+            <input type="file" ngf-select ng-model="avatar" name="file"
+                     accept="image/*" ngf-max-size="2MB"
+                     ngf-model-invalid="errorFile" id="avatar-input">
+          </div>
+          <div class="field"></div>
+          <div class="field">
+            <div class="ui small circular image form-img">
+              <img ng-src="{{user.avatar}}" alt="{{user.name}}">
+            </div>
+          </div>
+
         </div>
         <div class="form-group">
           <button type="submit" class="ui primary button">Save</button>
         </div>
 
     </form>
-    <pre>
+    <button ngf-select ng-model="picFile" accept="image/*">
+            Select Picture</button>
+        <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
+             class="cropArea">
+            <img-crop image="picFile  | ngfDataUrl"
+            result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+            </img-crop>
+        </div>
+        <div>
+            <img ng-src="{{croppedDataUrl}}" />
+        </div>
+        <button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>
+
+        <span class="progress" ng-show="progress >= 0">
+          <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+        </span>
+        <span ng-show="result">Upload Successful</span>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+    <pre style="">
         {{ user | json }}
     </pre>
   </div>

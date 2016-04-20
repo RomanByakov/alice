@@ -5,7 +5,8 @@ var teamSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   logo: {
     type: String,
@@ -27,6 +28,6 @@ teamSchema.statics.createTeam = function(name, callback) {
   });
 };
 
-var Team = restful.model('Teams', teamSchema);
+var Team = mongoose.model('Teams', teamSchema);
 
 module.exports = Team;

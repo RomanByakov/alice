@@ -14,6 +14,11 @@ angular.module('aliceApp')
   }
 
   $scope.addUser = function(avatar) {
+    if(avatar == null){
+      $scope.user.$save(function() {
+          $state.go('users');
+      });
+    }else{
     avatar.upload = Upload.upload({
       url: '/api/users',
       data: {
@@ -21,7 +26,7 @@ angular.module('aliceApp')
         lastname: $scope.user.lastname,
         login: $scope.user.login,
         password: $scope.user.password,
-        department: JSON.parse($scope.user.department).name,
+        department: $scope.user.department,
         team: $scope.user.team,
         role: $scope.user.role
       },
@@ -38,6 +43,8 @@ angular.module('aliceApp')
         $state.go('users');
       });
     });
+
   }
+}
 
 })

@@ -4,12 +4,9 @@ angular.module('aliceApp')
   $scope.roles = Role.query();
 
   $scope.deleteRole = function(role) {
-    if (popupService.showPopup('Really delete this?')) {
-      role.$delete(function() {
-        //$window.location.href = '';
-        $state.go('roles');
+      role.$delete().then(function(){
+        $state.go('roles', {}, { reload: true });
       });
-    }
   }
 
 })

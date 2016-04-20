@@ -18,12 +18,21 @@ var checkAdminOrSelf = function(user, id) {
 };
 
 var checkAdmin = function(user) {
-  Role.checkAccess(user.role.name, AdminRole, throwErr);
+  Role.checkAccess(getRole(user), AdminRole, throwErr);
 };
 
 var checkUser = function(user) {
-  Role.checkAccess(user.role.name, UserRole, throwErr);
+  Role.checkAccess(getRole(user), UserRole, throwErr);
 }
+
+var getRole = function(user) {
+  var role = user.role.name;
+  if (!user.role.name) {
+    role = user.role;
+  }
+
+  return role;
+};
 
 module.exports = {
   'GET': checkUser,

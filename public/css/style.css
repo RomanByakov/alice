@@ -189,7 +189,39 @@ body,html
   display: none;
 }
 
+.form-img
+{
+  background: #fbfcfc !important;
+  margin: 32px 0 0 0;
+}
+
+.form-img img
+{
+  border: 1px solid #e3dede !important;
+}
+
 .department-button
 {
   margin: 20px 0 0 -5px;
+}
+
+
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width:500px;
+    height:350px;
+}
+form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
 }

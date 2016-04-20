@@ -1,4 +1,4 @@
-var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies', 'ngFileUpload']);
+var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies', 'ngFileUpload', 'ngImgCrop']);
 
 //baaaaaaad
 var checkAccess = function($cookies, $state) {
@@ -46,6 +46,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.teams = [];
 
   $scope.update = function(department) {
+    alert(department);
     $scope.teams = JSON.parse(department).teams;
   }
 
@@ -53,6 +54,8 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.updateUser = function(avatar) {
     //alert($scope.user.department.name);
     if (avatar) {
+      $scope.user.department = $scope.user.department.name;
+
       avatar.upload = Upload.upload({
         url: '/api/users/' + $scope.user._id,
         data: {
@@ -61,8 +64,8 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
           lastname: $scope.user.lastname,
           username: $scope.user.username,
           password: $scope.user.password,
-          department: $scope.user.department.name,
-          team: $scope.user.team,
+          department: $scope.user.department,
+          team: $scope.user.team.name,
           role: $scope.user.role
         },
         headers: {
@@ -75,13 +78,18 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
       });
 
       avatar.upload.then(function(response) {
-        $timeout(function() {
-          $state.go('users');
-        });
-      });
+        $timeout(function () {
+             $scope.result = response.data;
+         });
+      }, function(responce){
+        if (response.status > 0) $scope.errorMsg = response.status
+          + ': ' + response.data;
+      }, function(evt){
+        $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+      }
+    );
     } else {
       $scope.user.department = $scope.user.department.name;
-      alert($scope.user.department);
 
       $scope.user.$update({
         _id: $scope.user._id,
@@ -122,12 +130,11 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   };
 
   $scope.deleteDepartment = function(department) {
-    if (popupService.showPopup('Really delete this?')) {
-      department.$delete(function() {
-        //$window.location.href = '';
-        $state.go('departments');
-      });
-    }
+    // if (popupService.showPopup('Really delete this?')) {
+      department.$delete().then(function(){
+  $state.go('departments', {}, { reload: true });
+});
+    // }
   }
 
 }).controller('DepartmentViewController', function($scope, $cookies, $stateParams, Department) {
@@ -135,6 +142,7 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   $scope.department = Department.get({
     id: $stateParams.id
   });
+
 }).controller('DepartmentCreateController', function($scope, $state, $cookies, $stateParams, Department) {
   checkAccess($cookies, $state);
   $scope.department = new Department();
@@ -142,7 +150,7 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
 
   $scope.addDepartment = function() {
     $scope.department.$save(function() {
-      $state.go('departments');
+        $state.go('departments');
     });
   }
 
@@ -157,10 +165,15 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   $scope.loadDepartment = function() {
     $scope.department = Department.get({
       id: $stateParams.id
+    }, function() {
+      $('.ui.dropdown').dropdown();
     });
+
   };
 
   $scope.loadDepartment();
+
+
 });
 
 module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {
