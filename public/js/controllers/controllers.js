@@ -46,6 +46,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.teams = [];
 
   $scope.update = function(department) {
+    alert(department);
     $scope.teams = JSON.parse(department).teams;
   }
 
@@ -122,12 +123,11 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   };
 
   $scope.deleteDepartment = function(department) {
-    if (popupService.showPopup('Really delete this?')) {
-      department.$delete(function() {
-        //$window.location.href = '';
-        $state.go('departments');
-      });
-    }
+    // if (popupService.showPopup('Really delete this?')) {
+      department.$delete().then(function(){
+  $state.go('departments', {}, { reload: true });
+});
+    // }
   }
 
 }).controller('DepartmentViewController', function($scope, $cookies, $stateParams, Department) {
@@ -142,7 +142,7 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
 
   $scope.addDepartment = function() {
     $scope.department.$save(function() {
-      $state.go('departments');
+        $state.go('departments');
     });
   }
 

@@ -14,6 +14,11 @@ angular.module('aliceApp')
   }
 
   $scope.addUser = function(avatar) {
+    if(avatar == null){
+      $scope.user.$save(function() {
+          $state.go('users');
+      });
+    }else{
     avatar.upload = Upload.upload({
       url: '/api/users',
       data: {
@@ -38,6 +43,8 @@ angular.module('aliceApp')
         $state.go('users');
       });
     });
+
   }
+}
 
 })
