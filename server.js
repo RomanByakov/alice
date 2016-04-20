@@ -68,6 +68,7 @@ if (app.get('env') === 'development') {
   //setup
   app.use('/drop', setup.drop);
   app.use('/setup', setup.init);
+  app.use('/fill', setup.fillUsers);
   app.get('/check-access-test', setup.checkAccessTest);
 }
 
