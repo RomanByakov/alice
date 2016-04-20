@@ -56,19 +56,24 @@ router.route('/:id', function(req, res, next) {
       }
     });
   }).delete(function(req, res, next) {
-    Role.findOne({_id: req.body._id}, function(err, role) {
-      if (err) {
-        throw err;
-      } else {
-        role.remove(function(err) {
-          if (err) {
-            throw err;
-          } else {
-            res.json({success: true});
-          }
-        })
-      }
-    });
+    // Role.findOne({_id: req.body._id}, function(err, role) {
+    //   if (err) {
+    //     throw err;
+    //   } else {
+    //     role.remove(function(err) {
+    //       if (err) {
+    //         throw err;
+    //       } else {
+    //         res.json({success: true});
+    //       }
+    //     })
+    //   }
+    // });
+    Role.remove({'_id': req.params.id})
+    .then(function() {
+      res.json({success: true});
+    })
+    .catch((err) => { throw err; });
   });
 
 module.exports = router;
