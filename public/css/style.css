@@ -1,61 +1,16 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
+/*
+  Alice main stylesheet
+  Author: vanhock
+*/
 
-
- .fixed-bottom-right
- {
-   position: fixed !important;
-   right: 10px;
-   bottom: 10px;
- }
-
+/* Base styles */
 
 body,html
 {
    background: #ECECEC !important;
 }
 
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(../font/material-design-icons/Material-Design-Icons.eot); /* For IE6-8 */
-  src: local('Material Icons'),
-       local('Material-Design-Icons'),
-       url(../font/material-design-icons/Material-Design-Icons.woff2) format('woff2'),
-       url(../font/material-design-icons/Material-Design-Icons.woff) format('woff'),
-       url(../font/material-design-icons/Material-Design-Icons.ttf) format('truetype');
-}
-
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
-}
+/* Top Bar */
 
 .top-bar
 {
@@ -126,7 +81,7 @@ body,html
  top: 0;
 }
 
-/* Content - start */
+/* Content  */
 
 .wrapper-block
 {
@@ -146,59 +101,18 @@ body,html
   margin: 0 0 10px 0 !important;
 }
 
-/* Content - finish */
 
+/* Sidebar */
 
-/* Sidebar - start */
-
-
-/* User */
-
-.curent-user
+.fixed-bottom-right
 {
-  float:right;
+ position: fixed !important;
+ right: 10px;
+ bottom: 10px;
 }
 
-.curent-user md-chips-wrap
-{
-  box-shadow: none;
-}
+/* Content block */
 
-.sidenav-left
-{
-  background-color: rgb(236, 236, 236);
-  padding: 10px 0 0 0;
-}
-
-.sidenav-left md-content
-{
-  background: none;
-}
-
-.curent-user_avatar img
-{
-  width: 140px;
-}
-
-/* Sidebar - finish */
-.content
-{
-
-}
-
-.clear-all::after
-{
-  content:"";
-  display:block;
-  clear:both;
-}
-
-.content::after
-{
-  content:"";
-  display:block;
-  clear:both;
-}
 .main-content
 {
   max-width: 1280px;
@@ -212,64 +126,14 @@ body,html
   margin:0;
   padding: 0;
 }
-.user-cards
-{
 
+/* Users page */
+
+.user-cards .card
+{
+  margin-bottom: 15px !important;
 }
 
-.user-cards_img
-{
-  height: 300px;
-}
-
-.user-cards_card .user-detales
-{
-  margin: 40px 0 0 0;
-  border: 0;
-}
-
-.user-cards .card-action a
-{
-  margin: 0 10px 0 0;
-}
-
-.user-cards .md-card-image
-{
-
-}
-
-
-.user-chip
-{
-  float:right
-}
-
-.search-wrapper
-{
-  position: relative;
-  background: #fff
-}
-
-.search-wrapper input, .search-wrapper input:focus
-{
-  border: 0 !important;
-  display: inline-block;
-  vertical-align: top;
-  box-shadow: none !important;
-}
-
-.search-wrapper i
-{
-  display: inline-block;
-  vertical-align: top;
-  position: absolute;
-  right: 15px;
-  top: 13px;
-  font-size: 2.5rem;
-  color: #ccc;
-}
-
-/* Users - start */
 .user-add-button
 {
   bottom: 20px !important;
@@ -287,16 +151,13 @@ body,html
 
 }
 
-/* Users - finish */
-
-/* Departments - Start */
+/* Departments */
 
 .department-cards .card
 {
   margin: 17px 10px 17px 0 !important;
 }
 
-/* Departments - Finish */
 
 /* Form */
 

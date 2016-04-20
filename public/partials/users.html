@@ -9,6 +9,12 @@
   </div>
 </div>
 
+<div class="user-add-button ui  bottom sticky visible">
+  <button ui-sref="newUser" class="circular teal ui icon button addpopup">
+    <i class="icon add user big"></i>
+  </button>
+</div>
+
 <h3 class="ui header">All users</h3>
 <div class="ui link cards user-cards">
   <div class="card" ng-repeat="user in users | filter:search" ui-sref="editUser({id:user._id})">
