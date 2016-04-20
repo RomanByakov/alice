@@ -48,7 +48,7 @@ router.route('/', function (req, res, next) {
 
         upload.avatar(file, user)
         .then(function(result) {
-          if (result instanceof User) {
+          if (result !== false) {
             result.populate();
             res.send(result);
           } else {
