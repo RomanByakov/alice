@@ -6,7 +6,7 @@ var uploadAvatar = function (file, user) {
   logger.debug('[upload::uploadAvatar] call');
   if (!file || !file.avatar) {
     logger.debug('[upload::uploadAvatar] avatar missing');
-    return Q.call(() => { return false; });
+    return Q.fcall(() => { return false; });
   }
 
   //todo: extension
