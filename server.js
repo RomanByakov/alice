@@ -127,11 +127,12 @@ app.use('/api/roles', require('./routes/role'));
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.json({
-      message: err.message,
-      error: err,
-      stack: err.stack
-    });
+    // res.json({
+    //   message: err.message,
+    //   error: err,
+    //   stack: err.stack
+    // });
+    res.send(err);
   });
 } else {
   app.use(function(err, req, res, next) {
