@@ -1,5 +1,6 @@
 var restful = require('node-restful');
 var mongoose = restful.mongoose;
+var logger = require('../modules/alice-logger');
 
 var roleSchema = new mongoose.Schema({
   name: {
@@ -42,25 +43,29 @@ var setChildAndSave = function(role, child, callback) {
 }
 
 roleSchema.statics.checkAccess = function(userRole, checkingRole, callback) {
+  logger.debug("userRole = " + userRole + " checkingRole = " + checkingRole);
   if (userRole == null) {
     return callback(new Error('Access Denied'));
   }
 
-  //console.log("userRole = " + userRole + " checkingRole = " + checkingRole);
   if (userRole == checkingRole) {
     return callback(null);
   }
 
-
-  this.findOne({name: userRole}, function (err, role) {
+  Role.findOne({name: userRole}, function (err, role) {
+    logger.debug('into check access find one');
     if (err) return callback(err);
 
+    logger.debug('no errors');
+    logger.debug('role ' + role);
     if (role.child) {
-      this.findOne({_id: role.child._id}, function (err, role) {
+      Role.findOne({_id: role.child._id}, function (err, role) {
+        logger.debug('into next find one in check access');
         if (err) return callback(err);
 
         if (role) {
-          checkAccess(role.name, checkingRole, callback);
+          logger.debug(role.name);
+          Role.checkAccess(role.name, checkingRole, callback);
         } else {
           return callback(new Error('Access Denied'));
         }
@@ -71,6 +76,6 @@ roleSchema.statics.checkAccess = function(userRole, checkingRole, callback) {
   });
 };
 
-var Role = restful.model('Roles', roleSchema);
+var Role = mongoose.model('Roles', roleSchema);
 
 module.exports = Role;
