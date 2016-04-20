@@ -5,6 +5,8 @@ var Team = require('../../models/team');
 var Department = require('../../models/department');
 var Role = require('../../models/role');
 
+var Q = require('q');
+
 module.exports.drop = function(req, res, next) {
   //clear db
   mongoose.connection.collections['users'].drop(function(err) {
@@ -118,4 +120,16 @@ module.exports.checkAccessTest = function(req, res, next) {
       });
     }
   });
+};
+
+module.exports.fillUsers = function(req, res, next) {
+  var methods = [];
+  for(var i = 0; i < 1000; i++) {
+    var name = 'GENERATED' + i;
+    methods.push(User.createUser(name, name, name, name, null, null, 'User'));
+  }
+
+  Q.all(methods)
+  .then(() => { res.json({success: true}); })
+  .catch(() => { res.json({success: false}); });
 };

@@ -17,7 +17,7 @@ router.route('/', function(req, res, next) {
     });
   })
   .post(function(req, res, next) {
-    Role.createRole(req.body.name, req.body.child, function(err, role) {
+    Role.createRole(req.body.name, req.body.child.name, function(err, role) {
       if (err) {
         throw err;
       } else {
@@ -42,11 +42,11 @@ router.route('/:id', function(req, res, next) {
     });
   })
   .put(function(req, res, next) {
-    Role.findOne({_id: req.body.id}, function(err, role) {
+    Role.findOne({_id: req.body._id}, function(err, role) {
       if (err) {
         throw err;
       } else {
-        role.updateRole(req.body.name, req.body.child, function(err, role) {
+        role.updateRole(req.body.name, req.body.child.name, function(err, role) {
           if (err) {
             throw err;
           } else {
@@ -56,7 +56,7 @@ router.route('/:id', function(req, res, next) {
       }
     });
   }).delete(function(req, res, next) {
-    Role.findOne({_id: req.body.id}, function(err, role) {
+    Role.findOne({_id: req.body._id}, function(err, role) {
       if (err) {
         throw err;
       } else {

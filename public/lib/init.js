@@ -8,6 +8,7 @@
 
     // User popup init
 
+  
     $('.top-bar_user .teal')
       .popup({
         popup: $('.user-menu'),
@@ -15,7 +16,7 @@
         position: 'bottom left'
       });
 
-      
+
     var $document = $(document),
         $element = $('#some-element'),
         className = 'hasScrolled';
