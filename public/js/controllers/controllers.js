@@ -1,4 +1,4 @@
-var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies', 'ngFileUpload']);
+var module = angular.module('aliceApp.controllers', ['ngTagsInput', 'ngCookies', 'ngFileUpload', 'ngImgCrop']);
 
 //baaaaaaad
 var checkAccess = function($cookies, $state) {
@@ -78,10 +78,16 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
       });
 
       avatar.upload.then(function(response) {
-        $timeout(function() {
-          $state.go('users');
-        });
-      });
+        $timeout(function () {
+             $scope.result = response.data;
+         });
+      }, function(responce){
+        if (response.status > 0) $scope.errorMsg = response.status
+          + ': ' + response.data;
+      }, function(evt){
+        $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+      }
+    );
     } else {
 
       $scope.user.$update({
@@ -144,6 +150,7 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   $scope.department = Department.get({
     id: $stateParams.id
   });
+
 }).controller('DepartmentCreateController', function($scope, $state, $cookies, $stateParams, Department) {
   checkAccess($cookies, $state);
   $scope.department = new Department();
@@ -166,10 +173,15 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   $scope.loadDepartment = function() {
     $scope.department = Department.get({
       id: $stateParams.id
+    }, function() {
+      $('.ui.dropdown').dropdown();
     });
+
   };
 
   $scope.loadDepartment();
+
+
 });
 
 module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {
