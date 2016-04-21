@@ -16,38 +16,12 @@
   <link href="css/ng-img-crop.css" type="text/css" rel="stylesheet" />
 </head>
 
-<body>
-  <div ng-controller="NavBarController" class="top-bar">
-    <div class="item top-bar_logo">
-      <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
-    </div>
-    <div class="item top-bar_search">
-      <div class="ui icon input">
-        <input type="text" ng-model="search" placeholder="Search...">
-        <i class="search icon"></i>
+<body ng-controller="NavBarController">
+  <div class="ui wrapper-block sidebar  visible left nav-bar vertical menu" ng-class="user.role == 'guest' ? 'background' :'inverted'">
+      <div class="item nav-bar_logo">
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
       </div>
-    </div>
-    <div class="item top-bar_user">
-      <a class="ui teal image label">
-        <img ng-src="{{user.avatar}}" alt="Contact Person">
-        <span ng-bind="user.username"></span>
-        <div class="detail" ng-bind="user.role.name"></div>
-      </a>
-      <div class="ui transition hidden popup user-menu">
-        <a class="item teal">
-          <i class="setting icon teal" ng-click=""></i>
-          <span class="teal">Settings</span>
-        </a>
-        <a class="item teal">
-          <i class="sign out icon teal" ng-click="logout()"></i>
-          <span class="teal">Sign Out</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="ui wrapper-block pushable">
-    <div class="ui sidebar visible inverted left vertical menu">
+      <div class="inverted" ng-hide="user.role == 'guest'">
       <a class="item" ui-sref="users">
         <i class="users icon"></i> Users
       </a>
@@ -57,14 +31,48 @@
       <a class="item" ui-sref="roles">
         <i class="handicap icon"></i> Roles
       </a>
-    </div>
-    <div class="pusher">
-      <div class="content-block" ui-view>
-
+      <div class="item top-bar_search">
+        <div class="ui icon input row">
+          <input type="text" ng-model="$root.search" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
       </div>
-      <!-- <div class="ui basic segment ">
-        <div class="ui fluid container" ></div>
-      </div> -->
+    </div>
+  </div>
+  <div class="pusher">
+    <div class="top-bar">
+      <div class="item hamburger">
+        <i class="sidebar hamburger_icon  big icon"></i>
+      </div>
+      <div class="item top-bar_logo hidden">
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+      </div>
+      <div class="item top-bar_search">
+        <div class="ui icon input mobile only row">
+          <input type="text" ng-model="$root.search" placeholder="Search..." ng-hide="user.role == 'guest'">
+          <i class="search icon"></i>
+        </div>
+      </div>
+      <div class="item top-bar_user" ng-hide="user.role == 'guest'">
+        <a class="ui teal image label">
+          <img ng-src="{{user.avatar}}" alt="Contact Person">
+          <span ng-bind="user.username"></span>
+          <div class="detail" ng-bind="user.role"></div>
+        </a>
+        <div class="ui transition hidden popup user-menu">
+          <a class="item teal" ng-hide="true">
+            <i class="setting icon teal" ng-click=""></i>
+            <span class="teal" >Settings</span>
+          </a>
+          <a class="item teal">
+            <i class="sign out icon teal"></i>
+            <span class="teal" ng-click="logout()">Sign Out</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="content-block" ui-view>
+
     </div>
   </div>
   <!--  Scripts-->

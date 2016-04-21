@@ -7,18 +7,25 @@ var checkAccess = function($cookies, $state) {
   }
 };
 
-module.controller('NavBarController', function($scope, $state, $window, $cookies) {
-
+module.controller('NavBarController', function($rootScope, $scope, $state, $window, $cookies) {
 
   $scope.user = {
     showTooltip: false,
     tipDirection: ''
   };
 
+  $rootScope.update = function () {
+    if ($cookies.get('user')) {
+      $scope.user = JSON.parse($cookies.get('user'));
+    } else {
+      $state.go('login');
+    }
+  }
+
   if (!$cookies.get('user')) {
     $scope.user.role = 'guest';
     //$window.location.href = '#/login';
-    //$state.go('login');
+    $state.go('login');
   } else {
     $scope.user = JSON.parse($cookies.get('user'));
 
@@ -26,6 +33,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
       $cookies.remove('token');
       $cookies.remove('user');
       $scope.user.role = 'guest';
+      $state.go('users', {}, { reload: true });
     };
   }
 
@@ -45,17 +53,17 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.roles = Role.query();
   $scope.teams = [];
 
-  $scope.update = function(department) {
-    alert(department);
-    $scope.teams = JSON.parse(department).teams;
+  $scope.roleClass = '';
+
+  $scope.update = function(index) {
+    $scope.user.department = $scope.departments[index].name;
+    $scope.teams = $scope.departments[index].teams;
   }
 
   //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
   $scope.updateUser = function(avatar) {
     //alert($scope.user.department.name);
     if (avatar) {
-      $scope.user.department = $scope.user.department.name;
-
       avatar.upload = Upload.upload({
         url: '/api/users/' + $scope.user._id,
         data: {
@@ -89,7 +97,6 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
       }
     );
     } else {
-      $scope.user.department = $scope.user.department.name;
 
       $scope.user.$update({
         _id: $scope.user._id,
@@ -109,14 +116,23 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.loadUser = function() {
     $scope.user = User.get({
       id: $stateParams.id
-    }, function() {
-      $scope.teams = $scope.user.department.teams;
+    }
+    , function() {
+
+      //$scope.user.department = $scope.user.department.name;
+      $scope.user.team = $scope.user.team.name;
+
+      $(".ui.dropdown").dropdown("refresh");
+      $($('.ui.dropdown').get(0)).dropdown('set selected',$scope.user.department.name);
+      $($('.ui.dropdown').get(1)).dropdown('set selected',$scope.user.team);
+      $($('.ui.dropdown').get(2)).dropdown('set selected',$scope.user.role);
+      //$scope.teams = $scope.user.department.teams;
     });
   };
 
 
   $scope.loadUser();
-  $('.ui.dropdown').dropdown();
+
 });
 
 // departments controllers
@@ -125,7 +141,6 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   $scope.departments = Department.query();
 
   $scope.departmentSelect = function() {
-    alert('asdaswd');
     $scope.$apply();
   };
 
@@ -189,4 +204,36 @@ module.controller('LoginController', function($scope, $state, $stateParams, $coo
     });
 
   }
+
+  // Form Validation
+
+//   $('.ui.form')
+//   .form({
+//     fields: {
+//       name: {
+//         identifier: 'login',
+//         rules: [
+//           {
+//             type   : 'empty',
+//             prompt : 'Please enter your login'
+//           }
+//         ]
+//       },
+//       password: {
+//         identifier: 'password',
+//         rules: [
+//           {
+//             type   : 'empty',
+//             prompt : 'Please enter a password'
+//           },
+//           {
+//             type   : 'minLength[6]',
+//             prompt : 'Your password must be at least {ruleValue} characters'
+//           }
+//         ]
+//       },
+//     }
+//   })
+// ;
+
 });

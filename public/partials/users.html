@@ -7,35 +7,40 @@
 
   </div>
 </div>
-<div class="user-add-button ui  bottom sticky visible">
+<div class="user-add-button ui fixed bottom sticky ">
   <button ui-sref="newUser" class="circular teal ui icon button addpopup">
     <i class="icon add user big"></i>
   </button>
 </div>
 <h3 class="ui header">All users</h3>
-
-<div class="ui link cards user-cards">
-  <div class="card" ng-repeat="user in users | filter:search" ui-sref="editUser({id:user._id})">
-    <div class="image user-cards_img">
-     <img ng-src="{{user.avatar}}" alt="{{user.name}}">
-    </div>
-    <div class="content">
-      <div class="header"><span ng-bind="user.name"></span> <span ng-bind="user.lastname"></span></div>
-      <div class="meta">
-        <a ng-bind="user.department.name"></a>
+<div class="ui link cards user-cards grid">
+    <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:$root.search" ui-sref="editUser({id:user._id})">
+      <div class="image user-cards_img">
+       <img ng-src="{{user.avatar}}" alt="{{user.name}}">
       </div>
-      <div class="description">
-        Matthew is an interior designer living in New York.
+      <div class="content">
+        <div class="header"><span ng-bind="user.name"></span> <span ng-bind="user.lastname"></span></div>
+        <div class="meta">
+          <a ng-bind="user.department.name"></a>
+        </div>
+        <div class="description">
+          <span ng-bind="getFullDepartment(user)"></span>
+        </div>
       </div>
-    </div>
-    <div class="extra content" ng-bind="getFullDepartment(user)">
-      <span class="right floated">
-        Joined in 2013
-      </span>
-      <!-- <span>
-        <i class="user icon"></i>
-        75 Friends
-      </span> -->
+      <div class="extra content">
+        <span class="right floated">
+          <button class="ui basic button">
+            <i class="icon remove user" ng-show="user.role == 'God'"></i>
+            Delete
+          </button>
+        </span>
+        <span>
+          <button class="ui basic button" ng-show="user.role == 'Admin' || user.role == 'God'">
+            <i class="icon write"></i>
+            Edit
+          </button>
+        </span>
+      </div>
     </div>
   </div>
 </div>
