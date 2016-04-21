@@ -93,7 +93,7 @@ body,html
 .content-block
 {
   padding: 40px 0 0 40px !important;
-  max-width: 1280px;
+  /*max-width: 1280px;*/
 }
 
 .content-block h3
@@ -139,7 +139,6 @@ body,html
   margin: 0 auto;
   background: #fbfcfc !important;
   height: 219px;
-  width: 290px;
 }
 
 .user-cards_img img
@@ -153,8 +152,8 @@ body,html
 
 .user-add-button
 {
-  top: 20px !important;
-  right: 275px !important;
+  top: 25px !important;
+  right: 20px !important;
   position: fixed !important;
 }
 .user-add-button button
@@ -224,4 +223,20 @@ form .progress {
     font-size: smaller;
     background: orange;
     width: 0;
+}
+
+
+/* login form */
+
+.login-form
+{
+  margin: 0 auto !important;
+  width: 390px;
+}
+
+
+.ui.visible.left.sidebar~.fixed, .ui.visible.left.sidebar~.pusher {
+    -webkit-transform: none !important;
+    transform: none !important;
+    margin-left: 260px !important;
 }
