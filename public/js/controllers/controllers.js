@@ -7,18 +7,25 @@ var checkAccess = function($cookies, $state) {
   }
 };
 
-module.controller('NavBarController', function($scope, $state, $window, $cookies) {
-
+module.controller('NavBarController', function($rootScope, $scope, $state, $window, $cookies) {
 
   $scope.user = {
     showTooltip: false,
     tipDirection: ''
   };
 
+  $rootScope.update = function () {
+    if ($cookies.get('user')) {
+      $scope.user = JSON.parse($cookies.get('user'));
+    } else {
+      $state.go('login');
+    }
+  }
+
   if (!$cookies.get('user')) {
     $scope.user.role = 'guest';
     //$window.location.href = '#/login';
-    //$state.go('login');
+    $state.go('login');
   } else {
     $scope.user = JSON.parse($cookies.get('user'));
 
@@ -134,7 +141,6 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   $scope.departments = Department.query();
 
   $scope.departmentSelect = function() {
-    alert('asdaswd');
     $scope.$apply();
   };
 
