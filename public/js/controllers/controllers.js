@@ -26,6 +26,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
       $cookies.remove('token');
       $cookies.remove('user');
       $scope.user.role = 'guest';
+      $state.go('users', {}, { reload: true });
     };
   }
 
@@ -200,33 +201,33 @@ module.controller('LoginController', function($scope, $state, $stateParams, $coo
 
   // Form Validation
 
-  $('.ui.form')
-  .form({
-    fields: {
-      name: {
-        identifier: 'login',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Please enter your login'
-          }
-        ]
-      },
-      password: {
-        identifier: 'password',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Please enter a password'
-          },
-          {
-            type   : 'minLength[6]',
-            prompt : 'Your password must be at least {ruleValue} characters'
-          }
-        ]
-      },
-    }
-  })
-;
+//   $('.ui.form')
+//   .form({
+//     fields: {
+//       name: {
+//         identifier: 'login',
+//         rules: [
+//           {
+//             type   : 'empty',
+//             prompt : 'Please enter your login'
+//           }
+//         ]
+//       },
+//       password: {
+//         identifier: 'password',
+//         rules: [
+//           {
+//             type   : 'empty',
+//             prompt : 'Please enter a password'
+//           },
+//           {
+//             type   : 'minLength[6]',
+//             prompt : 'Your password must be at least {ruleValue} characters'
+//           }
+//         ]
+//       },
+//     }
+//   })
+// ;
 
 });

@@ -16,38 +16,38 @@
   <link href="css/ng-img-crop.css" type="text/css" rel="stylesheet" />
 </head>
 
-<body>
-  <div ng-controller="NavBarController" class="top-bar">
+<body ng-controller="NavBarController">
+  <div class="top-bar">
     <div class="item top-bar_logo">
       <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
     </div>
-    <div class="item top-bar_search">
+    <div class="item top-bar_search" ng-hide="user.role == 'guest'">
       <div class="ui icon input">
         <input type="text" ng-model="$root.search" placeholder="Search...">
         <i class="search icon"></i>
       </div>
     </div>
-    <div class="item top-bar_user">
+    <div class="item top-bar_user" ng-hide="user.role == 'guest'">
       <a class="ui teal image label">
         <img ng-src="{{user.avatar}}" alt="Contact Person">
         <span ng-bind="user.username"></span>
-        <div class="detail" ng-bind="user.role.name"></div>
+        <div class="detail" ng-bind="user.role"></div>
       </a>
       <div class="ui transition hidden popup user-menu">
-        <a class="item teal">
+        <a class="item teal" ng-hide="true">
           <i class="setting icon teal" ng-click=""></i>
           <span class="teal">Settings</span>
         </a>
         <a class="item teal">
-          <i class="sign out icon teal" ng-click="logout()"></i>
-          <span class="teal">Sign Out</span>
+          <i class="sign out icon teal"></i>
+          <span class="teal" ng-click="logout()">Sign Out</span>
         </a>
       </div>
     </div>
   </div>
 
   <div class="ui wrapper-block pushable">
-    <div class="ui sidebar visible inverted left vertical menu">
+    <div class="ui sidebar visible inverted left vertical menu" ng-hide="user.role == 'guest'">
       <a class="item" ui-sref="users">
         <i class="users icon"></i> Users
       </a>
