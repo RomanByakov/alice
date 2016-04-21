@@ -4,42 +4,41 @@ var mongoose = restful.mongoose;
 var Team = require('./team');
 var User = require('./user');
 
+var Q = require('q');
+var logger = require('../modules/alice-logger');
+
 var departmentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
+  },
+  logo: {
+    type: String,
+    default: '../img/empty-img.jpg'
   },
   teams:[mongoose.Schema.Types.Mixed]
 });
 
-//not working
 departmentSchema.methods.updateDepartment = function(name, teams, callback) {
   this.name = name;
 
-  var teamCallback = function(err) {
-    if (err) {
-      callback(err);
-    }
-  };
+  this.teams = [];
 
-  //-_________-
-  teams.forEach(function(item) {
-    Team.createTeam(item.name, teamCallback);
-    Team.findOne({name: item.name}, function(err, team) {
-      if (err) {
-        callback(err);
-      } else {
-        this.teams.push(team);
-      }
+  for (var i = 0; i < teams.length; i++) {
+    var team = new Team({
+      name: teams[i].name
     });
-  });
+
+    team.save();
+    this.teams.push(team);
+  }
 
   this.save(callback);
 };
 
 departmentSchema.methods.deleteDepartment = function(callback) {
-    //todo: check in users
     User.find({department: this}, function(err, users) {
       if (users) {
         return callback(null, null);
@@ -73,6 +72,7 @@ departmentSchema.statics.createDepartment = function(name, teams, callback) {
   department.save(callback);
 };
 
-var Department = restful.model('Departments', departmentSchema)
+var Department = mongoose.model('Departments', departmentSchema);
+//Department.findOne = Q.nbind(Department.findOne.bind(Department));
 
 module.exports = Department;

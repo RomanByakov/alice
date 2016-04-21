@@ -1,14 +1,20 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var config = require('./config');
-var morgan = require('morgan');
+var Q = require('q');
+
+mongoose.Promise = Q.Promise;
+
 var path = require('path');
 var connectDomain = require('connect-domain');
+var url = require('url');
+var accessConfig = require('./access-config');
 
 var setup = require('./modules/setup');
 
 var jwt = require('jsonwebtoken');
+
+const throng = require('throng');
 
 // models
 var User = require('./models/user');
@@ -16,11 +22,29 @@ var Team = require('./models/team');
 var Department = require('./models/department');
 var Role = require('./models/role');
 
-// mongodb
+// throng({
+//   workers: 2,
+//   http://stackoverflow.com/questions/35799948/how-do-you-deploy-throng-or-cluster-with-angular-fullstack
+//   lifetime: Infinity
+// }, () => { console.log('Throng on!'); });
+
+var app = express();
+
+if (app.get('env') === 'development') {
+  var config = require('./config');
+} else {
+  var config = require('./config-prod');
+}
+
 mongoose.connect(config.database);
 
-// express
-var app = express();
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
+
 app.use(connectDomain());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -29,82 +53,106 @@ app.use(bodyParser.json());
 // api secret
 app.set('apliceSecret', config.token.secret);
 
-app.use(morgan('dev'));
-
 app.use("/", express.static(path.join(__dirname, 'public')));
 
-//setup
-app.use('/setup', setup.init);
-app.get('/check-access-test', setup.checkAccessTest);
+app.use('/', function(req, res, next) {
+  var parsedUrl = url.parse(req.url, true);
+  var pathname = parsedUrl.pathname;
+
+  // if (pathname == '/favicon.ico') {
+  //   res.json({favicon: empty});
+  // } else {
+  //   console.log(pathname);
+  //   next();
+  // }
+  next();
+});
+
+app.use('/favicon.ico', function(req, res, next) {
+  res.json({favicon: 'empty'});
+});
+
+if (app.get('env') === 'development') {
+  //setup
+  app.use('/drop', setup.drop);
+  app.use('/setup', setup.init);
+  app.use('/fill', setup.fillUsers);
+  app.get('/check-access-test', setup.checkAccessTest);
+}
 
 app.use('/auth', require('./routes/auth'));
 
 //check token
-// app.use(function(req, res, next) {
-//
-//   // check header or url parameters or post parameters for token
-//   var token = req.body.token || req.param('token') || req.headers['x-access-token'];
-//
-//   // decode token
-//   if (token) {
-//     // verifies secret and checks exp
-//     jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
-//       if (err) {
-//         return res.status(401).json({
-//           message: 'Failed to authenticate token.'
-//         });
-//       } else {
-//         // if everything is good, save to request for use in other routes
-//         req.decoded = decoded;
-//         next();
-//       }
-//     });
-//
-//   } else {
-//
-//     // if there is no token
-//     // return an error
-//     return res.status(401).json({
-//       message: 'Access is denied.'
-//     });
-//
-//   }
-//
-// });
+app.use(function(req, res, next) {
+  var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+
+  if (token) {
+    jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
+      if (err) {
+        return res.status(401).json({
+          message: 'Failed to authenticate token.'
+        });
+      } else {
+        var parsedUrl = url.parse(req.url, true);
+        var pathname = parsedUrl.pathname;
+        //console.log('Url' + parsedUrl.pathname);
+        //console.log('Query: ' + JSON.stringify(req.params));
+        //console.log('Parsed: ' + JSON.stringify(parsedUrl));
+        req.decoded = decoded;
+        //console.log(req.method);
+        req.currentUser = decoded._doc;
+
+        return Q.fcall(function() {
+          //temp crutch, refactor to access module
+          if (pathname == '/api/users' && req.params.id != null) {
+            return accessConfig['SELF'](req.currentUser, req.params.id);
+          } else {
+            return accessConfig[req.method](req.currentUser);
+          }
+        })
+        .then(function() {
+          next();
+        })
+        .catch(function(err) {
+          throw err;
+        });
+      }
+    });
+
+  } else {
+    return res.status(401).json({
+      message: 'Access is denied.'
+    });
+  }
+});
 
 // routes
 app.use('/api/users', require('./routes/user'));
 app.use('/api/departments', require('./routes/department'));
 app.use('/api/teams', require('./routes/team'));
+app.use('/api/roles', require('./routes/role'));
 
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    console.log('test');
-    if (err) {
-      res.status(err.status || 500);
-      res.json({
-        message: err.message,
-        error: err,
-        stack: err.stack
-      });
-      console.log("Error handled");
-    } else {
-      res.json({success: true});
-    }
+    res.status(err.status || 500);
+    // res.json({
+    //   message: err.message,
+    //   error: err,
+    //   stack: err.stack
+    // });
+    res.send(err);
   });
 } else {
   app.use(function(err, req, res, next) {
-    if (err) {
-      res.status(err.status || 500);
-      res.json({message: "Something wrong..."});
-      console.log(err.message);
-      console.log(err.stack);
-    } else {
-      res.json({success: true});
-    }
+    res.status(err.status || 500);
+    res.json({message: "Something wrong..."});
   });
 }
 
+// process.on('uncaughtException', function (err, req, res) {
+//   console.log(JSON.stringify(err));
+// });
+
 // start server
 app.listen(config.port);
-console.log(' alice is running on port 3000');
+console.log('alice is running on port ' + config.port);
