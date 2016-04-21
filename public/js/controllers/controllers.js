@@ -45,17 +45,17 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.roles = Role.query();
   $scope.teams = [];
 
-  $scope.update = function(department) {
-    alert(department);
-    $scope.teams = JSON.parse(department).teams;
+  $scope.roleClass = '';
+
+  $scope.update = function(index) {
+    $scope.user.department = $scope.departments[index].name;
+    $scope.teams = $scope.departments[index].teams;
   }
 
   //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
   $scope.updateUser = function(avatar) {
     //alert($scope.user.department.name);
     if (avatar) {
-      $scope.user.department = $scope.user.department.name;
-
       avatar.upload = Upload.upload({
         url: '/api/users/' + $scope.user._id,
         data: {
@@ -83,7 +83,6 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
         });
       });
     } else {
-      $scope.user.department = $scope.user.department.name;
 
       $scope.user.$update({
         _id: $scope.user._id,
@@ -103,14 +102,23 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
   $scope.loadUser = function() {
     $scope.user = User.get({
       id: $stateParams.id
-    }, function() {
-      $scope.teams = $scope.user.department.teams;
+    }
+    , function() {
+
+      //$scope.user.department = $scope.user.department.name;
+      $scope.user.team = $scope.user.team.name;
+
+      $(".ui.dropdown").dropdown("refresh");
+      $($('.ui.dropdown').get(0)).dropdown('set selected',$scope.user.department.name);
+      $($('.ui.dropdown').get(1)).dropdown('set selected',$scope.user.team);
+      $($('.ui.dropdown').get(2)).dropdown('set selected',$scope.user.role);
+      //$scope.teams = $scope.user.department.teams;
     });
   };
 
 
   $scope.loadUser();
-  $('.ui.dropdown').dropdown();
+
 });
 
 // departments controllers
