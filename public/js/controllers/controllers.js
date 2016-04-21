@@ -189,4 +189,36 @@ module.controller('LoginController', function($scope, $state, $stateParams, $coo
     });
 
   }
+
+  // Form Validation
+
+  $('.ui.form')
+  .form({
+    fields: {
+      name: {
+        identifier: 'login',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter your login'
+          }
+        ]
+      },
+      password: {
+        identifier: 'password',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter a password'
+          },
+          {
+            type   : 'minLength[6]',
+            prompt : 'Your password must be at least {ruleValue} characters'
+          }
+        ]
+      },
+    }
+  })
+;
+
 });
