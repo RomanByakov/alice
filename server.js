@@ -121,7 +121,7 @@ app.use(function(req, res, next) {
 // routes
 app.use('/api/users', require('./routes/user'));
 app.use('/api/departments', require('./routes/department'));
-app.use('/api/teams', require('./routes/team'));
+//app.use('/api/teams', require('./routes/team'));
 app.use('/api/roles', require('./routes/role'));
 
 if (app.get('env') === 'development') {

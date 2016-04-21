@@ -52,11 +52,13 @@ departmentSchema.methods.deleteDepartment = function(callback) {
     this.remove(callback);
 };
 
-departmentSchema.statics.createDepartment = function(name, teams, callback) {
+departmentSchema.statics.createDepartment = function(name, teams) {
   "use strict";
   var department = new Department({
     name: name
   });
+
+  logger.debug(teams);
 
   for (var i = 0; i < teams.length; i++) {
     var team = new Team({
@@ -69,7 +71,7 @@ departmentSchema.statics.createDepartment = function(name, teams, callback) {
     department.teams.push(team);
   }
 
-  department.save(callback);
+  return department.save();
 };
 
 var Department = mongoose.model('Departments', departmentSchema);
