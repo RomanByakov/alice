@@ -14,19 +14,11 @@ var setup = require('./modules/setup');
 
 var jwt = require('jsonwebtoken');
 
-const throng = require('throng');
-
 // models
 var User = require('./models/user');
 var Team = require('./models/team');
 var Department = require('./models/department');
 var Role = require('./models/role');
-
-// throng({
-//   workers: 2,
-//   http://stackoverflow.com/questions/35799948/how-do-you-deploy-throng-or-cluster-with-angular-fullstack
-//   lifetime: Infinity
-// }, () => { console.log('Throng on!'); });
 
 var app = express();
 

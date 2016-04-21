@@ -78,7 +78,17 @@ module.exports.init = function(req, res, next) {
         //   res.json({success:true});
         // });
 
-        User.createUser("Alice", "Simpson", "Alice", "Sochno", null, null, "God")
+        var params = {
+          name: "Alice",
+          lastname: "Simpson",
+          username: "Alice",
+          password: "Sochno",
+          department: null,
+          team: null,
+          role: "God"
+        };
+
+        User.createUser(params)
         .then(function() {
           res.json({success: true});
         });
@@ -126,7 +136,18 @@ module.exports.fillUsers = function(req, res, next) {
   var methods = [];
   for(var i = 0; i < 1000; i++) {
     var name = 'GENERATED' + i;
-    methods.push(User.createUser(name, name, name, name, null, null, 'User'));
+
+    var params = {
+      name: name,
+      lastname: name,
+      username: name,
+      password:name,
+      department: null,
+      team: null,
+      role: "User"
+    };
+
+    methods.push(User.createUser(params));
   }
 
   Q.all(methods)
