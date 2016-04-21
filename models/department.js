@@ -21,7 +21,7 @@ var departmentSchema = new mongoose.Schema({
   teams:[mongoose.Schema.Types.Mixed]
 });
 
-departmentSchema.methods.updateDepartment = function(name, teams, callback) {
+departmentSchema.methods.updateDepartment = function(name, teams) {
   this.name = name;
 
   this.teams = [];
@@ -35,21 +35,15 @@ departmentSchema.methods.updateDepartment = function(name, teams, callback) {
     this.teams.push(team);
   }
 
-  this.save(callback);
+  return this.save();
 };
 
-departmentSchema.methods.deleteDepartment = function(callback) {
-    User.find({department: this}, function(err, users) {
-      if (users) {
-        return callback(null, null);
-      }
-    });
-
+departmentSchema.methods.deleteDepartment = function() {
     this.teams.forEach(function(team) {
         team.remove(callback);
     });
 
-    this.remove(callback);
+    return this.remove();
 };
 
 departmentSchema.statics.createDepartment = function(name, teams) {
