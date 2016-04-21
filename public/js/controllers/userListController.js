@@ -1,8 +1,10 @@
 angular.module('aliceApp')
   // users controllers
-  .controller('UserListController', function($scope, $state, $window, User, $cookies) {
+  .controller('UserListController', function($rootScope, $scope, $state, $window, User, $cookies) {
 
     checkAccess($cookies, $state);
+
+    $rootScope.update();
 
     $scope.users = User.query();
 
@@ -10,6 +12,6 @@ angular.module('aliceApp')
       user.$delete().then(function(){
         $state.go('users', {}, { reload: true });
       });
-    }
+    };
 
   })

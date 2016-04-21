@@ -14,8 +14,8 @@
 </div>
 <h3 class="ui header">All users</h3>
 <div class="ui link cards user-cards grid">
-    <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:search">
-      <div class="image user-cards_img" ui-sref="viewUser({id:user._id})">
+    <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:$root.search" ui-sref="editUser({id:user._id})">
+      <div class="image user-cards_img">
        <img ng-src="{{user.avatar}}" alt="{{user.name}}">
       </div>
       <div class="content">
@@ -30,12 +30,12 @@
       <div class="extra content">
         <span class="right floated">
           <button class="ui basic button">
-            <i class="icon remove user"></i>
+            <i class="icon remove user" ng-show="user.role == 'God'"></i>
             Delete
           </button>
         </span>
         <span>
-          <button class="ui basic button" ui-sref="editUser({id:user._id})">
+          <button class="ui basic button" ui-sref="editUser({id:user._id})" ng-show="user.role == 'Admin' || user.role == 'God'">
             <i class="icon write"></i>
             Edit
           </button>

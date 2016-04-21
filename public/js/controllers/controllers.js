@@ -7,18 +7,25 @@ var checkAccess = function($cookies, $state) {
   }
 };
 
-module.controller('NavBarController', function($scope, $state, $window, $cookies) {
-
+module.controller('NavBarController', function($rootScope, $scope, $state, $window, $cookies) {
 
   $scope.user = {
     showTooltip: false,
     tipDirection: ''
   };
 
+  $rootScope.update = function () {
+    if ($cookies.get('user')) {
+      $scope.user = JSON.parse($cookies.get('user'));
+    } else {
+      $state.go('login');
+    }
+  }
+
   if (!$cookies.get('user')) {
     $scope.user.role = 'guest';
     //$window.location.href = '#/login';
-    //$state.go('login');
+    $state.go('login');
   } else {
     $scope.user = JSON.parse($cookies.get('user'));
 
@@ -26,6 +33,7 @@ module.controller('NavBarController', function($scope, $state, $window, $cookies
       $cookies.remove('token');
       $cookies.remove('user');
       $scope.user.role = 'guest';
+      $state.go('users', {}, { reload: true });
     };
   }
 
@@ -133,7 +141,6 @@ module.controller('DepartmentListController', function($scope, $state, $cookies,
   $scope.departments = Department.query();
 
   $scope.departmentSelect = function() {
-    alert('asdaswd');
     $scope.$apply();
   };
 
@@ -200,33 +207,33 @@ module.controller('LoginController', function($scope, $state, $stateParams, $coo
 
   // Form Validation
 
-  $('.ui.form')
-  .form({
-    fields: {
-      name: {
-        identifier: 'login',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Please enter your login'
-          }
-        ]
-      },
-      password: {
-        identifier: 'password',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Please enter a password'
-          },
-          {
-            type   : 'minLength[6]',
-            prompt : 'Your password must be at least {ruleValue} characters'
-          }
-        ]
-      },
-    }
-  })
-;
+//   $('.ui.form')
+//   .form({
+//     fields: {
+//       name: {
+//         identifier: 'login',
+//         rules: [
+//           {
+//             type   : 'empty',
+//             prompt : 'Please enter your login'
+//           }
+//         ]
+//       },
+//       password: {
+//         identifier: 'password',
+//         rules: [
+//           {
+//             type   : 'empty',
+//             prompt : 'Please enter a password'
+//           },
+//           {
+//             type   : 'minLength[6]',
+//             prompt : 'Your password must be at least {ruleValue} characters'
+//           }
+//         ]
+//       },
+//     }
+//   })
+// ;
 
 });
