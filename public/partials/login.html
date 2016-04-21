@@ -1,20 +1,19 @@
-<form class="form-horizontal card-login_form" role="form" ng-submit="login()">
-  <div class="row valign-wrapper card-login_block">
-    <div class="card-panel card-login white">
-      <div class="input-field col s10 offset-s1">
-        <input id="login" ng-model="user.username" type="text" required>
-        <label for="login">Login</label>
-      </div>
-      <div class="input-field col s10 offset-s1">
-        <input id="password" ng-model="user.password" type="password" required>
-        <label for="password">Password</label>
-      </div>
-      <div class="row center">
-        <label id="message" class="red-text">{{error}}</label>
-      </div>
-      <div class="row center">
-        <button type="submit" class="btn-large waves-effect waves-light orange">Login</button>
+<div class="ui stacked segment login-form">
+  <form class="ui large form"  ng-submit="login()">
+    <div class="field">
+      <div class="ui left icon input">
+        <i class="user icon"></i>
+        <input id="login" class="ui teal" ng-model="user.username" id="login" name="login" type="text" placeholder="Login" required>
       </div>
     </div>
-  </div>
-</form>
+    <div class="field">
+      <div class="ui left icon input">
+        <i class="lock icon"></i>
+        <input id="login" ng-model="user.password" name="password" id="password" type="password" placeholder="Password" required>
+      </div>
+    </div>
+    <button type="submit" class="ui fluid large teal submit button">Login</button>
+    <div class="ui error message">
+      </div>
+      <div class="ui red message" ng-hide="!error" ng-bind="error"></div>
+  </form>

@@ -44,6 +44,22 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
       templateUrl: 'partials/department-edit.html',
       controller: 'DepartmentEditController'
     })
+    // roles
+    .state('roles', {
+      url: '/roles',
+      templateUrl: 'partials/roles.html',
+      controller: 'RolesListController'
+    })
+    .state('newRole', {
+      url: '/roles/new',
+      templateUrl: 'partials/role-add.html',
+      controller: 'RoleCreateController'
+    })
+    .state('editRole', {
+      url: '/roles/edit/:id',
+      templateUrl: 'partials/role-edit.html',
+      controller: 'RoleEditController'
+    })
     //auth
     .state('login', {
       url: 'login',

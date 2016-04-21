@@ -1,3 +1,112 @@
-<form class="form-horizontal" role="form" ng-submit="updateUser()">
-    <div ng-include="'partials/_form.html'"></div>
-</form>
+<div class="user-form">
+  <div class="ui piled segment">
+    <h4 class="ui header">Edit user card</h4>
+    <form role="form" class="ui form" ng-submit="updateUser(avatar)">
+        <!-- <div ng-include="'partials/_form.html'"></div> -->
+        <div class="ui inverted segment">
+          <div class="ui inverted form">
+            <div class="two fields">
+              <div class="field">
+                <label>Login</label>
+                <input placeholder="User login" ng-model="user.login" type="text">
+              </div>
+              <div class="field">
+                <label>Password</label>
+                <input placeholder="Write pass" ng-model="user.password" type="password">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Name</label>
+          <div class="two fields">
+            <div class="field">
+              <input type="text" name="shipping[first-name]" ng-model="user.name" placeholder="First Name">
+            </div>
+            <div class="field">
+              <input type="text" name="shipping[last-name]" ng-model="user.lastname" placeholder="Last Name">
+            </div>
+          </div>
+        </div>
+        <div class="three fields">
+          <div class="field">
+            <label>Departments</label>
+            <div class="ui selection dropdown">
+              <input type="hidden" name="gender">
+              <i class="dropdown icon"></i>
+              <div class="default text" >Department</div>
+              <div class="menu">
+                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name" ng-selected="user.department.name == department.name"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ui field">
+            <label>Team</label>
+            <div class="ui selection dropdown">
+              <input type="hidden" name="gender">
+              <i class="dropdown icon"></i>
+              <div class="default text">Team</div>
+              <div class="menu">
+                <div ng-repeat="team in teams" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Role</label>
+            <div class="ui selection dropdown">
+              <input type="hidden" name="gender">
+              <i class="dropdown icon"></i>
+              <div class="default text" >Role</div>
+              <div class="menu">
+                <div ng-repeat="role in roles" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="three fields">
+          <div class="field">
+            <label>Avatar</label>
+            <input type="file" ngf-select ng-model="avatar" name="file"
+                     accept="image/*" ngf-max-size="2MB"
+                     ngf-model-invalid="errorFile" id="avatar-input">
+          </div>
+          <div class="field"></div>
+          <div class="field">
+            <div class="ui small circular image form-img">
+              <img ng-src="{{user.avatar}}" alt="{{user.name}}">
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <button type="submit" class="ui primary button">Save</button>
+        </div>
+
+    </form>
+    <button ngf-select ng-model="picFile" accept="image/*">
+            Select Picture</button>
+        <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
+             class="cropArea">
+            <img-crop image="picFile  | ngfDataUrl"
+            result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+            </img-crop>
+        </div>
+        <div>
+            <img ng-src="{{croppedDataUrl}}" />
+        </div>
+        <button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>
+
+        <span class="progress" ng-show="progress >= 0">
+          <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+        </span>
+        <span ng-show="result">Upload Successful</span>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+    <pre style="">
+        {{ user | json }}
+    </pre>
+  </div>
+</div>

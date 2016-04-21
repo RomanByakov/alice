@@ -1,69 +1,299 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
+/*
+  Alice main stylesheet
+  Author: vanhock
+*/
 
- body
- {
-     background: #F9F8F8;
- }
+/* Base styles */
 
-  .brand-logo
+body,html
+{
+   background: #ECECEC !important;
+}
+
+.background
+{
+   background: #ECECEC !important;
+}
+
+/* Top Bar */
+
+.top-bar
+{
+  background-color: rgb(0,137,123);
+  height: 70px;
+}
+
+.top-bar_logo
+{
+
+}
+
+.top-bar_logo .brand-logo
+{
+  margin: 16px 0 0 54px;
+}
+
+.nav-bar_logo
+{
+  height: 70px;
+  background: #00897B !important;
+}
+
+.nav-bar_logo .brand-logo
+{
+  margin: 3px 0 0 65px;
+}
+
+.top-bar_search
+{
+  padding: 17px 0 0 0;
+  margin: 0 0 0 10px;
+  float: left;
+}
+
+.top-bar_user
+{
+  float:right;
+  margin: 22px 65px 0 0;
+}
+
+.user-menu
+{
+
+}
+
+.user-menu .item
+{
+  display: block;
+  margin: 3px 0px 5px 0;
+  cursor:pointer;
+  color: #00b5ad;
+}
+
+.user-menu .item:hover span, .user-menu .item:hover i
+{
+  color: #333 !important;
+}
+
+.brand-logo
+{
+  position: relative;
+  width: 133px;
+  float: left;
+}
+
+.brand-logo span
+{
+  position: absolute;
+  font-size: 11px;
+  color: #EAEAEA;
+  top: -1px;
+  left: 88px;
+}
+
+.brand-logo:before
+{
+ content:"";
+ background: url("../img/alice.png") no-repeat;
+ width: 83px;
+ height: 36px;
+ display: block;
+ vertical-align: top;
+ top: 0;
+}
+
+/* Content  */
+/*******************************
+         Sidebar Layout
+*******************************/
+
+
+
+.wrapper-block
+{
+  border: 0 !important;
+  height: auto !important;
+  min-height: 100%;
+  box-shadow: none !important;
+}
+
+.wrapper-block .nav-bar_logo
+{
+
+}
+
+.content-block
+{
+  padding: 30px !important;
+  max-width: 1280px;
+}
+
+.content-block h3
+{
+  margin: 0 0 10px 0 !important;
+}
+
+
+/* Sidebar */
+.side-bar
+{
+  width: 270px;
+}
+.fixed-bottom-right
+{
+ position: fixed !important;
+ right: 10px;
+ bottom: 10px;
+}
+
+.hamburger
+{
+  float:left;
+  margin: 0 19px 0 10px;
+}
+
+.hamburger_icon
+{
+  margin: 21px 0 0 0 !important;
+  cursor: pointer;
+  position: absolute;
+  z-index: 999999;
+  color: #025A51 !important;
+}
+
+/* Content block */
+
+.main-content
+{
+  max-width: 1280px;
+  background-color: rgb(236, 236, 236);
+  margin: 0 0 0 20px;
+  padding: 10px 0 0 0;
+}
+
+.main-content h3
+{
+  margin:0;
+  padding: 0;
+}
+
+/* Users page */
+
+.user-cards .card
+{
+  margin-bottom: 8px !important;
+}
+
+.user-cards_img
+{
+  margin: 0 auto;
+  background: #fbfcfc !important;
+}
+
+.user-cards_img img
+{
+  max-width: 150px !important;
+  border-radius: 100% !important;
+  margin: 30px auto;
+  border: 1px solid #e3dede !important;
+}
+
+.user-add-button
+{
+  bottom: 25px !important;
+  right: 20px !important;
+  position: fixed !important;
+}
+.user-add-button button
+{
+  padding: 20px !important;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.42) !important;
+}
+
+
+.user-add-button i
+{
+
+}
+
+/* Departments */
+
+.department-cards .card
+{
+  margin: 17px 10px 17px 0 !important;
+}
+
+
+/* Form */
+
+.user-form
+{
+  max-width: 700px;
+}
+
+.hidden
+{
+  display: none !important;
+}
+
+.form-img
+{
+  background: #fbfcfc !important;
+  margin: 32px 0 0 0;
+}
+
+.form-img img
+{
+  border: 1px solid #e3dede !important;
+}
+
+.department-button
+{
+  margin: 20px 0 0 -5px;
+}
+
+
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width:500px;
+    height:350px;
+}
+form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+
+/* login form */
+
+.login-form
+{
+  margin: 0 auto !important;
+  width: 390px;
+}
+
+
+.ui.visible.left.sidebar~.fixed, .ui.visible.left.sidebar~.pusher {
+    -webkit-transform: none !important;
+    transform: none !important;
+    margin-left: 260px !important;
+}
+
+
+@media only screen and (max-width: 767px){
+
+  .top-bar_user
   {
-    vertical-align: top;
-
+      display: none;
   }
-
- .brand-logo:before
- {
-   content:"";
-   background: url("../img/alice.png") no-repeat;
-   width: 164px;
-   height: 87px;
-   display: block;
-   margin: 8px 0 0 0;
-   vertical-align: top;
-   position: absolute;
-
- }
-
-.icon-block {
-  padding: 0 15px;
-}
-.icon-block .material-icons {
-	font-size: inherit;
-}
-
-.card-login
-{
-  margin: 0 auto 0 auto;
-
-}
-
-.card-login_block
-{
-  min-height: 600px;
-}
-
-.user-cards
-{
-  margin: 50px auto 0 auto;
-}
-
-.user-cards_card
-{
-  margin: 0 23px 23px 0;
-}
-.user-cards_card .user-detales
-{
-  margin: 40px 0 0 0;
-  border: 0;
-}
-
-.user-cards .card-action a
-{
-  margin: 0 10px 0 0;
 }

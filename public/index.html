@@ -9,44 +9,98 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <!-- Angular Material CSS now available via Google CDN; version 0.9.4 used here -->
+
+  <link rel="stylesheet" type="text/css" href="js/semantic/semantic.min.css">
+  <link href="css/ng-img-crop.css" type="text/css" rel="stylesheet" />
 </head>
 
-<body>
-  <nav class="orange" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" ui-sref="users" class="brand-logo"></a>
-      <ul class="right hide-on-med-and-down">
-          <li><a ui-sref="departments" href="#">Departments</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a ui-sref="departments" href="#">Departments</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+<body ng-controller="NavBarController">
+  <div class="ui wrapper-block sidebar  visible left nav-bar vertical menu" ng-class="user.role == 'guest' ? 'background' :'inverted'">
+      <div class="item nav-bar_logo">
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+      </div>
+      <div class="inverted" ng-hide="user.role == 'guest'">
+      <a class="item" ui-sref="users">
+        <i class="users icon"></i> Users
+      </a>
+      <a class="item" ui-sref="departments">
+        <i class="building outline icon"></i> Departments
+      </a>
+      <a class="item" ui-sref="roles">
+        <i class="handicap icon"></i> Roles
+      </a>
+      <div class="item top-bar_search">
+        <div class="ui icon input row">
+          <input type="text" ng-model="$root.search" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
+      </div>
     </div>
-  </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <!-- partitial -->
-      <div ui-view></div>
-      <!-- partitial -->
+  </div>
+  <div class="pusher">
+    <div class="top-bar">
+      <div class="item hamburger">
+        <i class="sidebar hamburger_icon  big icon"></i>
+      </div>
+      <div class="item top-bar_logo hidden">
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+      </div>
+      <div class="item top-bar_search">
+        <div class="ui icon input mobile only row">
+          <input type="text" ng-model="$root.search" placeholder="Search..." ng-hide="user.role == 'guest'">
+          <i class="search icon"></i>
+        </div>
+      </div>
+      <div class="item top-bar_user" ng-hide="user.role == 'guest'">
+        <a class="ui teal image label">
+          <img ng-src="{{user.avatar}}" alt="Contact Person">
+          <span ng-bind="user.username"></span>
+          <div class="detail" ng-bind="user.role"></div>
+        </a>
+        <div class="ui transition hidden popup user-menu">
+          <a class="item teal" ng-hide="true">
+            <i class="setting icon teal" ng-click=""></i>
+            <span class="teal" >Settings</span>
+          </a>
+          <a class="item teal">
+            <i class="sign out icon teal"></i>
+            <span class="teal" ng-click="logout()">Sign Out</span>
+          </a>
+        </div>
+      </div>
     </div>
+    <div class="content-block" ui-view>
 
-    <!--  Scripts-->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="lib/angular.min.js"></script>
-    <script src="lib/ng-tags-input.min.js"></script>
-    <script src="lib/angular-cookies.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/controllers.js"></script>
-    <script type="text/javascript" src="js/services.js"></script>
-    <script type="text/javascript" src="js/filters.js"></script>
-    <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="lib/angular-resource.min.js"></script>
-    <script src="lib/materialize.js"></script>
-    <script src="lib/init.js"></script>
+    </div>
+  </div>
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="lib/angular.min.js"></script>
+  <script src="lib/ng-tags-input.min.js"></script>
+  <script src="lib/angular-cookies.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/controllers/controllers.js"></script>
+  <script type="text/javascript" src="js/controllers/userListController.js"></script>
+  <script type="text/javascript" src="js/controllers/userCreateController.js"></script>
+  <script type="text/javascript" src="js/controllers/rolesListController.js"></script>
+  <script type="text/javascript" src="js/services.js"></script>
+  <script type="text/javascript" src="js/filters.js"></script>
+  <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="lib/angular-resource.min.js"></script>
+  <script src="lib/init.js"></script>
+  <script src="lib/ng-file-upload-shim.min.js"></script>
+  <script src="lib/ng-file-upload.min.js"></script>
+  <script src="lib/ng-img-crop.js"></script>
+  <!-- **** Semantic UI **** -->
 
+  <script src="js/semantic/semantic.min.js"></script>
+  <script type="text/javascript">
+
+  $('.ui.dropdown')
+    .dropdown();
+  </script>
 </body>
 
 </html>

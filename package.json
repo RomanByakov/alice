@@ -12,9 +12,15 @@
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "jsonwebtoken": "^5.7.0",
-    "mongoose": "^4.4.7",
-    "morgan": "^1.7.0",
+    "mongoose": "*",
     "node-restful": "^0.2.5",
-    "connect-domain": "*"
+    "connect-domain": "*",
+    "connect-multiparty": "*",
+    "crypto": "*",
+    "winston": "*",
+    "q": "1.0.1",
+    "imagemagick": "*",
+    "easyimage": "*",
+    "throng": "*"
   }
 }
