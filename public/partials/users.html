@@ -14,8 +14,8 @@
 </div>
 <h3 class="ui header">All users</h3>
 <div class="ui link cards user-cards grid">
-    <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:search" ui-sref="editUser({id:user._id})">
-      <div class="image user-cards_img">
+    <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:search">
+      <div class="image user-cards_img" ui-sref="viewUser({id:user._id})">
        <img ng-src="{{user.avatar}}" alt="{{user.name}}">
       </div>
       <div class="content">
@@ -35,7 +35,7 @@
           </button>
         </span>
         <span>
-          <button class="ui basic button">
+          <button class="ui basic button" ui-sref="editUser({id:user._id})">
             <i class="icon write"></i>
             Edit
           </button>
