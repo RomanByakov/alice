@@ -14,7 +14,7 @@
 </div>
 <h3 class="ui header">All users</h3>
 <div class="ui link cards user-cards doubling stackable five column grid">
-    <div class="card" ng-repeat="user in users | filter:search" ui-sref="editUser({id:user._id})">
+    <div class="card" ng-repeat="user in users | filter:$root.search" ui-sref="editUser({id:user._id})">
       <div class="image user-cards_img">
        <img ng-src="{{user.avatar}}" alt="{{user.name}}">
       </div>
