@@ -35,7 +35,7 @@
           </button>
         </span>
         <span>
-          <button class="ui basic button" ng-show="user.role == 'Admin' || user.role == 'God'">
+          <button class="ui basic button" ui-sref="editUser({id:user._id})" ng-show="user.role == 'Admin' || user.role == 'God'">
             <i class="icon write"></i>
             Edit
           </button>
