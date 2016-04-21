@@ -17,6 +17,10 @@
 </head>
 
 <body ng-controller="NavBarController">
+  <div class="ui wrapper-block sidebar visible inverted left nav-bar vertical menu">
+      <div class="item nav-bar_logo">
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+      </div>
   <div class="top-bar">
     <div class="item top-bar_logo">
       <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
@@ -57,14 +61,47 @@
       <a class="item" ui-sref="roles">
         <i class="handicap icon"></i> Roles
       </a>
-    </div>
-    <div class="pusher">
-      <div class="content-block" ui-view>
-
+      <div class="item top-bar_search">
+        <div class="ui icon input row">
+          <input type="text" ng-model="search" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
       </div>
-      <!-- <div class="ui basic segment ">
-        <div class="ui fluid container" ></div>
-      </div> -->
+  </div>
+  <div class="pusher">
+    <div ng-controller="NavBarController" class="top-bar">
+      <div class="item hamburger">
+        <i class="sidebar hamburger_icon  big icon"></i>
+      </div>
+      <div class="item top-bar_logo hidden">
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+      </div>
+      <div class="item top-bar_search">
+        <div class="ui icon input mobile only row">
+          <input type="text" ng-model="search" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
+      </div>
+      <div class="item top-bar_user">
+        <a class="ui teal image label">
+          <img ng-src="{{user.avatar}}" alt="Contact Person">
+          <span ng-bind="user.username"></span>
+          <div class="detail" ng-bind="user.role.name"></div>
+        </a>
+        <div class="ui transition hidden popup user-menu">
+          <a class="item teal">
+            <i class="setting icon teal" ng-click=""></i>
+            <span class="teal">Settings</span>
+          </a>
+          <a class="item teal">
+            <i class="sign out icon teal" ng-click="logout()"></i>
+            <span class="teal">Sign Out</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="content-block" ui-view>
+
     </div>
   </div>
   <!--  Scripts-->

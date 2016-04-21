@@ -19,14 +19,31 @@ body,html
 }
 
 .top-bar_logo
-{float: left;}
+{
+
+}
+
+.top-bar_logo .brand-logo
+{
+  margin: 16px 0 0 54px;
+}
+
+.nav-bar_logo
+{
+  height: 70px;
+  background: #00897B !important;
+}
+
+.nav-bar_logo .brand-logo
+{
+  margin: 3px 0 0 65px;
+}
 
 .top-bar_search
 {
   padding: 17px 0 0 0;
-  margin: 0 0 0 110px;
+  margin: 0 0 0 10px;
   float: left;
-  width: 400px;
 }
 
 .top-bar_user
@@ -56,9 +73,8 @@ body,html
 .brand-logo
 {
   position: relative;
-  width: 128px;
-  float:left;
-  margin: 16px;
+  width: 133px;
+  float: left;
 }
 
 .brand-logo span
@@ -82,18 +98,29 @@ body,html
 }
 
 /* Content  */
+/*******************************
+         Sidebar Layout
+*******************************/
+
+
 
 .wrapper-block
 {
   border: 0 !important;
   height: auto !important;
   min-height: 100%;
+  box-shadow: none !important;
+}
+
+.wrapper-block .nav-bar_logo
+{
+
 }
 
 .content-block
 {
-  padding: 40px 0 0 40px !important;
-  /*max-width: 1280px;*/
+  padding: 30px !important;
+  max-width: 1280px;
 }
 
 .content-block h3
@@ -103,12 +130,30 @@ body,html
 
 
 /* Sidebar */
-
+.side-bar
+{
+  width: 270px;
+}
 .fixed-bottom-right
 {
  position: fixed !important;
  right: 10px;
  bottom: 10px;
+}
+
+.hamburger
+{
+  float:left;
+  margin: 0 19px 0 10px;
+}
+
+.hamburger_icon
+{
+  margin: 21px 0 0 0 !important;
+  cursor: pointer;
+  position: absolute;
+  z-index: 999999;
+  color: #025A51 !important;
 }
 
 /* Content block */
@@ -131,28 +176,26 @@ body,html
 
 .user-cards .card
 {
-  margin-bottom: 15px !important;
+  margin-bottom: 8px !important;
 }
 
 .user-cards_img
 {
   margin: 0 auto;
   background: #fbfcfc !important;
-  height: 219px;
 }
 
 .user-cards_img img
 {
-  height: 150px !important;
-  width: 150px !important;
+  max-width: 150px !important;
   border-radius: 100% !important;
-  margin: 35px auto 0 auto;
+  margin: 30px auto;
   border: 1px solid #e3dede !important;
 }
 
 .user-add-button
 {
-  top: 25px !important;
+  bottom: 25px !important;
   right: 20px !important;
   position: fixed !important;
 }
@@ -185,7 +228,7 @@ body,html
 
 .hidden
 {
-  display: none;
+  display: none !important;
 }
 
 .form-img
@@ -239,4 +282,13 @@ form .progress {
     -webkit-transform: none !important;
     transform: none !important;
     margin-left: 260px !important;
+}
+
+
+@media only screen and (max-width: 767px){
+
+  .top-bar_user
+  {
+      display: none;
+  }
 }
