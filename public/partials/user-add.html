@@ -8,11 +8,11 @@
             <div class="two fields">
               <div class="field">
                 <label>Login</label>
-                <input placeholder="User login" ng-model="user.login" type="text" required>
+                <input placeholder="User login" ng-model="user.login" type="text">
               </div>
               <div class="field">
                 <label>Password</label>
-                <input placeholder="Write pass" ng-model="user.password" type="password" required>
+                <input placeholder="Write pass" ng-model="user.password" type="password">
               </div>
             </div>
           </div>
@@ -22,31 +22,48 @@
           <label>Name</label>
           <div class="two fields">
             <div class="field">
-              <input type="text" name="shipping[first-name]" ng-model="user.name" placeholder="First Name" required>
+              <input type="text" name="shipping[first-name]" ng-model="user.name" placeholder="First Name">
             </div>
             <div class="field">
-              <input type="text" name="shipping[last-name]" ng-model="user.lastname" placeholder="Last Name" required>
+              <input type="text" name="shipping[last-name]" ng-model="user.lastname" placeholder="Last Name">
             </div>
           </div>
         </div>
         <div class="three fields">
           <div class="field">
             <label>Departments</label>
-            <select required name="departments" class="ui fluid dropdown" ng-change="update(user.department)" ng-model="user.department">
-              <option ng-repeat="department in departments" value="{{department.name}}" ng-bind="department.name"></option>
-            </select>
+            <div class="ui selection dropdown">
+              <input type="hidden" name="gender">
+              <i class="dropdown icon"></i>
+              <div class="default text" ng-change="update(user.department)" ng-model="user.department">Department</div>
+              <div class="menu">
+                <div ng-repeat="department in departments" class="item" data-value="{{department.name}}" ng-bind="department.name" ng-selected="user.department.name == department.name"></div>
+              </div>
+            </div>
           </div>
-          <div class="field">
+
+          <div class="ui field">
             <label>Team</label>
-            <select required class="ui fluid dropdown" ng-model="user.team">
-              <option ng-repeat="team in teams" value="{{team.name}}" ng-bind="team.name"></option>
-            </select>
+            <div class="ui selection dropdown">
+              <input type="hidden" name="gender">
+              <i class="dropdown icon"></i>
+              <div class="default text" ng-model="user.team">Team</div>
+              <div class="menu">
+                <div ng-repeat="team in teams" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
+              </div>
+            </div>
           </div>
           <div class="field">
             <label>Role</label>
-            <select class="ui fluid dropdown" ng-model="user.role" required>
-              <option ng-repeat="role in roles" value="{{role.name}}" ng-bind="role.name" required></option>
-            </select>
+            <div class="ui selection dropdown">
+              <input type="hidden" name="gender">
+              <i class="dropdown icon"></i>
+              <div class="default text" ng-model="user.role">Role</div>
+              <div class="menu">
+                <div ng-repeat="role in roles" class="item" data-value="{{role.name}}" ng-bind="role.name" ng-selected="user.role.name == role.name"></div>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="field">
