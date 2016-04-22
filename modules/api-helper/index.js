@@ -70,4 +70,11 @@ var isEmpty = function(value) {
   return value === null || value === undefined || (util.isString(value) && value.replace(/ /g,'') == '');
 }
 
+var handleError = function(res, err) {
+  //temp
+  res.status(500);
+  res.json({error: {message: err.message, stack: err.stack}});
+};
+
 module.exports.getParams = getParams;
+module.exports.handleError = handleError;

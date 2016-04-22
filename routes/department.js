@@ -26,9 +26,9 @@ var getDepartments = function(req, res, next) {
     .then(function(departments) {
       res.send(departments);
     })
-    .catch((err) => { res.json({error: err.message}); })
+    .catch((err) => { helper.handleError(res, err); })
   } catch(err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
@@ -46,9 +46,9 @@ var postDepartment = function(req, res, next) {
 
     Department.createDepartment(params.name, params.teams)
     .then((department) => { res.send(department); })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
@@ -63,9 +63,9 @@ var getDepartment = function(req, res, next) {
 
     Department.findOne({'_id': params.id})
     .then((department) => { res.send(department); })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
@@ -89,9 +89,9 @@ var updateDepartment = function(req, res, next) {
         return department.updateDepartment(params.name, params.teams)
         .then((department) => { res.send(department); });
      })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
@@ -108,14 +108,14 @@ var deleteDepartment = function(req, res, next) {
     .then((department) => {
       User.findOne({'department': department})
       .then((user) => { throw new Error('Department used by users'); })
-      .catch((err) => { res.json({error: err.message}); })
+      .catch((err) => { helper.handleError(res, err); })
 
       return department.deleteDepartment()
       .then((department) => { res.send(department); });
      })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 

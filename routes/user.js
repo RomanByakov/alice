@@ -36,9 +36,9 @@ var getUsers = function(req, res, next) {
       User.populateRecords(users);
       res.send(users);
     })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
@@ -56,9 +56,9 @@ var getUser = function(req, res, next) {
       user.populate();
       res.send(user);
     })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
@@ -135,9 +135,9 @@ var postUser = function(req, res, next) {
         res.send(user);
       }
     })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
@@ -224,9 +224,9 @@ var updateUser = function(req, res, next) {
       })
       .catch((err) => { throw err;});
     })
-    .catch((err) => { res.json({error: {message: err.message, stack: err.stack}}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: JSON.stringify(err)});
+    helper.handleError(res, err);
   }
 };
 
@@ -241,9 +241,9 @@ var deleteUser = function(req, res, next) {
 
     User.remove({'_id': params.id})
     .then(() => { res.json({sucess: true}); })
-    .catch((err) => { res.json({error: err.message}); });
+    .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
-    res.json({error: err.message});
+    helper.handleError(res, err);
   }
 };
 
