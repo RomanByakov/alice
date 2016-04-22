@@ -1,6 +1,7 @@
 var restful = require('node-restful');
 var mongoose = restful.mongoose;
 var logger = require('../modules/alice-logger');
+var Q = require('q');
 
 var roleSchema = new mongoose.Schema({
   name: {
@@ -47,36 +48,25 @@ var setChildAndSave = function(role, child) {
   }
 }
 
-roleSchema.statics.checkAccess = function(userRole, checkingRole, callback) {
+roleSchema.statics.checkAccess = function(userRole, checkingRole) {
   logger.debug("userRole = " + userRole + " checkingRole = " + checkingRole);
   if (userRole == null) {
-    return callback(new Error('Access Denied'));
+    throw new Error('Access Denied');
   }
 
   if (userRole == checkingRole) {
-    return callback(null);
+    return Q.fcall(() => { return true; });
   }
 
-  Role.findOne({name: userRole}, function (err, role) {
-    logger.debug('into check access find one');
-    if (err) return callback(err);
-
-    logger.debug('no errors');
-    logger.debug('role ' + role);
+  return Role.findOne({name: userRole})
+  .then((role) => {
+    logger.debug('into check access find one role ' + role);
     if (role.child) {
-      Role.findOne({_id: role.child._id}, function (err, role) {
-        logger.debug('into next find one in check access');
-        if (err) return callback(err);
-
-        if (role) {
-          logger.debug(role.name);
-          Role.checkAccess(role.name, checkingRole, callback);
-        } else {
-          return callback(new Error('Access Denied'));
-        }
-      });
+      //maybe call findOne again
+      return Q.fcall(checkAccess(role.child.name, checkingRole));
     } else {
-      return callback(new Error('Access Denied'));
+      //return Q.fcall(() => { return false; });
+      throw new Error('Access Denied');
     }
   });
 };
