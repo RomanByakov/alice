@@ -52,12 +52,14 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
 
 
 
-}).controller('UserViewController', function($scope, $state, $cookies, $stateParams, User) {
-    checkAccess($cookies, $state);
-    $scope.user = User.get({
-        id: $stateParams.id
-    });
+}).controller('UserViewController', function($rootScope, $scope, $state, $cookies, $stateParams, User) {
+    $rootScope.checkAccess($cookies, $state, function() {
 
+        $scope.user = User.get({
+            id: $stateParams.id
+        });
+
+    });
 }).controller('UserEditController', function($rootScope, $scope, $state, $cookies, $stateParams, User, Upload, $timeout, Department, Role) {
     $rootScope.checkAccess($cookies, $state, function() {
         $scope.avatar = null;
