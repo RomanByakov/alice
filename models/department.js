@@ -40,7 +40,7 @@ departmentSchema.methods.updateDepartment = function(name, teams) {
 
 departmentSchema.methods.deleteDepartment = function() {
     this.teams.forEach(function(team) {
-        team.remove(callback);
+        team.remove();
     });
 
     return this.remove();
