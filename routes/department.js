@@ -19,6 +19,7 @@ var helper = require('../modules/api-helper');
 
 // models
 var Department = require('../models/department');
+var User = require('../models/user');
 
 var getDepartments = function(req, res, next) {
   try {
