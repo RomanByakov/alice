@@ -29,6 +29,7 @@
             </div>
           </div>
         </div>
+
         <div class="three fields">
           <div class="field">
             <label>Departments</label>
@@ -63,31 +64,83 @@
                 <div ng-repeat="role in roles" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
               </div>
             </div>
-
-
           </div>
         </div>
-        <div class="three fields">
+        <div class="two fields">
           <div class="field">
             <label>Avatar</label>
             <input type="file" ngf-select ng-model="avatar" name="file"
                      accept="image/*" ngf-max-size="2MB"
                      ngf-model-invalid="errorFile" id="avatar-input">
           </div>
-          <div class="field"></div>
-          <div class="field">
-            <div class="ui small circular image form-img">
-              <img ng-src="{{user.avatar}}" alt="{{user.name}}">
+        </div>
+        <h4 class="ui dividing header">Additional information</h4>
+        <div class="three fields">
+            <div class="field">
+              <label>Position</label>
+              <div class="ui left icon input">
+                <input type="text" name="shipping[first-name]" ng-model="user.position" placeholder="Position">
+                <i class="paw icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <div class="ui left icon input">
+                <input type="text" ng-model="user.phone" placeholder="You phone number...">
+                <i class="text telephone icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <div class="ui left icon input">
+                <input type="text" ng-model="user.email" placeholder="You email...">
+                <i class="text at icon"></i>
+              </div>
+            </div>
+          </div>
+          <div class="two fields">
+            <div class="field">
+              <label>Site</label>
+              <div class="ui left icon input">
+                <input type="text" ng-model="user.site" placeholder="You site...">
+                <i class="text linkify icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label>Github</label>
+              <div class="ui left icon input">
+                <input type="text" ng-model="user.github" placeholder="Github user link...">
+                <i class="text github icon"></i>
+              </div>
+            </div>
+          </div>
+          <div class="three fields">
+            <div class="field">
+              <label>Telegram</label>
+              <div class="ui left icon input">
+                <input type="text" ng-model="user.telegram" placeholder="Telegram user...">
+                <i class="text send outline icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label>Skype</label>
+              <div class="ui left icon input">
+                <input type="text" ng-model="user.skype" placeholder="Skype login...">
+                <i class="text skype icon"></i>
+              </div>
             </div>
           </div>
 
-        </div>
-        <div class="form-group">
-          <button type="submit" class="ui primary button">Save</button>
-        </div>
-
-    </form>
-    <button ngf-select ng-model="picFile" accept="image/*">
+          <div class="form-group">
+            <button type="submit" class="ui teal medium button">Save</button>
+          </div>
+      </form>
+    </div>
+    <pre style="">
+        {{ user | json }}
+    </pre>
+  </div>
+    <!-- <button ngf-select ng-model="picFile" accept="image/*">
             Select Picture</button>
         <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
              class="cropArea">
@@ -104,9 +157,4 @@
           <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
         </span>
         <span ng-show="result">Upload Successful</span>
-        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-    <pre style="">
-        {{ user | json }}
-    </pre>
-  </div>
-</div>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span> -->
