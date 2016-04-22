@@ -1,4 +1,85 @@
-<div class="user-form">
+<div class="ui tall stacked segment container">
+  <span class="ui teal left ribbon label header user-details_ribbon">
+    <h3 ng-bind="user.name + ' ' + user.lastname"></h3>
+    <div class="sub header" style="color: #A9E4E1 !important; margin: -10px 0 0 0;">web developer</div>
+  </span>
+  <div class="ui horizontal list user-details_list" >
+    <div class="item">
+      <img class="ui circular image" ng-src="{{user.avatar}}" alt="{{user.name}}">
+    </div>
+
+    <div class="item">
+      <div class="ui list user-details">
+          <div class="item">
+            <i class="building outline large icon"></i>
+            <div class="content">
+              <h4>IT</h4>
+            </div>
+          </div>
+          <div class="item">
+            <i class="angellist large icon"></i>
+            <div class="content">
+              <h4>Happy Giraffe</h4>
+            </div>
+          </div>
+          <div class="item">
+            <i class="text telephone large icon"></i>
+            <div class="content">
+              <h4>(4932) 35-50-53</h4>
+            </div>
+          </div>
+          <div class="item">
+            <i class="mail large icon"></i>
+            <div class="content">
+              <h4><a href="mailto:jack@semantic-ui.com">jack@semantic-ui.com</a></h4>
+            </div>
+          </div>
+          <div class="item">
+            <i class="linkify large icon"></i>
+            <div class="content">
+              <h4><a href="http://www.semantic-ui.com">semantic-ui.com</a></h4>
+            </div>
+          </div>
+          <div class="item">
+            <i class="skype large icon"></i>
+            <div class="content">
+              <h4>vanhocker</h4>
+            </div>
+          </div>
+          <div class="item">
+            <i class="github large icon"></i>
+            <div class="content">
+              <h4><a href="https://github.com/beknown/happy-giraffe">Happy Giraffe repo</a></h4>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="item">
+      <div class="ui medium horizontal statistics">
+        <div class="teal small statistic">
+          <div class="value">
+            18 min
+          </div>
+          <div class="label">
+            today is absent
+          </div>
+        </div>
+        <div class="small statistic">
+          <div class="value">
+            34 days
+          </div>
+          <div class="label">
+            working
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="user-form">
     <div class="ui piled segment">
     <table class="ui very basic collapsing celled table">
       <thead>
@@ -27,4 +108,4 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> -->

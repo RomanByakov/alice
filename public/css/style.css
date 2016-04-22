@@ -289,6 +289,32 @@ form .progress {
     margin-left: 260px !important;
 }
 
+/* User details */
+
+.user-details
+{
+
+}
+
+.user-details_list
+{margin: -16px 0 0px 82px !important;}
+
+.user-details_list > .item
+{display: inline-block !important;vertical-align: middle !important;margin: 11px 52px 0 0;}
+
+.user-details > .item
+{
+  margin: 0 0 10px 0;
+}
+
+.user-details_ribbon
+{
+  position: absolute !important;
+  z-index: 999;
+  left: -21px !important;
+  top: 28px;
+}
+
 
 @media only screen and (max-width: 767px){
 
