@@ -41,10 +41,10 @@ var setChildAndSave = function(role, child) {
       logger.debug('[Role::setChildAndSave] child role find');
       role.child = model;
 
-      return role.save(callback);
+      return role.save();
     });
   } else {
-    return role.save(callback);
+    return role.save();
   }
 }
 
