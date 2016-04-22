@@ -39,11 +39,16 @@ departmentSchema.methods.updateDepartment = function(name, teams) {
 };
 
 departmentSchema.methods.deleteDepartment = function() {
-    this.teams.forEach(function(team) {
-        team.remove();
-    });
+  var methods = [];
 
-    return this.remove();
+  this.teams.forEach(function(team) {
+      methods.push(Team.findOneAndRemove({_id: team._id}));
+  });
+
+  return Q.all(methods)
+    .then(() => {
+      return this.remove();
+    });
 };
 
 departmentSchema.statics.createDepartment = function(name, teams) {
