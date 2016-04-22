@@ -7,15 +7,15 @@
 
   </div>
 </div>
-<div class="user-add-button ui fixed bottom sticky ">
+<div class="user-add-button ui fixed bottom sticky " ng-show="currentUser.role == 'Admin' || currentUser.role == 'God'">
   <button ui-sref="newUser" class="circular teal ui icon button addpopup">
     <i class="icon add user big"></i>
   </button>
 </div>
 <h3 class="ui header">All users</h3>
 <div class="ui link cards user-cards grid">
-    <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:$root.search" ui-sref="editUser({id:user._id})">
-      <div class="image user-cards_img">
+    <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:$root.search">
+      <div class="image user-cards_img" ui-sref="viewUser({id:user._id})">
        <img ng-src="{{user.avatar}}" alt="{{user.name}}">
       </div>
       <div class="content">
@@ -29,13 +29,13 @@
       </div>
       <div class="extra content">
         <span class="right floated">
-          <button class="ui basic button">
-            <i class="icon remove user" ng-show="user.role == 'God'"></i>
+          <button class="ui basic button" ng-click="deleteUser(user)" ng-show="currentUser.role == 'God'">
+            <i class="icon remove user"></i>
             Delete
           </button>
         </span>
         <span>
-          <button class="ui basic button" ui-sref="editUser({id:user._id})" ng-show="user.role == 'Admin' || user.role == 'God'">
+          <button class="ui basic button" ui-sref="editUser({id:user._id})" ng-show="currentUser.role == 'Admin' || currentUser.role == 'God'"  ui-sref="editUser({id:user._id})">
             <i class="icon write"></i>
             Edit
           </button>
