@@ -12,6 +12,32 @@
     <i class="icon add user big"></i>
   </button>
 </div>
+<div class="ui modal user-delete-modal">
+ <i class="close big icon"></i>
+ <div class="header">
+   Delete user
+ </div>
+ <div class="image content">
+   <div class="image">
+     <i class="archive small icon"></i>
+   </div>
+   <div class="description">
+     <p>Are you sure you want to delete user?</p>
+   </div>
+ </div>
+ <div class="actions">
+   <div class="two fluid ui inverted buttons">
+     <div class="ui red inverted button">
+       <i class="remove icon"></i>
+       No
+     </div>
+     <div class="ui green inverted button" >
+       <i class="checkmark icon"></i>
+       Yes
+     </div>
+   </div>
+ </div>
+</div>
 <h3 class="ui header">All users</h3>
 <div class="ui link cards user-cards grid">
     <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:$root.search">
@@ -29,7 +55,7 @@
       </div>
       <div class="extra content">
         <span class="right floated">
-          <button class="ui basic button" ng-click="deleteUser(user)" ng-show="currentUser.role == 'God'">
+          <button class="ui basic button user-delete-modal_show" ng-click="deleteUser(user)" ng-show="currentUser.role == 'God'">
             <i class="icon remove user"></i>
             Delete
           </button>
