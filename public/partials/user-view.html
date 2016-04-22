@@ -1,7 +1,7 @@
 <div class="ui tall stacked segment container">
   <span class="ui teal left ribbon label header user-details_ribbon">
     <h3 ng-bind="user.name + ' ' + user.lastname"></h3>
-    <div class="sub header" style="color: #A9E4E1 !important; margin: -10px 0 0 0;">web developer</div>
+    <div class="sub header" style="color: #A9E4E1 !important; margin: -10px 0 0 0;" ng-bind="user.position"></div>
   </span>
   <div class="ui horizontal list user-details_list" >
     <div class="item">
@@ -13,43 +13,49 @@
           <div class="item">
             <i class="building outline large icon"></i>
             <div class="content">
-              <h4>IT</h4>
+              <h4 ng-bind="user.department.name"></h4>
             </div>
           </div>
           <div class="item">
             <i class="angellist large icon"></i>
             <div class="content">
-              <h4>Happy Giraffe</h4>
+              <h4 ng-bind="user.team.name"></h4>
             </div>
           </div>
           <div class="item">
             <i class="text telephone large icon"></i>
             <div class="content">
-              <h4>(4932) 35-50-53</h4>
+              <h4 ng-bind="user.phone"></h4>
             </div>
           </div>
           <div class="item">
             <i class="at large icon"></i>
             <div class="content">
-              <h4><a href="mailto:jack@semantic-ui.com">jack@semantic-ui.com</a></h4>
+              <h4><a href="mailto:{{user.email}}" ng-bind="user.email"></a></h4>
             </div>
           </div>
           <div class="item">
             <i class="linkify large icon"></i>
             <div class="content">
-              <h4><a href="http://www.semantic-ui.com">semantic-ui.com</a></h4>
+              <h4><a href="{{user.site}}" ng-bind="user.site"></a></h4>
             </div>
           </div>
           <div class="item">
             <i class="skype large icon"></i>
             <div class="content">
-              <h4>vanhocker</h4>
+              <h4 ng-bind="user.skype"></h4>
+            </div>
+          </div>
+          <div class="item">
+            <i class="text send large icon"></i>
+            <div class="content">
+              <h4><a href="https://telegram.me/{{user.telegram}}" ng-bind="user.telegram"></a></h4>
             </div>
           </div>
           <div class="item">
             <i class="github large icon"></i>
             <div class="content">
-              <h4><a href="https://github.com/beknown/happy-giraffe">Happy Giraffe repo</a></h4>
+              <h4><a href="{{user.github}}" ng-bind="user.github"></a></h4>
             </div>
           </div>
         </div>
