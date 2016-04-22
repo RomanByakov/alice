@@ -58,6 +58,26 @@ var userSchema = new Schema({
   telegram: {
     type: String,
     default: 'Unknown'
+  },
+  email: {
+    type: String,
+    default: 'Unknown'
+  },
+  site: {
+    type: String,
+    default: 'Unknown'
+  },
+  github: {
+    type: String,
+    default: 'Unknown'
+  },
+  jobapplydate: {
+    type: Number,
+    default: null
+  },
+  position: {
+    type: String,
+    default: "Slave"
   }
 });
 
@@ -69,20 +89,27 @@ userSchema.statics.checkAccess = function(userRole, role, callback) {
   Role.checkAccess(userRole, role, callback);
 };
 
-userSchema.statics.createUser = function(firstName, lastName, login, password, team, department, role) {
-  //todo: validate first and last name for emptyness (spaces only).
+userSchema.statics.createUser = function(params) {
   var user = new User({
-    name: firstName,
-    lastname: lastName,
-    username: login,
-    password: User.hashPassword(password)
+    name: params.name,
+    lastname: params.lastname,
+    username: params.username,
+    password: User.hashPassword(params.password),
+    skype: params.skype,
+    email: params.email,
+    site: params.site,
+    github: params.github,
+    telegram: params.telegram,
+    phone: params.phone,
+    position: params.position,
+    jobapplydate: params.jobapplydate
   });
 
   return Q.fcall(function() {
-    return user.setDepartment(department, team)
+    return user.setDepartment(params.department, params.team)
   })
   .then(function() {
-    return user.setRole(role);
+    return user.setRole(params.role);
   })
   .then(function() {
     logger.debug('[User::createUser] user save');
@@ -90,20 +117,28 @@ userSchema.statics.createUser = function(firstName, lastName, login, password, t
   });
 };
 
-userSchema.methods.updateUser = function(firstName, lastName, login, password, team, department, role) {
-  logger.debug('[User::updateUser] call with ' + department + ', ' + team + ', ' + role);
+userSchema.methods.updateUser = function(params) {
+  //logger.debug('[User::updateUser] call with ' + department + ', ' + team + ', ' + role);
   var user = this;
 
-  user.username = login === null ? user.username : login;
-  user.name = firstName;
-  user.lastname = lastName;
-  user.password = password === null ? user.password : User.hashPassword(password);
+  user.username = params.username === null ? user.username : params.username;
+  user.name = params.name;
+  user.lastname = params.lastname;
+  user.password = params.password === null ? user.password : User.hashPassword(params.password);
+  user.skype = params.skype;
+  user.email = params.email;
+  user.site = params.site;
+  user.github = params.github;
+  user.telegram = params.telegram;
+  user.phone = params.phone;
+  user.position = params.position;
+  user.jibapplydate = params.jobapplydate;
 
   return Q.fcall(function() {
-    return user.setDepartment(department, team)
+    return user.setDepartment(params.department, params.team)
   })
   .then(function() {
-    return user.setRole(role);
+    return user.setRole(params.role);
   })
   .then(function() {
     logger.debug('[User::updateUser] user save');
@@ -155,7 +190,7 @@ userSchema.methods.setRole = function(role) {
     return Role.findOne({name: role})
     .then(function(model) {
       if (model) {
-        self.role = role;
+        self.role = model;
       }
 
       return true;
