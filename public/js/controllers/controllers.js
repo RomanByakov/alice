@@ -178,37 +178,38 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
         id: $stateParams.id
     });
 
-}).controller('DepartmentCreateController', function($scope, $state, $cookies, $stateParams, Department) {
-    checkAccess($cookies, $state);
-    $scope.department = new Department();
-    $scope.department.teams = [];
+}).controller('DepartmentCreateController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
+    $rootScope.checkAccess($cookies, $state, function() {
+        $scope.department = new Department();
+        $scope.department.teams = [];
 
-    $scope.addDepartment = function() {
-        $scope.department.$save(function() {
-            $state.go('departments');
-        });
-    }
+        $scope.addDepartment = function() {
+            $scope.department.$save(function() {
+                $state.go('departments');
+            });
+        }
+    });
+}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
+    $rootScope.checkAccess($cookies, $state, function() {
+        $scope.updateDepartment = function() {
+            $scope.department.$update(function() {
+                $state.go('departments');
+            });
+        };
 
-}).controller('DepartmentEditController', function($scope, $state, $cookies, $stateParams, Department) {
-    checkAccess($cookies, $state);
-    $scope.updateDepartment = function() {
-        $scope.department.$update(function() {
-            $state.go('departments');
-        });
-    };
+        $scope.loadDepartment = function() {
+            $scope.department = Department.get({
+                id: $stateParams.id
+            }, function() {
+                $('.ui.dropdown').dropdown();
+            });
 
-    $scope.loadDepartment = function() {
-        $scope.department = Department.get({
-            id: $stateParams.id
-        }, function() {
-            $('.ui.dropdown').dropdown();
-        });
+        };
 
-    };
-
-    $scope.loadDepartment();
+        $scope.loadDepartment();
 
 
+    });
 });
 
 module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {
