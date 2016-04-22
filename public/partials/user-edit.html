@@ -50,7 +50,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">Team</div>
               <div class="menu">
-                <div ng-repeat="team in teams" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
+                <div ng-repeat="team in teams" ng-click="addTeamToModel(team)" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
               </div>
             </div>
           </div>

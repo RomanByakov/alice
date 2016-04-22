@@ -8,7 +8,7 @@
             <div class="two fields">
               <div class="field">
                 <label>Login</label>
-                <input placeholder="User login" ng-model="user.login" type="text">
+                <input placeholder="User login" ng-model="user.username" type="text">
               </div>
               <div class="field">
                 <label>Password</label>
@@ -140,6 +140,8 @@
         {{ user | json }}
     </pre>
   </div>
+  <pre>{{departments | json}}</pre>
+  <pre>{{roles | json}}</pre>
     <!-- <button ngf-select ng-model="picFile" accept="image/*">
             Select Picture</button>
         <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
