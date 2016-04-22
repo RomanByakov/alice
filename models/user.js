@@ -78,6 +78,10 @@ var userSchema = new Schema({
   position: {
     type: String,
     default: "Slave"
+  },
+  info: {
+    type: String,
+    default: null
   }
 });
 
@@ -102,7 +106,8 @@ userSchema.statics.createUser = function(params) {
     telegram: params.telegram,
     phone: params.phone,
     position: params.position,
-    jobapplydate: params.jobapplydate
+    jobapplydate: params.jobapplydate,
+    info: params.info
   });
 
   return Q.fcall(function() {
@@ -133,6 +138,7 @@ userSchema.methods.updateUser = function(params) {
   user.phone = params.phone;
   user.position = params.position;
   user.jibapplydate = params.jobapplydate;
+  user.info = params.info;
 
   return Q.fcall(function() {
     return user.setDepartment(params.department, params.team)
