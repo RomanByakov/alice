@@ -57,6 +57,11 @@ body,html
   margin: 22px 65px 0 0;
 }
 
+.top-bar_user .ui.image.label
+{
+    border-radius: 11px 4px 4px 11px !important;
+}
+
 .user-menu
 {
 

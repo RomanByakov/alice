@@ -14,38 +14,36 @@ var roleSchema = new mongoose.Schema({
   }
 });
 
-roleSchema.statics.createRole = function(name, child, callback) {
+roleSchema.statics.createRole = function(name, child) {
   logger.debug('[Role::createRole] call with ' + name + ', ' + child);
   var role = new Role({
     name: name
   });
 
-  setChildAndSave(role, child, callback)
+  return setChildAndSave(role, child)
   logger.debug('[Role::createRole] end');
 };
 
-roleSchema.methods.updateRole = function(name, child, callback) {
+roleSchema.methods.updateRole = function(name, child) {
   logger.debug('[Role::updateRole] call with ' + name + ', ' + child);
   this.name = name;
 
-  setChildAndSave(this, child, callback);
+  return setChildAndSave(this, child);
   logger.debug('[Role::updateRole] call end');
 };
 
-var setChildAndSave = function(role, child, callback) {
+var setChildAndSave = function(role, child) {
   logger.debug('[Role::setChildAndSave] call');
   if (child != null) {
-    Role.findOne({name: child}, function(err, model) {
-      logger.debug('[Role::setChildAndSave] findOne callback');
-      if (model) {
-        logger.debug('[Role::setChildAndSave] child role find');
-        role.child = model;
-      }
+    return Role.findOne({name: child})
+    .then((model) => {
+      logger.debug('[Role::setChildAndSave] child role find');
+      role.child = model;
 
-      role.save(callback);
+      return role.save(callback);
     });
   } else {
-    role.save(callback);
+    return role.save(callback);
   }
 }
 
