@@ -16,12 +16,12 @@ angular.module('aliceApp')
                 });
             };
 
-            $scope.$watch("users", function (value) {//I change here
-              var val = value || null;
-              if (val)
-                $('.user-delete-modal')
-                  .modal('attach events', '#logo-container', 'show')
-                ;
-              });
+            // $scope.$watch("users", function (value) {//I change here
+            //   var val = value || null;
+            //   if (val)
+            //     $('.user-delete-modal')
+            //       .modal('attach events', '#logo-container', 'show')
+            //     ;
+            //   });
         });
     })
