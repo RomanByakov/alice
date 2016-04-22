@@ -8,6 +8,8 @@ angular.module('aliceApp')
 
             $scope.currentUser = JSON.parse($cookies.get('user'));
 
+            $( "#search" ).focus();
+
             $scope.deleteUser = function(user) {
                 user.$delete().then(function() {
                     $state.go('users', {}, {

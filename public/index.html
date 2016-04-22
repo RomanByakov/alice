@@ -17,23 +17,23 @@
 </head>
 
 <body ng-controller="NavBarController">
-  <div class="ui wrapper-block sidebar  visible left nav-bar vertical menu" ng-class="user.role == 'guest' ? 'background' :'inverted'">
+  <div class="ui wrapper-block sidebar  visible left nav-bar vertical menu" ng-class="user.role.name == 'guest' ? 'background' :'inverted'">
       <div class="item nav-bar_logo">
         <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
       </div>
-      <div class="inverted" ng-hide="user.role == 'guest'">
+      <div class="inverted" ng-hide="user.role.name == 'guest'">
       <a class="item" ui-sref="users">
         <i class="users icon"></i> Users
       </a>
       <a class="item" ui-sref="departments">
         <i class="building outline icon"></i> Departments
       </a>
-      <a class="item" ui-sref="roles" ng-show="user.role == 'Admin' || user.role == 'God'">
+      <a class="item" ui-sref="roles" ng-show="user.role.name == 'Admin' || user.role.name == 'God'">
         <i class="handicap icon"></i> Roles
       </a>
       <div class="item top-bar_search">
         <div class="ui icon input row">
-          <input type="text" ng-model="$root.search" placeholder="Search...">
+          <input type="text" ng-model="$root.search" placeholder="Search..." >
           <i class="search icon"></i>
         </div>
       </div>
@@ -49,15 +49,15 @@
       </div>
       <div class="item top-bar_search">
         <div class="ui icon input mobile only row">
-          <input type="text" ng-model="$root.search" placeholder="Search..." ng-hide="user.role == 'guest'">
+          <input type="text" id="search" ng-model="$root.search" placeholder="Search..." ng-hide="user.role.name == 'guest'">
           <i class="search icon"></i>
         </div>
       </div>
-      <div class="item top-bar_user" ng-hide="user.role == 'guest'">
+      <div class="item top-bar_user" ng-hide="user.role.name == 'guest'">
         <a class="ui teal image label">
           <img ng-src="{{user.avatar}}" alt="Contact Person">
           <span ng-bind="user.username"></span>
-          <div class="detail" ng-bind="user.role" ng-show="user.role"></div>
+          <div class="detail" ng-bind="user.role.name" ng-show="user.role"></div>
         </a>
         <div class="ui transition hidden popup user-menu">
           <a class="item teal" ng-hide="true">
@@ -85,6 +85,7 @@
   <script type="text/javascript" src="js/controllers/userListController.js"></script>
   <script type="text/javascript" src="js/controllers/userCreateController.js"></script>
   <script type="text/javascript" src="js/controllers/rolesListController.js"></script>
+  <script type="text/javascript" src="js/controllers/rolesCreateController.js"></script>
   <script type="text/javascript" src="js/services.js"></script>
   <script type="text/javascript" src="js/filters.js"></script>
   <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
