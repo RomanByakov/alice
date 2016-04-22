@@ -46,6 +46,7 @@
       adaptive();
     });
 
+    
     $('.hamburger').click(function(){
       if($('.wrapper-block').hasClass('visible'))
       {
