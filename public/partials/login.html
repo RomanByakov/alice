@@ -3,16 +3,17 @@
     <div class="field">
       <div class="ui left icon input">
         <i class="user icon"></i>
-        <input id="login" class="ui teal" ng-model="user.username" id="login" name="login" type="text" placeholder="Login">
+        <input id="login" class="ui teal" ng-model="user.username" id="login" name="login" type="text" placeholder="Login" required>
       </div>
     </div>
     <div class="field">
       <div class="ui left icon input">
         <i class="lock icon"></i>
-        <input id="login" ng-model="user.password" name="password" id="password" type="password" placeholder="Password">
+        <input id="login" ng-model="user.password" name="password" id="password" type="password" placeholder="Password" required>
       </div>
     </div>
     <button type="submit" class="ui fluid large teal submit button">Login</button>
-    <div class="ui error message"></div>
+    <div class="ui error message">
+      </div>
+      <div class="ui red message" ng-hide="!error" ng-bind="error"></div>
   </form>
-</div>
