@@ -79,42 +79,29 @@ app.use(function(req, res, next) {
   var token = req.body.token || req.param('token') || req.headers['x-access-token'];
 
   if (token) {
-    jwt.verify(token, app.get('apliceSecret'), function(err, decoded) {
-      if (err) {
-        return res.status(401).json({
-          message: 'Failed to authenticate token.'
-        });
-      } else {
-        var parsedUrl = url.parse(req.url, true);
-        var pathname = parsedUrl.pathname;
-        //console.log('Url' + parsedUrl.pathname);
-        //console.log('Query: ' + JSON.stringify(req.params));
-        //console.log('Parsed: ' + JSON.stringify(parsedUrl));
-        req.decoded = decoded;
-        //console.log(req.method);
-        req.currentUser = decoded._doc;
+    try {
+      var decoded = jwt.verify(token, app.get('apliceSecret'));
 
-        return Q.fcall(function() {
-          //temp crutch, refactor to access module
+      var parsedUrl = url.parse(req.url, true);
+      var pathname = parsedUrl.pathname;
+      req.decoded = decoded;
+      req.currentUser = decoded._doc;
+
+      return Q.fcall(() => {
           if (pathname == '/api/users' && req.params.id != null) {
             return accessConfig['SELF'](req.currentUser, req.params.id);
           } else {
             return accessConfig[req.method](req.currentUser);
           }
-        })
-        .then(function() {
-          next();
-        })
-        .catch(function(err) {
-          throw err;
-        });
-      }
-    });
+      })
+      .then(() => { next(); })
+      .catch((err) => { res.status(401).json({error: {message: err.message, stack: err.stack}}); });
+    } catch (err) {
+      res.status(401).json({error: {message: err.message, stack: err.stack}});
+    }
 
   } else {
-    return res.status(401).json({
-      message: 'Access is denied.'
-    });
+    return res.status(401).json({message: 'Access is denied.'});
   }
 });
 
