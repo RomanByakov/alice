@@ -16,6 +16,7 @@ angular.module('aliceApp')
                 });
             };
 
+            
             // $scope.$watch("users", function (value) {//I change here
             //   var val = value || null;
             //   if (val)

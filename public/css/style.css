@@ -192,7 +192,7 @@ body,html
 .user-cards_img
 {
   margin: 0 auto;
-  background: #fbfcfc !important;
+  background: none !important;
 }
 
 .user-cards_img img
