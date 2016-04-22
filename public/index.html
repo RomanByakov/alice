@@ -28,7 +28,7 @@
       <a class="item" ui-sref="departments">
         <i class="building outline icon"></i> Departments
       </a>
-      <a class="item" ui-sref="roles">
+      <a class="item" ui-sref="roles" ng-show="user.role == 'Admin' || user.role == 'God'">
         <i class="handicap icon"></i> Roles
       </a>
       <div class="item top-bar_search">
@@ -57,7 +57,7 @@
         <a class="ui teal image label">
           <img ng-src="{{user.avatar}}" alt="Contact Person">
           <span ng-bind="user.username"></span>
-          <div class="detail" ng-bind="user.role"></div>
+          <div class="detail" ng-bind="user.role" ng-show="user.role"></div>
         </a>
         <div class="ui transition hidden popup user-menu">
           <a class="item teal" ng-hide="true">
