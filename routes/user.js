@@ -96,6 +96,18 @@ var postUser = function(req, res, next) {
   }, {
     name: 'email',
     status: false
+  }, {
+    name: 'site',
+    status: false
+  }, {
+    name: 'github',
+    status: false
+  }, {
+    name: 'position',
+    status: false
+  }, {
+    name: 'jobapplydate',
+    status: false
   }];
 
   try {
@@ -136,7 +148,7 @@ var updateUser = function(req, res, next) {
   var required = [{
     name: 'id',
     status: true
-  }, {
+  } ,{
     name: 'name',
     status: true
   }, {
@@ -169,8 +181,19 @@ var updateUser = function(req, res, next) {
   }, {
     name: 'email',
     status: false
+  }, {
+    name: 'site',
+    status: false
+  }, {
+    name: 'github',
+    status: false
+  }, {
+    name: 'position',
+    status: false
+  }, {
+    name: 'jobapplydate',
+    status: false
   }];
-
 
   try {
     var params = helper.getParams(required, req)
@@ -201,9 +224,9 @@ var updateUser = function(req, res, next) {
       })
       .catch((err) => { throw err;});
     })
-    .catch((err) => {res.json({error: err.message});});
+    .catch((err) => { res.json({error: {message: err.message, stack: err.stack}}); });
   } catch (err) {
-    res.json({error: err.message});
+    res.json({error: JSON.stringify(err)});
   }
 };
 

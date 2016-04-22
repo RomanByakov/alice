@@ -1,4 +1,5 @@
 var logger = require('../alice-logger');
+var util = require('util');
 
 /**
  * Check request params for existing and empriness based on required array config.
@@ -66,7 +67,7 @@ var isEmpty = function(value) {
   // logger.debug('[ApiHelper::isEmpty] ' + value === null);
   // logger.debug('[ApiHelper::isEmpty] ' + value === undefined);
   // logger.debug('[ApiHelper::isEmpty] ' + value.replace(/ /g,'') == '');
-  return value === null || value === undefined || value.replace(/ /g,'') == '';
+  return value === null || value === undefined || (util.isString(value) && value.replace(/ /g,'') == '');
 }
 
 module.exports.getParams = getParams;

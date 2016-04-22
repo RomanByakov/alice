@@ -59,9 +59,25 @@ var userSchema = new Schema({
     type: String,
     default: 'Unknown'
   },
-  telegram: {
+  email: {
     type: String,
     default: 'Unknown'
+  },
+  site: {
+    type: String,
+    default: 'Unknown'
+  },
+  github: {
+    type: String,
+    default: 'Unknown'
+  },
+  jobapplydate: {
+    type: Number,
+    default: null
+  },
+  position: {
+    type: String,
+    default: "Slave"
   }
 });
 
@@ -78,7 +94,15 @@ userSchema.statics.createUser = function(params) {
     name: params.name,
     lastname: params.lastname,
     username: params.username,
-    password: User.hashPassword(params.password)
+    password: User.hashPassword(params.password),
+    skype: params.skype,
+    email: params.email,
+    site: params.site,
+    github: params.github,
+    telegram: params.telegram,
+    phone: params.phone,
+    position: params.position,
+    jobapplydate: params.jobapplydate
   });
 
   return Q.fcall(function() {
@@ -97,10 +121,18 @@ userSchema.methods.updateUser = function(params) {
   //logger.debug('[User::updateUser] call with ' + department + ', ' + team + ', ' + role);
   var user = this;
 
-  user.username = params.username === undefined ? user.username : params.username;
+  user.username = params.username === null ? user.username : params.username;
   user.name = params.name;
   user.lastname = params.lastname;
-  user.password = params.password === undefined ? user.password : User.hashPassword(params.password);
+  user.password = params.password === null ? user.password : User.hashPassword(params.password);
+  user.skype = params.skype;
+  user.email = params.email;
+  user.site = params.site;
+  user.github = params.github;
+  user.telegram = params.telegram;
+  user.phone = params.phone;
+  user.position = params.position;
+  user.jibapplydate = params.jobapplydate;
 
   return Q.fcall(function() {
     return user.setDepartment(params.department, params.team)
