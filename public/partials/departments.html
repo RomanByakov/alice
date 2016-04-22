@@ -18,7 +18,7 @@
     </div>
   </div>
 </div>
-<div class="ui department-button">
+<div class="ui department-button" ng-show="currentUser.role == 'Admin' || currentUser.role == 'God'">
   <button ui-sref="newDepartment" class="ui teal button">Add New Department</button>
 </div>
 <!--
