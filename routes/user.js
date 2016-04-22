@@ -108,6 +108,9 @@ var postUser = function(req, res, next) {
   }, {
     name: 'jobapplydate',
     status: false
+  }, {
+    name: 'info',
+    status: false
   }];
 
   try {
@@ -192,6 +195,9 @@ var updateUser = function(req, res, next) {
     status: false
   }, {
     name: 'jobapplydate',
+    status: false
+  }, {
+    name: 'info',
     status: false
   }];
 
