@@ -49,21 +49,23 @@ var setChildAndSave = function(role, child) {
 }
 
 roleSchema.statics.checkAccess = function(userRole, checkingRole) {
-  logger.debug("userRole = " + userRole + " checkingRole = " + checkingRole);
+  logger.debug("[Role::checkAccess] userRole = " + userRole + " checkingRole = " + checkingRole);
   if (userRole == null) {
     throw new Error('Access Denied');
   }
 
   if (userRole == checkingRole) {
+    logger.debug('[Role::checkAccess] return true');
     return Q.fcall(() => { return true; });
+    //return true;
   }
 
   return Role.findOne({name: userRole})
   .then((role) => {
-    logger.debug('into check access find one role ' + role);
+    logger.debug('iRole::checkAccess] into check access find one role ' + role);
     if (role.child) {
       //maybe call findOne again
-      return Q.fcall(checkAccess(role.child.name, checkingRole));
+      return Role.checkAccess(role.child.name, checkingRole);
     } else {
       //return Q.fcall(() => { return false; });
       throw new Error('Access Denied');

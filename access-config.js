@@ -1,5 +1,6 @@
 'use strict';
 var Role = require('./models/role');
+var Q = require('q');
 let AdminRole = 'Admin';
 let UserRole = 'User';
 
@@ -11,18 +12,18 @@ var throwErr = function(err) {
 
 var checkAdminOrSelf = function(user, id) {
   if (user._id != id) {
-    checkAdmin(user);
+    return checkAdmin(user);
   } else {
     return true;
   }
 };
 
 var checkAdmin = function(user) {
-  Role.checkAccess(getRole(user), AdminRole, throwErr);
+  return Role.checkAccess(getRole(user), AdminRole);
 };
 
 var checkUser = function(user) {
-  Role.checkAccess(getRole(user), UserRole, throwErr);
+  return Role.checkAccess(getRole(user), UserRole);
 }
 
 var getRole = function(user) {
