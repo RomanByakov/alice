@@ -7,7 +7,7 @@
 
   </div>
 </div>
-<div class="user-add-button ui fixed bottom sticky " ng-show="currentUser.role == 'Admin' || currentUser.role == 'God'">
+<div class="user-add-button ui fixed bottom sticky " ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
   <button ui-sref="newUser" class="circular teal ui icon button addpopup">
     <i class="icon add user big"></i>
   </button>
@@ -53,15 +53,15 @@
           <span ng-bind="getFullDepartment(user)"></span>
         </div>
       </div>
-      <div class="extra content">
+      <div class="extra content" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'" >
         <span class="right floated">
-          <button class="ui basic button user-delete-modal_show" ng-click="deleteUser(user)" ng-show="currentUser.role == 'God'">
+          <button class="ui basic button user-delete-modal_show" ng-click="deleteUser(user)" ng-show="currentUser.role.name == 'God'">
             <i class="icon remove user"></i>
             Delete
           </button>
         </span>
         <span>
-          <button class="ui basic button" ui-sref="editUser({id:user._id})" ng-show="currentUser.role == 'Admin' || currentUser.role == 'God'"  ui-sref="editUser({id:user._id})">
+          <button class="ui basic button" ui-sref="editUser({id:user._id})" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'"  ui-sref="editUser({id:user._id})">
             <i class="icon write"></i>
             Edit
           </button>
