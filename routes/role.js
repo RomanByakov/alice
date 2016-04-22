@@ -1,79 +1,120 @@
 var express = require('express');
 var router = express.Router();
 
+var logger = require('../modules/alice-logger');
+var helper = require('../modules/api-helper');
+
 var Role = require('../models/role');
+
+var getRoles = function(req, res, next) {
+  try {
+    Role.find()
+    .then((roles) => { res.send(roles); })
+    .catch((err) => { helper.handleError(res, err); });
+  } catch (err) {
+    helper.handleError(res, err);
+  }
+};
+
+var postRole = function(req, res, next) {
+  var required = [{
+    name: 'name',
+    status: true
+  }, {
+    name: 'child',
+    status: false
+  }];
+
+  try {
+    var params = helper.getParams(required, req);
+
+    Role.createRole(params.name, params.child)
+    .then((role) => { res.send(role); })
+    .catch((err) => { helper.handleError(res, err); });
+
+  } catch (err) {
+    helper.handleError(res, err);
+  }
+};
+
+var getRole = function(req, res, next) {
+  var required = [{
+    name: 'id',
+    status: true
+  }];
+
+  try {
+    var params = helper.getParams(required, req);
+
+    Role.findOne({'_id': params.id})
+    .then((role) => { res.send(role); })
+    .catch((err) => { helper.handleError(res, err); });
+  } catch (err) {
+    helper.handleError(res, err);
+  }
+};
+
+var updateRole = function(req, res, next) {
+  var required = [{
+    name: 'id',
+    status: true
+  }, {
+    name: 'name',
+    status: true
+  }, {
+    name: 'child',
+    status: false
+  }];
+
+  try {
+    var params = helper.getParams(required, req);
+
+    Role.findOne()
+    .then((role) => {
+      role.updateRole(params.name, params.child)
+      .then((role) => { res.send(role); })
+      .catch((err) => { helper.handleError(res, err); });
+    })
+    .catch((err) => { helper.handleError(res, err); });
+
+  } catch (err) {
+    helper.handleError(res, err);
+  }
+};
+
+//todo: stop deleting if role is using as child by other roles
+var deleteRole = function(req, res, next) {
+  var required = [{
+    name: 'id',
+    status: true
+  }];
+
+  try {
+    var params = helper.getParams(required, req);
+
+    Role.remove({'_id': params.id})
+    .then(() => {
+      res.json({success: true});
+    })
+    .catch((err) => { helper.handleError(res, err); });
+  } catch (err) {
+    helper.handleError(res, err);
+  }
+};
 
 router.route('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 })
-  .get(function(req, res, next) {
-    Role.find({}, function(err, roles) {
-      if (err) {
-         throw err;
-       }
-
-      res.json(roles);
-    });
-  })
-  .post(function(req, res, next) {
-    Role.createRole(req.body.name, req.body.child.name, function(err, role) {
-      if (err) {
-        throw err;
-      } else {
-        res.json(role);
-      }
-    });
-  });
+  .get(getRoles)
+  .post(postRole);
 
 router.route('/:id', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 })
-  .get(function(req, res, next) {
-    Role.findOne({
-      '_id': req.params.id
-    }, function(err, role) {
-      if (err) {
-        throw err;
-      }
-
-      res.json(role);
-    });
-  })
-  .put(function(req, res, next) {
-    Role.findOne({_id: req.body._id}, function(err, role) {
-      if (err) {
-        throw err;
-      } else {
-        role.updateRole(req.body.name, req.body.child.name, function(err, role) {
-          if (err) {
-            throw err;
-          } else {
-            res.json(role);
-          }
-        });
-      }
-    });
-  }).delete(function(req, res, next) {
-    // Role.findOne({_id: req.body._id}, function(err, role) {
-    //   if (err) {
-    //     throw err;
-    //   } else {
-    //     role.remove(function(err) {
-    //       if (err) {
-    //         throw err;
-    //       } else {
-    //         res.json({success: true});
-    //       }
-    //     })
-    //   }
-    // });
-    Role.remove({'_id': req.params.id})
-    .then(function() {
-      res.json({success: true});
-    })
-    .catch((err) => { throw err; });
-  });
+  .get(getRole)
+  .put(updateRole)
+  .delete(deleteRole);
 
 module.exports = router;
