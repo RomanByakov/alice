@@ -79,6 +79,10 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
           $scope.user.team = team.name;
         };
 
+        $scope.addRoleToModel = function(role) {
+          $scope.user.role = role.name;
+        };
+
         //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
         $scope.updateUser = function(avatar) {
             //alert($scope.user.department.name);

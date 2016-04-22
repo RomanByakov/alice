@@ -56,7 +56,5 @@ angular.module('aliceApp')
 
                         }
                     }
-
-                    $scope.init();
                 });
             })
