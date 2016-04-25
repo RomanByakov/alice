@@ -10,8 +10,6 @@ angular.module('aliceApp')
                     $scope.roles = Role.query();
                     $scope.teams = [];
 
-
-
                     $scope.update = function(department) {
                         $scope.teams = JSON.parse(department).teams;
                     }
