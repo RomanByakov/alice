@@ -47,21 +47,48 @@
       <div class="content">
         <div class="header"><span ng-bind="user.name"></span> <span ng-bind="user.lastname"></span></div>
         <div class="meta">
-          <a ng-bind="user.department.name"></a>
-        </div>
-        <div class="description">
-          <span ng-bind="getFullDepartment(user)"></span>
+          <a ng-bind="user.position"></a>
         </div>
       </div>
-      <div class="extra content" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'" >
+      <div class="content">
+        <div class="description">
+          <div class="ui list user-details">
+            <div class="item">
+              <i class="building outline large icon"></i>
+              <div class="content">
+                <h4 ng-bind="user.department.name"></h4>
+              </div>
+            </div>
+            <div class="item">
+              <i class="angellist large icon"></i>
+              <div class="content">
+                <h4 ng-bind="user.team.name"></h4>
+              </div>
+            </div>
+            <div class="item">
+              <i class="text telephone large icon"></i>
+              <div class="content">
+                <h4 ng-bind="user.phone"></h4>
+              </div>
+            </div>
+            <div class="item">
+              <i class="at large icon"></i>
+              <div class="content">
+                <h4><a target="_blank" href="mailto:{{user.email}}" ng-bind="user.email"></a></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="extra content">
         <span class="right floated">
-          <button class="ui basic button user-delete-modal_show" ng-click="deleteUser(user)" ng-show="currentUser.role.name == 'God'">
+          <button class="ui orange basic button user-delete-modal_show" ng-click="deleteUser(user)" ng-show="currentUser.role.name == 'God'">
             <i class="icon remove user"></i>
             Delete
           </button>
         </span>
         <span>
-          <button class="ui basic button" ui-sref="editUser({id:user._id})" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'"  ui-sref="editUser({id:user._id})">
+          <button class="ui teal basic button" ui-sref="editUser({id:user._id})" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'"  ui-sref="editUser({id:user._id})">
             <i class="icon write"></i>
             Edit
           </button>

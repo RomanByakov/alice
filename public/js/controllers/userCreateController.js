@@ -10,6 +10,8 @@ angular.module('aliceApp')
                     $scope.roles = Role.query();
                     $scope.teams = [];
 
+
+
                     $scope.update = function(department) {
                         $scope.teams = JSON.parse(department).teams;
                     }
@@ -25,11 +27,18 @@ angular.module('aliceApp')
                                 data: {
                                     name: $scope.user.name,
                                     lastname: $scope.user.lastname,
-                                    login: $scope.user.login,
+                                    username: $scope.user.username,
                                     password: $scope.user.password,
                                     department: $scope.user.department,
-                                    team: $scope.user.team,
-                                    role: $scope.user.role
+                                    team: $scope.user.team.name,
+                                    role: $scope.user.role,
+                                    position: $scope.user.position,
+                                    phone: $scope.user.phone,
+                                    email: $scope.user.email,
+                                    site: $scope.user.site,
+                                    githib: $scope.user.github,
+                                    telegram: $scope.user.telegram,
+                                    skype: $scope.user.skype
                                 },
                                 headers: {
                                     'x-access-token': $cookies.get('token')

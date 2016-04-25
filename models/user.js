@@ -126,10 +126,10 @@ userSchema.methods.updateUser = function(params) {
   //logger.debug('[User::updateUser] call with ' + department + ', ' + team + ', ' + role);
   var user = this;
 
-  user.username = params.username === null ? user.username : params.username;
+  user.username = (params.username == null || params.username == undefined) ? user.username : params.username;
   user.name = params.name;
   user.lastname = params.lastname;
-  user.password = params.password === null ? user.password : User.hashPassword(params.password);
+  user.password = (params.password == null || params.password == undefined) ? user.password : User.hashPassword(params.password);
   user.skype = params.skype;
   user.email = params.email;
   user.site = params.site;
