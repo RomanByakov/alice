@@ -34,7 +34,7 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
     }
 
     if (!$cookies.get('user')) {
-        $scope.user.role = 'guest';
+        $scope.user.role = {name: 'guest'};
         //$window.location.href = '#/login';
         $state.go('login');
     } else {
@@ -43,7 +43,7 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
         $scope.logout = function() {
             $cookies.remove('token');
             $cookies.remove('user');
-            $scope.user.role.name = 'guest';
+            $scope.user.role = {name: 'guest'};
             $state.go('users', {}, {
                 reload: true
             });
