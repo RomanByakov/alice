@@ -46,7 +46,9 @@ angular.module('aliceApp')
                                     site: $scope.user.site,
                                     githib: $scope.user.github,
                                     telegram: $scope.user.telegram,
-                                    skype: $scope.user.skype
+                                    skype: $scope.user.skype,
+                                    jobapplydate: $scope.user.jobapplydate,
+                                    info: $scope.user.info
                                 },
                                 headers: {
                                     'x-access-token': $cookies.get('token')
@@ -72,7 +74,7 @@ angular.module('aliceApp')
                         singleDatePicker: true,
                         showDropdowns: true,
                         locale: {
-                        format: 'DD/MM/YYYY'
+                          format: 'MM-DD-YYYY'
                         }
                     });
                   });
