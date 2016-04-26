@@ -19,12 +19,7 @@ var departmentSchema = new mongoose.Schema({
     type: String,
     default: '../img/empty-img.jpg'
   },
-  teams:[mongoose.Schema.Types.Mixed],
-  phone: {
-    type: String,
-    default: null,
-    validate: validators.phoneValidator
-  }
+  teams:[mongoose.Schema.Types.Mixed]
 });
 
 departmentSchema.methods.updateDepartment = function(name, teams) {
