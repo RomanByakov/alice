@@ -49,31 +49,31 @@ var userSchema = new Schema({
   },
   skype: {
     type: String,
-    default: 'Unknown'
+    default: null
   },
   phone: {
     type: Number,
-    default: 0
+    default: null
   },
   telegram: {
     type: String,
-    default: 'Unknown'
+    default: null
   },
   email: {
     type: String,
-    default: 'Unknown'
+    default: null
   },
   site: {
     type: String,
-    default: 'Unknown'
+    default: null
   },
   github: {
     type: String,
-    default: 'Unknown'
+    default: null
   },
   jobapplydate: {
-    type: Number,
-    default: null
+    type: Date,
+    default: new Date()
   },
   position: {
     type: String,
@@ -106,7 +106,7 @@ userSchema.statics.createUser = function(params) {
     telegram: params.telegram,
     phone: params.phone,
     position: params.position,
-    jobapplydate: params.jobapplydate,
+    jobapplydate: new Date(params.jobapplydate),
     info: params.info
   });
 
@@ -137,7 +137,7 @@ userSchema.methods.updateUser = function(params) {
   user.telegram = params.telegram;
   user.phone = params.phone;
   user.position = params.position;
-  user.jibapplydate = params.jobapplydate;
+  user.jobapplydate = new Date(params.jobapplydate);
   user.info = params.info;
 
   return Q.fcall(function() {
