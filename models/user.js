@@ -23,7 +23,7 @@ var emailValidator = [function(val) {
 }, 'InvalidEmail'];
 
 var githubValidator = [function(val) {
-  logger.debug('[User::emailValidator] call');
+  logger.debug('[User::githubValidator] call');
 
   if (val == null) {
       return true;
@@ -32,6 +32,30 @@ var githubValidator = [function(val) {
   var githubRegex = /https:\/\/github.com\/.{1}.*/;
   return githubRegex.test(val);
 }, 'InvalidGithubUrl'];
+
+var phoneValidator = [function(val) {
+  logger.debug('[User::phoneValidator] call');
+
+  if (val == null) {
+    return true;
+  }
+
+  var phoneRegex = /^\d{11}$/;
+  return phoneRegex.test(val);
+
+}, 'InvalidPhone'];
+
+var siteValidator = [function(val) {
+  logger.debug('[User::siteValidator] call');
+
+  if (val == null) {
+    return true;
+  }
+
+  var siteRegex = /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/;
+  return siteRegex.test(val);
+
+}, 'InvalidSite'];
 
 var userSchema = new Schema({
   name: {
@@ -74,8 +98,9 @@ var userSchema = new Schema({
     default: null
   },
   phone: {
-    type: Number,
-    default: null
+    type: String,
+    default: null,
+    validate: phoneValidator
   },
   telegram: {
     type: String,
@@ -88,7 +113,8 @@ var userSchema = new Schema({
   },
   site: {
     type: String,
-    default: null
+    default: null,
+    validate: siteValidator
   },
   github: {
     type: String,
