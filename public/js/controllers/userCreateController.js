@@ -65,4 +65,16 @@ angular.module('aliceApp')
                         }
                     }
                 });
+
+                $(function() {
+
+                    $('input[name="datetowork"]').daterangepicker({
+                        singleDatePicker: true,
+                        showDropdowns: true,
+                        locale: {
+                        format: 'DD/MM/YYYY'
+                        }
+                    });
+                  });
+
             })

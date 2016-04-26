@@ -46,7 +46,7 @@
       adaptive();
     });
 
-    
+
     $('.hamburger').click(function(){
       if($('.wrapper-block').hasClass('visible'))
       {
@@ -57,6 +57,8 @@
       }
 
     });
+
+    
 
     // $document.scroll(function() {
     //   if ($document.scrollTop() >= 70) {

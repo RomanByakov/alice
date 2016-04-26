@@ -11,6 +11,52 @@ var util = require('util');
 var Q = require('q');
 var logger = require('../modules/alice-logger');
 
+var emailValidator = [function(val) {
+  logger.debug('[User::emailValidator] call');
+
+  if (val == null) {
+    return true;
+  }
+
+  var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  return emailRegex.test(val);
+}, 'InvalidEmail'];
+
+var githubValidator = [function(val) {
+  logger.debug('[User::githubValidator] call');
+
+  if (val == null) {
+      return true;
+  }
+
+  var githubRegex = /https:\/\/github.com\/.{1}.*/;
+  return githubRegex.test(val);
+}, 'InvalidGithubUrl'];
+
+var phoneValidator = [function(val) {
+  logger.debug('[User::phoneValidator] call');
+
+  if (val == null) {
+    return true;
+  }
+
+  var phoneRegex = /^\d{11}$/;
+  return phoneRegex.test(val);
+
+}, 'InvalidPhone'];
+
+var siteValidator = [function(val) {
+  logger.debug('[User::siteValidator] call');
+
+  if (val == null) {
+    return true;
+  }
+
+  var siteRegex = /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/;
+  return siteRegex.test(val);
+
+}, 'InvalidSite'];
+
 var userSchema = new Schema({
   name: {
     type: String,
@@ -49,31 +95,35 @@ var userSchema = new Schema({
   },
   skype: {
     type: String,
-    default: 'Unknown'
+    default: null
   },
   phone: {
-    type: Number,
-    default: 0
+    type: String,
+    default: null,
+    validate: phoneValidator
   },
   telegram: {
     type: String,
-    default: 'Unknown'
+    default: null
   },
   email: {
     type: String,
-    default: 'Unknown'
+    default: null,
+    validate: emailValidator
   },
   site: {
     type: String,
-    default: 'Unknown'
+    default: null,
+    validate: siteValidator
   },
   github: {
     type: String,
-    default: 'Unknown'
+    default: null,
+    validate: githubValidator
   },
   jobapplydate: {
-    type: Number,
-    default: null
+    type: Date,
+    default: new Date()
   },
   position: {
     type: String,
@@ -106,7 +156,7 @@ userSchema.statics.createUser = function(params) {
     telegram: params.telegram,
     phone: params.phone,
     position: params.position,
-    jobapplydate: params.jobapplydate,
+    jobapplydate: new Date(params.jobapplydate),
     info: params.info
   });
 
@@ -137,7 +187,7 @@ userSchema.methods.updateUser = function(params) {
   user.telegram = params.telegram;
   user.phone = params.phone;
   user.position = params.position;
-  user.jibapplydate = params.jobapplydate;
+  user.jobapplydate = new Date(params.jobapplydate);
   user.info = params.info;
 
   return Q.fcall(function() {
