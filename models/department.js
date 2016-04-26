@@ -1,12 +1,12 @@
 // dependencies
-var restful = require('node-restful');
-var mongoose = restful.mongoose;
+//var restful = require('node-restful');
+//var mongoose = restful.mongoose;
+var mongoose = require('mongoose');
 var Team = require('./team');
 var User = require('./user');
 
 var Q = require('q');
 var logger = require('../modules/alice-logger');
-var validators = require('../modules/validators');
 
 var departmentSchema = new mongoose.Schema({
   name: {
@@ -23,20 +23,21 @@ var departmentSchema = new mongoose.Schema({
 });
 
 departmentSchema.methods.updateDepartment = function(name, teams) {
-  this.name = name;
 
-  this.teams = [];
+    this.name = name;
 
-  for (var i = 0; i < teams.length; i++) {
-    var team = new Team({
-      name: teams[i].name
-    });
+    this.teams = [];
 
-    team.save();
-    this.teams.push(team);
-  }
+    for (var i = 0; i < teams.length; i++) {
+      var team = new Team({
+        name: teams[i].name
+      });
 
-  return this.save();
+      team.save();
+      this.teams.push(team);
+    }
+
+    return this.save();
 };
 
 departmentSchema.methods.deleteDepartment = function() {
