@@ -6,6 +6,7 @@ var User = require('./user');
 
 var Q = require('q');
 var logger = require('../modules/alice-logger');
+var validators = require('../modules/validators');
 
 var departmentSchema = new mongoose.Schema({
   name: {
@@ -18,7 +19,12 @@ var departmentSchema = new mongoose.Schema({
     type: String,
     default: '../img/empty-img.jpg'
   },
-  teams:[mongoose.Schema.Types.Mixed]
+  teams:[mongoose.Schema.Types.Mixed],
+  phone: {
+    type: String,
+    default: null,
+    validate: validators.phoneValidator
+  }
 });
 
 departmentSchema.methods.updateDepartment = function(name, teams) {

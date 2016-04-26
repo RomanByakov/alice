@@ -10,52 +10,7 @@ var util = require('util');
 
 var Q = require('q');
 var logger = require('../modules/alice-logger');
-
-var emailValidator = [function(val) {
-  logger.debug('[User::emailValidator] call');
-
-  if (val == null) {
-    return true;
-  }
-
-  var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  return emailRegex.test(val);
-}, 'InvalidEmail'];
-
-var githubValidator = [function(val) {
-  logger.debug('[User::githubValidator] call');
-
-  if (val == null) {
-      return true;
-  }
-
-  var githubRegex = /https:\/\/github.com\/.{1}.*/;
-  return githubRegex.test(val);
-}, 'InvalidGithubUrl'];
-
-var phoneValidator = [function(val) {
-  logger.debug('[User::phoneValidator] call');
-
-  if (val == null) {
-    return true;
-  }
-
-  var phoneRegex = /^\d{11}$/;
-  return phoneRegex.test(val);
-
-}, 'InvalidPhone'];
-
-var siteValidator = [function(val) {
-  logger.debug('[User::siteValidator] call');
-
-  if (val == null) {
-    return true;
-  }
-
-  var siteRegex = /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/;
-  return siteRegex.test(val);
-
-}, 'InvalidSite'];
+var validators = require('../modules/validators');
 
 var userSchema = new Schema({
   name: {
@@ -100,7 +55,7 @@ var userSchema = new Schema({
   phone: {
     type: String,
     default: null,
-    validate: phoneValidator
+    validate: validators.phoneValidator
   },
   telegram: {
     type: String,
@@ -109,21 +64,21 @@ var userSchema = new Schema({
   email: {
     type: String,
     default: null,
-    validate: emailValidator
+    validate: validators.emailValidator
   },
   site: {
     type: String,
     default: null,
-    validate: siteValidator
+    validate: validators.siteValidator
   },
   github: {
     type: String,
     default: null,
-    validate: githubValidator
+    validate: validators.githubValidator
   },
   jobapplydate: {
     type: Date,
-    default: new Date()
+    default: new Date('08-25-2014')
   },
   position: {
     type: String,

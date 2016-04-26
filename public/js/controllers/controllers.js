@@ -34,7 +34,9 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
     }
 
     if (!$cookies.get('user')) {
-        $scope.user.role = {name: 'guest'};
+        $scope.user.role = {
+            name: 'guest'
+        };
         //$window.location.href = '#/login';
         $state.go('login');
     } else {
@@ -43,7 +45,9 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
         $scope.logout = function() {
             $cookies.remove('token');
             $cookies.remove('user');
-            $scope.user.role = {name: 'guest'};
+            $scope.user.role = {
+                name: 'guest'
+            };
             $state.go('users', {}, {
                 reload: true
             });
@@ -57,7 +61,11 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
 
         $scope.user = User.get({
             id: $stateParams.id
+        }, function() {
+            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+            $scope.days = Math.round(Math.abs((new Date(Date.now()).getTime() - new Date($scope.user.jobapplydate).getTime())/(oneDay)));
         });
+
 
     });
 }).controller('UserEditController', function($rootScope, $scope, $state, $cookies, $stateParams, User, Upload, $timeout, Department, Role) {
@@ -76,11 +84,11 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
         }
 
         $scope.addTeamToModel = function(team) {
-          $scope.user.team = team.name;
+            $scope.user.team = team.name;
         };
 
         $scope.addRoleToModel = function(role) {
-          $scope.user.role = role.name;
+            $scope.user.role = role.name;
         };
 
         //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
