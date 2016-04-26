@@ -9,12 +9,20 @@ angular.module('aliceApp')
                     $scope.departments = Department.query();
                     $scope.roles = Role.query();
                     $scope.teams = [];
+                    $(".ui.dropdown").dropdown();
 
-
-
-                    $scope.update = function(department) {
-                        $scope.teams = JSON.parse(department).teams;
+                    $scope.update = function(index) {
+                        $scope.user.department = $scope.departments[index].name;
+                        $scope.teams = $scope.departments[index].teams;
                     }
+
+                    $scope.addTeamToModel = function(team) {
+                      $scope.user.team = team.name;
+                    };
+
+                    $scope.addRoleToModel = function(role) {
+                      $scope.user.role = role.name;
+                    };
 
                     $scope.addUser = function(avatar) {
                         if (avatar == null) {
@@ -30,7 +38,7 @@ angular.module('aliceApp')
                                     username: $scope.user.username,
                                     password: $scope.user.password,
                                     department: $scope.user.department,
-                                    team: $scope.user.team.name,
+                                    team: $scope.user.team,
                                     role: $scope.user.role,
                                     position: $scope.user.position,
                                     phone: $scope.user.phone,
