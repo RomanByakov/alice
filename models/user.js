@@ -57,6 +57,11 @@ var userSchema = new Schema({
     default: null,
     validate: validators.phoneValidator
   },
+  workphone: {
+    type: String,
+    default: null,
+    validate: validators.phoneValidator
+  },
   telegram: {
     type: String,
     default: null
@@ -110,6 +115,7 @@ userSchema.statics.createUser = function(params) {
     github: params.github,
     telegram: params.telegram,
     phone: params.phone,
+    workphone: params.workphone,
     position: params.position,
     jobapplydate: new Date(params.jobapplydate),
     info: params.info
@@ -141,6 +147,7 @@ userSchema.methods.updateUser = function(params) {
   user.github = params.github;
   user.telegram = params.telegram;
   user.phone = params.phone;
+  user.workphone = params.workphone;
   user.position = params.position;
   user.jobapplydate = new Date(params.jobapplydate);
   user.info = params.info;
