@@ -1,35 +1,51 @@
 <div class="user-form">
   <div class="ui piled segment">
     <h4 class="ui header">Edit user card</h4>
-    <form role="form" class="ui form" ng-submit="updateUser(avatar)">
+    <form role="form" class="ui form" ng-submit="editUser(avatar)">
         <!-- <div ng-include="'partials/_form.html'"></div> -->
         <div class="ui inverted segment">
           <div class="ui inverted form">
             <div class="two fields">
               <div class="field">
                 <label>Login</label>
-                <input placeholder="User login" ng-model="user.username" type="text">
+                <input placeholder="User login" ng-model="user.username" type="text" required>
               </div>
               <div class="field">
                 <label>Password</label>
-                <input placeholder="Write pass" ng-model="user.password" type="password">
+                <input placeholder="Write pass" ng-model="user.password" type="password" required>
               </div>
             </div>
           </div>
         </div>
-
+        <h4 class="ui dividing header">General information</h4>
         <div class="field">
           <label>Name</label>
           <div class="two fields">
             <div class="field">
-              <input type="text" name="shipping[first-name]" ng-model="user.name" placeholder="First Name">
+              <input type="text" name="" ng-model="user.name" placeholder="First Name">
             </div>
             <div class="field">
-              <input type="text" name="shipping[last-name]" ng-model="user.lastname" placeholder="Last Name">
+              <input type="text" name="" ng-model="user.lastname" placeholder="Last Name">
             </div>
           </div>
         </div>
 
+        <div class="two fields">
+          <div class="field">
+            <label>First working day </label>
+            <div class="ui left icon input">
+              <input type="text" ng-modal="user.jopapplydate" name="datetowork" value="25/08/2014" />
+              <i class="calendar icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label>Position</label>
+            <div class="ui left icon input">
+              <input type="text" name="shipping[first-name]" ng-model="user.position" placeholder="Position">
+              <i class="paw icon"></i>
+            </div>
+          </div>
+        </div>
         <div class="three fields">
           <div class="field">
             <label>Departments</label>
@@ -38,7 +54,7 @@
               <i class="dropdown icon"></i>
               <div class="default text" >Department</div>
               <div class="menu">
-                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name" ng-selected="user.department.name == department.name"></div>
+                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name"></div>
               </div>
             </div>
           </div>
@@ -50,7 +66,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">Team</div>
               <div class="menu">
-                <div ng-repeat="team in teams" ng-click="addTeamToModel(team)" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
+                <div ng-repeat="team in teams" ng-click="addTeamToModel(team)" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name"></div>
               </div>
             </div>
           </div>
@@ -61,28 +77,25 @@
               <i class="dropdown icon"></i>
               <div class="default text" >Role</div>
               <div class="menu">
-                <div ng-repeat="role in roles" ng-click="addRoleToModel(role)" ng-model="user.role" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
+                <div ng-repeat="role in roles" ng-click="addRoleToModel(role)" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="two fields">
-          <div class="field">
-            <label>Avatar</label>
-            <input type="file" ngf-select ng-model="avatar" name="file"
-                     accept="image/*" ngf-max-size="2MB"
-                     ngf-model-invalid="errorFile" id="avatar-input">
-          </div>
+        <div class="field">
+          <label>About you</label>
+          <textarea rows="2" ng-model="user.info" placeholder="Tell about yourself..."></textarea>
         </div>
+        <div class="field">
+          <label>Avatar</label>
+          <input type="file" ngf-select ng-model="avatar" name="file"
+                   accept="image/*" ngf-max-size="2MB"
+                   ngf-model-invalid="errorFile" id="avatar-input">
+        </div>
+
+
         <h4 class="ui dividing header">Additional information</h4>
         <div class="three fields">
-            <div class="field">
-              <label>Position</label>
-              <div class="ui left icon input">
-                <input type="text" name="shipping[first-name]" ng-model="user.position" placeholder="Position">
-                <i class="paw icon"></i>
-              </div>
-            </div>
             <div class="field">
               <label>Phone</label>
               <div class="ui left icon input">
@@ -140,6 +153,8 @@
         {{ user | json }}
     </pre>
   </div>
+  <pre>{{departments | json}}</pre>
+  <pre>{{roles | json}}</pre>
     <!-- <button ngf-select ng-model="picFile" accept="image/*">
             Select Picture</button>
         <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
