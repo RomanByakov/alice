@@ -34,7 +34,7 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
     }
 
     if (!$cookies.get('user')) {
-        $scope.user.role = 'guest';
+        $scope.user.role = {name: 'guest'};
         //$window.location.href = '#/login';
         $state.go('login');
     } else {
@@ -43,7 +43,7 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
         $scope.logout = function() {
             $cookies.remove('token');
             $cookies.remove('user');
-            $scope.user.role = 'guest';
+            $scope.user.role = {name: 'guest'};
             $state.go('users', {}, {
                 reload: true
             });
@@ -75,6 +75,14 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
             $scope.teams = $scope.departments[index].teams;
         }
 
+        $scope.addTeamToModel = function(team) {
+          $scope.user.team = team.name;
+        };
+
+        $scope.addRoleToModel = function(role) {
+          $scope.user.role = role.name;
+        };
+
         //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
         $scope.updateUser = function(avatar) {
             //alert($scope.user.department.name);
@@ -88,8 +96,15 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                         username: $scope.user.username,
                         password: $scope.user.password,
                         department: $scope.user.department,
-                        team: $scope.user.team.name,
-                        role: $scope.user.role
+                        team: $scope.user.team,
+                        role: $scope.user.role,
+                        position: $scope.user.position,
+                        phone: $scope.user.phone,
+                        email: $scope.user.email,
+                        site: $scope.user.site,
+                        githib: $scope.user.github,
+                        telegram: $scope.user.telegram,
+                        skype: $scope.user.skype
                     },
                     headers: {
                         'x-access-token': $cookies.get('token')
@@ -119,7 +134,14 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                     password: $scope.user.password,
                     department: $scope.user.department,
                     team: $scope.user.team,
-                    role: $scope.user.role
+                    role: $scope.user.role,
+                    position: $scope.user.position,
+                    phone: $scope.user.phone,
+                    email: $scope.user.email,
+                    site: $scope.user.site,
+                    githib: $scope.user.github,
+                    telegram: $scope.user.telegram,
+                    skype: $scope.user.skype
                 }, function() {
                     $state.go('users');
                 });
@@ -178,37 +200,38 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
         id: $stateParams.id
     });
 
-}).controller('DepartmentCreateController', function($scope, $state, $cookies, $stateParams, Department) {
-    checkAccess($cookies, $state);
-    $scope.department = new Department();
-    $scope.department.teams = [];
+}).controller('DepartmentCreateController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
+    $rootScope.checkAccess($cookies, $state, function() {
+        $scope.department = new Department();
+        $scope.department.teams = [];
 
-    $scope.addDepartment = function() {
-        $scope.department.$save(function() {
-            $state.go('departments');
-        });
-    }
+        $scope.addDepartment = function() {
+            $scope.department.$save(function() {
+                $state.go('departments');
+            });
+        }
+    });
+}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
+    $rootScope.checkAccess($cookies, $state, function() {
+        $scope.updateDepartment = function() {
+            $scope.department.$update(function() {
+                $state.go('departments');
+            });
+        };
 
-}).controller('DepartmentEditController', function($scope, $state, $cookies, $stateParams, Department) {
-    checkAccess($cookies, $state);
-    $scope.updateDepartment = function() {
-        $scope.department.$update(function() {
-            $state.go('departments');
-        });
-    };
+        $scope.loadDepartment = function() {
+            $scope.department = Department.get({
+                id: $stateParams.id
+            }, function() {
+                $('.ui.dropdown').dropdown();
+            });
 
-    $scope.loadDepartment = function() {
-        $scope.department = Department.get({
-            id: $stateParams.id
-        }, function() {
-            $('.ui.dropdown').dropdown();
-        });
+        };
 
-    };
-
-    $scope.loadDepartment();
+        $scope.loadDepartment();
 
 
+    });
 });
 
 module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {

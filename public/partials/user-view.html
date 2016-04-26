@@ -10,49 +10,49 @@
 
     <div class="item">
       <div class="ui list user-details">
-          <div class="item">
+          <div class="item" ng-show="user.department.name">
             <i class="building outline large icon"></i>
             <div class="content">
               <h4 ng-bind="user.department.name"></h4>
             </div>
           </div>
-          <div class="item">
+          <div class="item" ng-show="user.team.name">
             <i class="angellist large icon"></i>
             <div class="content">
               <h4 ng-bind="user.team.name"></h4>
             </div>
           </div>
-          <div class="item">
+          <div class="item" ng-show="user.phone">
             <i class="text telephone large icon"></i>
             <div class="content">
-              <h4 ng-bind="user.phone"></h4>
+              <h4  ng-bind="user.phone"></h4>
             </div>
           </div>
-          <div class="item">
+          <div class="item" ng-show="user.email">
             <i class="at large icon"></i>
             <div class="content">
               <h4><a target="_blank" href="mailto:{{user.email}}" ng-bind="user.email"></a></h4>
             </div>
           </div>
-          <div class="item">
+          <div class="item" ng-show="user.site">
             <i class="linkify large icon"></i>
             <div class="content">
               <h4><a target="_blank" href="{{user.site}}" ng-bind="user.site"></a></h4>
             </div>
           </div>
-          <div class="item">
+          <div class="item" ng-show="user.skype">
             <i class="skype large icon"></i>
             <div class="content">
               <h4 ng-bind="user.skype"></h4>
             </div>
           </div>
-          <div class="item">
+          <div class="item" ng-show="user.telegram">
             <i class="text send large icon"></i>
             <div class="content">
               <h4><a target="_blank" href="https://telegram.me/{{user.telegram}}" ng-bind="user.telegram"></a></h4>
             </div>
           </div>
-          <div class="item">
+          <div class="item" ng-show="user.github">
             <i class="github large icon"></i>
             <div class="content">
               <h4><a target="_blank" href="{{user.github}}" ng-bind="user.github"></a></h4>

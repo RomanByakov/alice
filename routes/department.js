@@ -19,6 +19,7 @@ var helper = require('../modules/api-helper');
 
 // models
 var Department = require('../models/department');
+var User = require('../models/user');
 
 var getDepartments = function(req, res, next) {
   try {
@@ -107,7 +108,9 @@ var deleteDepartment = function(req, res, next) {
     Department.findOne({'_id': params.id})
     .then((department) => {
       User.findOne({'department': department})
-      .then((user) => { throw new Error('Department used by users'); })
+      .then((user) => {
+        if (user) throw new Error('Department used by users'); 
+      })
       .catch((err) => { helper.handleError(res, err); })
 
       return department.deleteDepartment()

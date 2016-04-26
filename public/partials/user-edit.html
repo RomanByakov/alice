@@ -8,7 +8,7 @@
             <div class="two fields">
               <div class="field">
                 <label>Login</label>
-                <input placeholder="User login" ng-model="user.login" type="text">
+                <input placeholder="User login" ng-model="user.username" type="text">
               </div>
               <div class="field">
                 <label>Password</label>
@@ -50,7 +50,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">Team</div>
               <div class="menu">
-                <div ng-repeat="team in teams" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
+                <div ng-repeat="team in teams" ng-click="addTeamToModel(team)" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
               <i class="dropdown icon"></i>
               <div class="default text" >Role</div>
               <div class="menu">
-                <div ng-repeat="role in roles" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
+                <div ng-repeat="role in roles" ng-click="addRoleToModel(role)" ng-model="user.role" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
               </div>
             </div>
           </div>

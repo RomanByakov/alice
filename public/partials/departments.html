@@ -10,7 +10,7 @@
         <a ui-sref="viewDepartment({id:department._id})" ng-bind="team.name" ng-repeat="team in department.teams" class="ui tag label"></a>
       </div>
     </div>
-    <div class="extra content">
+    <div class="extra content" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
       <div class="ui two buttons">
         <button ui-sref="editDepartment({id:department._id})" class="ui basic teal button">Edit</button>
         <button ng-click="deleteDepartment(department)" class="ui basic red button">Delete</button>
@@ -18,7 +18,7 @@
     </div>
   </div>
 </div>
-<div class="ui department-button" ng-show="currentUser.role == 'Admin' || currentUser.role == 'God'">
+<div class="ui department-button" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
   <button ui-sref="newDepartment" class="ui teal button">Add New Department</button>
 </div>
 <!--

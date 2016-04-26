@@ -8,11 +8,11 @@
             <div class="two fields">
               <div class="field">
                 <label>Login</label>
-                <input placeholder="User login" ng-model="user.login" type="text">
+                <input placeholder="User login" ng-model="user.username" type="text" required>
               </div>
               <div class="field">
                 <label>Password</label>
-                <input placeholder="Write pass" ng-model="user.password" type="password">
+                <input placeholder="Write pass" ng-model="user.password" type="password" required>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
               <i class="dropdown icon"></i>
               <div class="default text" >Department</div>
               <div class="menu">
-                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name" ng-selected="user.department.name == department.name"></div>
+                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name"></div>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">Team</div>
               <div class="menu">
-                <div ng-repeat="team in teams" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name" ng-selected="user.team.name == team.name"></div>
+                <div ng-repeat="team in teams" ng-click="addTeamToModel(team)" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name"></div>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
               <i class="dropdown icon"></i>
               <div class="default text" >Role</div>
               <div class="menu">
-                <div ng-repeat="role in roles" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
+                <div ng-repeat="role in roles" ng-click="addRoleToModel(role)" class="item" data-value="{{role.name}}" ng-bind="role.name"></div>
               </div>
             </div>
           </div>
@@ -140,6 +140,8 @@
         {{ user | json }}
     </pre>
   </div>
+  <pre>{{departments | json}}</pre>
+  <pre>{{roles | json}}</pre>
     <!-- <button ngf-select ng-model="picFile" accept="image/*">
             Select Picture</button>
         <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
