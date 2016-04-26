@@ -1,6 +1,8 @@
 var restful = require('node-restful');
 var mongoose = restful.mongoose;
 
+var validators = require('../modules/validators');
+
 var teamSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -11,7 +13,7 @@ var teamSchema = new mongoose.Schema({
   logo: {
     type: String,
     default: '../img/empty-img.jpg'
-  },
+  }
 });
 
 teamSchema.statics.createTeam = function(name, callback) {

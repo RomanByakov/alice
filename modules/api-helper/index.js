@@ -27,7 +27,7 @@ var getParams = function(required, req) {
       throw new Error('ParamsMissing');
     }
 
-    result[required[i].name] = req[required[i].name];
+    result[required[i].name] = req[required[i].name] == '' ? null : req[required[i].name];
     //logger.debug('Result: ' + JSON.stringify(result));
   }
 
