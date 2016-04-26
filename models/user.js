@@ -85,6 +85,10 @@ var userSchema = new Schema({
     type: Date,
     default: new Date('08-25-2014')
   },
+  birthday: {
+    type: Date,
+    default: new Date('08-25-2014')
+  },
   position: {
     type: String,
     default: "Slave"
@@ -118,7 +122,8 @@ userSchema.statics.createUser = function(params) {
     workphone: params.workphone,
     position: params.position,
     jobapplydate: new Date(params.jobapplydate),
-    info: params.info
+    info: params.info,
+    birthday: new Date(params.birthday)
   });
 
   return Q.fcall(function() {
@@ -151,6 +156,7 @@ userSchema.methods.updateUser = function(params) {
   user.position = params.position;
   user.jobapplydate = new Date(params.jobapplydate);
   user.info = params.info;
+  user.birthday = new Date(params.birthday);
 
   return Q.fcall(function() {
     return user.setDepartment(params.department, params.team)
