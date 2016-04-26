@@ -251,9 +251,13 @@ body,html
 
 .user-form
 {
-  max-width: 700px;
+  max-width: 750px;
 }
-
+.user-form .piled.segment
+{
+  padding: 40px;
+}
+    
 .hidden
 {
   display: none !important;

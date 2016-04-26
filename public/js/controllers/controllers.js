@@ -175,6 +175,17 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
 
         $scope.loadUser();
 
+        $(function() {
+
+            $('input[name="datetowork"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                  format: 'MM-DD-YYYY'
+                }
+            });
+          });
+
     });
 
 });
