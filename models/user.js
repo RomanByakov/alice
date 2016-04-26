@@ -11,6 +11,28 @@ var util = require('util');
 var Q = require('q');
 var logger = require('../modules/alice-logger');
 
+var emailValidator = [function(val) {
+  logger.debug('[User::emailValidator] call');
+
+  if (val == null) {
+    return true;
+  }
+
+  var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  return emailRegex.test(val);
+}, 'InvalidEmail'];
+
+var githubValidator = [function(val) {
+  logger.debug('[User::emailValidator] call');
+
+  if (val == null) {
+      return true;
+  }
+
+  var githubRegex = /https:\/\/github.com\/.{1}.*/;
+  return githubRegex.test(val);
+}, 'InvalidGithubUrl'];
+
 var userSchema = new Schema({
   name: {
     type: String,
@@ -61,7 +83,8 @@ var userSchema = new Schema({
   },
   email: {
     type: String,
-    default: null
+    default: null,
+    validate: emailValidator
   },
   site: {
     type: String,
@@ -69,7 +92,8 @@ var userSchema = new Schema({
   },
   github: {
     type: String,
-    default: null
+    default: null,
+    validate: githubValidator
   },
   jobapplydate: {
     type: Date,
