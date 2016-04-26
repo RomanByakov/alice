@@ -18,7 +18,14 @@ angular.module('aliceApp')
                 });
             };
 
-            
+            $('.message .close')
+            .on('click', function() {
+              $(this)
+                .closest('.message')
+                .transition('scale')
+              ;
+            })
+          ;
             // $scope.$watch("users", function (value) {//I change here
             //   var val = value || null;
             //   if (val)

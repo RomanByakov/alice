@@ -38,6 +38,20 @@
    </div>
  </div>
 </div>
+
+<div class="ui success  message user-cards_message">
+  <i class="close icon"></i>
+
+  <div class="ui list">
+    <div class="item">
+      <img class="ui top aligned tiny image" src="../img/empty-img.png">
+      <div class="content">
+        <a class="header">Alice #bot</a>
+        <div class="description"><br>Welcome back, <b ng-bind="user.name"></b>!<br>You will not forget the name of your colleagues?</div>
+      </div>
+    </div>
+  </div>
+</div>
 <h3 class="ui header">All users</h3>
 <div class="ui link cards user-cards grid">
     <div class="card sixteen wide mobile seven wide tablet five wide computer column" ng-repeat="user in users | filter:$root.search">
@@ -48,6 +62,9 @@
         <div class="header"><span ng-bind="user.name"></span> <span ng-bind="user.lastname"></span></div>
         <div class="meta">
           <a ng-bind="user.position"></a>
+        </div>
+        <div class="description user-cards_about">
+          <span ng-bind="user.info" ng-maxlenght="10"></span>
         </div>
       </div>
       <div class="content">
