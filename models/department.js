@@ -7,6 +7,7 @@ var User = require('./user');
 
 var Q = require('q');
 var logger = require('../modules/alice-logger');
+var validators = require('../modules/validators');
 
 var departmentSchema = new mongoose.Schema({
   name: {
@@ -19,25 +20,52 @@ var departmentSchema = new mongoose.Schema({
     type: String,
     default: '../img/empty-img.jpg'
   },
-  teams:[mongoose.Schema.Types.Mixed]
+  teams:[mongoose.Schema.Types.Mixed],
+  color: {
+    type: String,
+    default: null,
+    validate: validators.colorValidator
+  },
+  phone: {
+    type: String,
+    default: null,
+    validate: validators.phoneValidator
+  },
+  lead: {
+    type: [mongoose.Schema.Types.Mixed]
+  },
+  description: {
+    type: String,
+    default: null
+  }
 });
 
-departmentSchema.methods.updateDepartment = function(name, teams) {
+var setTeams = function(teams, dep) {
+  for (var i = 0; i < teams.length; i++) {
+    var team = new Team({
+      name: teams[i].name,
+      color: teams[i].color,
+      phone: teams[i].phone,
+      description: teams[i].description
+    });
 
-    this.name = name;
+    team.save();
+    dep.teams.push(team);
+  }
+
+  return Q.fcall(() => { return true; });
+};
+
+departmentSchema.methods.updateDepartment = function(params) {
+    this.name = params.name;
+    this.color = params.color;
+    this.phone = params.phone;
+    this.description = params.description;
 
     this.teams = [];
 
-    for (var i = 0; i < teams.length; i++) {
-      var team = new Team({
-        name: teams[i].name
-      });
-
-      team.save();
-      this.teams.push(team);
-    }
-
-    return this.save();
+    return setTeams(params.teams, this)
+    .then(() => { return this.save(); });
 };
 
 departmentSchema.methods.deleteDepartment = function() {
@@ -53,26 +81,17 @@ departmentSchema.methods.deleteDepartment = function() {
     });
 };
 
-departmentSchema.statics.createDepartment = function(name, teams) {
+departmentSchema.statics.createDepartment = function(params) {
   "use strict";
   var department = new Department({
-    name: name
+    name: params.name,
+    color: params.color,
+    phone: params.phone,
+    description: params.description
   });
 
-  logger.debug(teams);
-
-  for (var i = 0; i < teams.length; i++) {
-    var team = new Team({
-      name: teams[i].name
-    });
-
-    //callback and then not working
-    team.save();
-
-    department.teams.push(team);
-  }
-
-  return department.save();
+  return setTeams(params.teams, department)
+  .then(() => { return department.save(); });
 };
 
 var Department = mongoose.model('Departments', departmentSchema);
