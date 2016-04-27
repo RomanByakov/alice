@@ -12,19 +12,36 @@ angular.module('aliceApp')
 
             $scope.deleteUser = function(user) {
                 user.$delete().then(function() {
+                  $('.user-delete-modal.modal').modal('hide');
                     $state.go('users', {}, {
                         reload: true
                     });
                 });
             };
 
-            
-            // $scope.$watch("users", function (value) {//I change here
-            //   var val = value || null;
-            //   if (val)
-            //     $('.user-delete-modal')
-            //       .modal('attach events', '#logo-container', 'show')
-            //     ;
-            //   });
+            $scope.showPopup = function(user) {
+              $scope.userForDelete = user;
+                $('.user-delete-modal.modal').modal('show');
+            };
+
+            $('.message .close')
+            .on('click', function() {
+              $(this)
+                .closest('.message')
+                .transition('scale')
+              ;
+            })
+          ;
+          // attach events to buttons
+
+
         });
+
+        // // $('.user-delete-modal.modal')
+        // //   .modal('attach events', '.user-delete-modal_show')
+        // // ;
+        //
+        // $('.user-delete-modal_show').click(function(){
+        //   $('.user-delete-modal.modal').modal('show');
+        // });
     })

@@ -17,24 +17,40 @@
             </div>
           </div>
         </div>
-        <h4 class="ui dividing header">General information</h4>
-        <div class="field">
-          <label>Name</label>
-          <div class="two fields">
-            <div class="field">
-              <input type="text" name="" ng-model="user.name" placeholder="First Name">
-            </div>
-            <div class="field">
-              <input type="text" name="" ng-model="user.lastname" placeholder="Last Name">
+        <h4 class="ui dividing header">About you</h4>
+        <div class="three fields">
+          <div class="field">
+            <label>First name</label>
+            <input type="text" name="" ng-model="user.name" placeholder="First Name">
+          </div>
+          <div class="field">
+            <label>Second name</label>
+            <input type="text" name="" ng-model="user.lastname" placeholder="Last Name">
+          </div>
+          <div class="field">
+            <label>Birthday</label>
+            <div class="ui left icon input">
+              <input type="text" ng-model="user.birthday" name="datetime" value="06-26-1993" placeholder="06-26-1993" />
+              <i class="gift icon"></i>
             </div>
           </div>
         </div>
+        <div class="field">
+          <textarea rows="2" ng-model="user.info" placeholder="Tell about yourself..."></textarea>
+        </div>
+        <div class="field">
+          <label>Avatar</label>
+          <button class="ui button" type="file" ngf-select ng-model="avatar" name="file"
+                   accept="image/*" ngf-max-size="2MB"
+                   ngf-model-invalid="errorFile" id="avatar-input">Select image</button>
+        </div>
 
+        <h4 class="ui dividing header">About work</h4>
         <div class="two fields">
           <div class="field">
             <label>First working day </label>
             <div class="ui left icon input">
-              <input type="text" ng-model="user.jobapplydate" name="datetowork" value="08-25-2014" />
+              <input type="text" ng-model="user.jopapplydate" name="datetime" value="08-25-2014" placeholder="08-25-2014" />
               <i class="calendar icon"></i>
             </div>
           </div>
@@ -52,7 +68,7 @@
             <div class="ui selection dropdown">
               <input type="hidden" name="gender">
               <i class="dropdown icon"></i>
-              <div class="default text" >Department</div>
+              <div class="default text">Department</div>
               <div class="menu">
                 <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name"></div>
               </div>
@@ -82,17 +98,6 @@
             </div>
           </div>
         </div>
-        <div class="field">
-          <label>About you</label>
-          <textarea rows="2" ng-model="user.info" placeholder="Tell about yourself..."></textarea>
-        </div>
-        <div class="field">
-          <label>Avatar</label>
-          <input type="file" ngf-select ng-model="avatar" name="file"
-                   accept="image/*" ngf-max-size="2MB"
-                   ngf-model-invalid="errorFile" id="avatar-input">
-        </div>
-
 
         <h4 class="ui dividing header">Additional information</h4>
         <div class="three fields">
@@ -149,9 +154,6 @@
           </div>
       </form>
     </div>
-    <pre style="">
-        {{ user | json }}
-    </pre>
   </div>
   <pre>{{departments | json}}</pre>
   <pre>{{roles | json}}</pre>

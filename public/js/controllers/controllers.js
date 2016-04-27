@@ -175,6 +175,17 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
 
         $scope.loadUser();
 
+        $(function() {
+
+            $('input[name="datetowork"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                  format: 'MM-DD-YYYY'
+                }
+            });
+          });
+
     });
 
 });
@@ -219,7 +230,7 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
             });
         }
     });
-}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
+}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User) {
     $rootScope.checkAccess($cookies, $state, function() {
         $scope.updateDepartment = function() {
             $scope.department.$update(function() {
@@ -237,8 +248,22 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
         };
 
         $scope.loadDepartment();
-
-
+        $scope.users = User.query();
+        $('.ui.dropdown.multiple')
+          .dropdown({
+            direction: 'downward'
+          })
+        ;
+        $('.ui.dropdown.fluid')
+          .dropdown({
+            direction: 'downward'
+          })
+        ;
+        $('.ui.dropdown.icon')
+          .dropdown({
+            direction: 'upward'
+          })
+        ;
     });
 });
 
