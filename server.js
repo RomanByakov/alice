@@ -16,8 +16,8 @@ var jwt = require('jsonwebtoken');
 
 // models
 var User = require('./models/user');
-var Team = require('./models/team');
 var Department = require('./models/department');
+var Team = require('./models/team');
 var Role = require('./models/role');
 
 var app = express();
