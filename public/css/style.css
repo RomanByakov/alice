@@ -203,6 +203,24 @@ body,html
   border: 1px solid #e3dede !important;
 }
 
+.user-cards_about
+{min-height: 19px;}
+
+.user-cards_about span
+{
+  display: block;
+  white-space: nowrap; /* Запрещаем перенос строк */
+  overflow: hidden; /* Обрезаем все, что не помещается в область */
+   /* Цвет фона */
+   /* Поля вокруг текста */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+}
+
+.user-cards_message
+{
+  max-width: 550px;
+}
+
 .user-add-button
 {
   bottom: 25px !important;
@@ -233,9 +251,13 @@ body,html
 
 .user-form
 {
-  max-width: 700px;
+  max-width: 750px;
 }
-
+.user-form .piled.segment
+{
+  padding: 40px;
+}
+    
 .hidden
 {
   display: none !important;
@@ -302,7 +324,7 @@ form .progress {
 }
 
 .user-details_list
-{margin: -16px 0 0px 82px !important;}
+{margin: -16px 0 0px 110px !important;}
 
 .user-details_list > .item
 {display: inline-block !important;vertical-align: middle !important;margin: 11px 52px 0 0;}
@@ -318,6 +340,7 @@ form .progress {
   z-index: 999;
   left: -21px !important;
   top: 28px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.32);
 }
 
 .daterangepicker

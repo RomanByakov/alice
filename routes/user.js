@@ -111,6 +111,12 @@ var postUser = function(req, res, next) {
   }, {
     name: 'info',
     status: false
+  }, {
+    name: 'workphone',
+    status: false
+  }, {
+    name: 'birthday',
+    status: false
   }];
 
   try {
@@ -198,6 +204,12 @@ var updateUser = function(req, res, next) {
     status: false
   }, {
     name: 'info',
+    status: false
+  }, {
+    name: 'workphone',
+    status: false
+  }, {
+    name: 'birthday',
     status: false
   }];
 

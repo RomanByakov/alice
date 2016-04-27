@@ -87,8 +87,22 @@ var updateDepartment = function(req, res, next) {
 
     Department.findOne({'_id': params.id})
     .then((department) => {
-        return department.updateDepartment(params.name, params.teams)
-        .then((department) => { res.send(department); });
+        return User.find({department: department})
+        .then((users) => {
+
+          return department.updateDepartment(params.name, params.teams)
+          .then((department) => {
+            var methods = [];
+            users.forEach((user) => {
+              user.department = department;
+              methods.push(user.save());
+            });
+
+            return Q.all(methods)
+            .then(() => { res.send(department); });
+          });
+        })
+        .catch((err) => { helper.handleError(res, err); });
      })
     .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
@@ -109,7 +123,7 @@ var deleteDepartment = function(req, res, next) {
     .then((department) => {
       User.findOne({'department': department})
       .then((user) => {
-        if (user) throw new Error('Department used by users'); 
+        if (user) throw new Error('Department used by users');
       })
       .catch((err) => { helper.handleError(res, err); })
 
