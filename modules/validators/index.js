@@ -45,3 +45,14 @@ module.exports.siteValidator = [function(val) {
   return siteRegex.test(val);
 
 }, 'InvalidSite'];
+
+module.exports.colorValidator = [function(val) {
+  logger.debug('[Validators::colorValidator] call');
+
+  if (val == null) {
+    return true;
+  }
+
+  var colorRegex = /^[0-9A-Fa-f]{6}$/;
+  return colorRegex.test(val);
+}, 'InvalidColor'];

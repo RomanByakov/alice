@@ -13,6 +13,23 @@ var teamSchema = new mongoose.Schema({
   logo: {
     type: String,
     default: '../img/empty-img.jpg'
+  },
+  color: {
+    type: String,
+    default: null,
+    validate: validators.colorValidator
+  },
+  phone: {
+    type: String,
+    default: null,
+    validate: validators.phoneValidator
+  },
+  description: {
+    type: String,
+    default: null
+  },
+  lead: {
+    type: [mongoose.Schema.Types.Mixed]
   }
 });
 
