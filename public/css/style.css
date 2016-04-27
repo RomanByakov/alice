@@ -187,6 +187,7 @@ body,html
 .user-cards .card
 {
   margin-bottom: 8px !important;
+  display: none;
 }
 
 .user-cards_img

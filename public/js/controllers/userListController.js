@@ -24,6 +24,8 @@ angular.module('aliceApp')
                 $('.user-delete-modal.modal').modal('show');
             };
 
+            // attach events to buttons
+
             $('.message .close')
             .on('click', function() {
               $(this)
@@ -32,10 +34,16 @@ angular.module('aliceApp')
               ;
             })
           ;
-          // attach events to buttons
 
+          $('.user-cards_message').transition({
+            animation : 'scale in',
+            duration : '1s'
+          });
 
         });
+
+
+
 
         // // $('.user-delete-modal.modal')
         // //   .modal('attach events', '.user-delete-modal_show')
