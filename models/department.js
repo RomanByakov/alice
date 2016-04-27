@@ -49,9 +49,11 @@ var setTeams = function(teams, dep) {
       description: teams[i].description
     });
 
-    team.save()
-    .then((model) => { dep.teams.push(model); });
+    team.save();
+    dep.teams.push(team);
   }
+
+  return Q.fcall(() => { return true; });
 };
 
 departmentSchema.methods.updateDepartment = function(params) {
