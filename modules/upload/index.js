@@ -62,7 +62,7 @@ var uploadAvatar = function (file, user) {
 
 var uploadDepartemntLogo = function (file, department) {
   logger.debug('[upload::uploadDepartemntLogo] call');
-  if (!file || !file.avatar) {
+  if (!file || !file.logo) {
     logger.debug('[upload::uploadDepartemntLogo] logo missing');
     return Q.fcall(() => { return false; });
   }
@@ -72,7 +72,7 @@ var uploadDepartemntLogo = function (file, department) {
 
   var path = __dirname + "/../../public/img/logos/departemtns/" + department._id + extension;
 
-  return easyimg.info(file.avatar.path)
+  return easyimg.info(file.logo.path)
   .then(function(info) {
     var size;
 
@@ -84,7 +84,7 @@ var uploadDepartemntLogo = function (file, department) {
 
 
     return easyimg.rescrop({
-       src: file.avatar.path,
+       src: file.logo.path,
        dst: path,
        height: size,
        width: size,
@@ -96,7 +96,7 @@ var uploadDepartemntLogo = function (file, department) {
     .then(function(image) {
       logger.debug('[upload::uploadDepartemntLogo] file resize and crop');
 
-      department.avatar = "../img/logos/departments/" + department._id + extension;
+      department.logo = "../img/logos/departments/" + department._id + extension;
 
       return department.save()
       .then(function(model) {
@@ -115,7 +115,7 @@ var uploadDepartemntLogo = function (file, department) {
 
 var uploadTeamLogo = function (file, team) {
   logger.debug('[upload::uploadTeamLogo] call');
-  if (!file || !file.avatar) {
+  if (!file || !file.logo) {
     logger.debug('[upload::uploadTeamLogo] logo missing');
     return Q.fcall(() => { return false; });
   }
@@ -125,7 +125,7 @@ var uploadTeamLogo = function (file, team) {
 
   var path = __dirname + "/../../public/img/logos/teams/" + team._id + extension;
 
-  return easyimg.info(file.avatar.path)
+  return easyimg.info(file.logo.path)
   .then(function(info) {
     var size;
 
@@ -137,7 +137,7 @@ var uploadTeamLogo = function (file, team) {
 
 
     return easyimg.rescrop({
-       src: file.avatar.path,
+       src: file.logo.path,
        dst: path,
        height: size,
        width: size,

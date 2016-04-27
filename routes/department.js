@@ -59,6 +59,16 @@ var postDepartment = function(req, res, next) {
 
     Department.createDepartment(params)
     .then((department) => {
+      if (params.lead) {
+        User.findOne({_id: params.lead._id})
+        .then((user) => {
+          if (user) {
+            department.lead = user;
+          }
+        })
+        .catch((err) => { helper.handleError(res, err); });
+      }
+
       if (req.files) {
         var file = req.files.file;
 
@@ -132,6 +142,16 @@ var updateDepartment = function(req, res, next) {
           return department.updateDepartment(params)
           .then((department) => {
 
+            if (params.lead) {
+              User.findOne({_id: params.lead._id})
+              .then((user) => {
+                if (user) {
+                  department.lead = user;
+                }
+              })
+              .catch((err) => { helper.handleError(res, err); });
+            }
+
             var send = function(department) {
               var methods = [];
               users.forEach((user) => {
@@ -157,15 +177,6 @@ var updateDepartment = function(req, res, next) {
             } else {
               send(department);
             }
-
-            // var methods = [];
-            // users.forEach((user) => {
-            //   user.department = department;
-            //   methods.push(user.save());
-            // });
-            //
-            // return Q.all(methods)
-            // .then(() => { res.send(department); });
           });
         })
         .catch((err) => { helper.handleError(res, err); });

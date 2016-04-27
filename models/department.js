@@ -49,8 +49,8 @@ var setTeams = function(teams, dep) {
       description: teams[i].description
     });
 
-    team.save();
-    dep.teams.push(team);
+    team.save()
+    .then((model) => { dep.teams.push(model); });
   }
 };
 
@@ -62,21 +62,8 @@ departmentSchema.methods.updateDepartment = function(params) {
 
     this.teams = [];
 
-    // for (var i = 0; i < params.teams.length; i++) {
-    //   var team = new Team({
-    //     name: params.teams[i].name,
-    //     color: params.teams[i].color,
-    //     phone: params.teams[i].phone,
-    //     description: params.teams[i].description
-    //   });
-    //
-    //   team.save();
-    //   this.teams.push(team);
-    // }
-
-    setTeams(params.teams, this);
-
-    return this.save();
+    return setTeams(params.teams, this)
+    .then(() => { return this.save(); });
 };
 
 departmentSchema.methods.deleteDepartment = function() {
@@ -101,20 +88,8 @@ departmentSchema.statics.createDepartment = function(params) {
     description: params.description
   });
 
-  // for (var i = 0; i < params.teams.length; i++) {
-  //   var team = new Team({
-  //     name: params.teams[i].name
-  //   });
-  //
-  //   //callback and then not working
-  //   team.save();
-  //
-  //   department.teams.push(team);
-  // }
-
-  setTeams(params.teams, department);
-
-  return department.save();
+  return setTeams(params.teams, department)
+  .then(() => { return department.save(); });
 };
 
 var Department = mongoose.model('Departments', departmentSchema);
