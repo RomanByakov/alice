@@ -101,8 +101,6 @@ departmentSchema.statics.createDepartment = function(params) {
     description: params.description
   });
 
-  logger.debug(teams);
-
   // for (var i = 0; i < params.teams.length; i++) {
   //   var team = new Team({
   //     name: params.teams[i].name
