@@ -68,7 +68,9 @@ departmentSchema.methods.deleteDepartment = function() {
   var methods = [];
 
   this.teams.forEach(function(team) {
+    if (team != null) {
       methods.push(Team.findOneAndRemove({_id: team._id}));
+    }
   });
 
   return Q.all(methods)

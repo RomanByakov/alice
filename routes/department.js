@@ -34,16 +34,99 @@ var getDepartments = function(req, res, next) {
   }
 };
 
-var addLead = function(department) {
-  if (department.lead == null) {
-    return Q.fcall(() => { return department; });
+/**
+ * Adding lead to mongoose model (team or department) with same field.
+ * @param model
+ * @return Q.Promise
+ */
+var addLead = function(model) {
+  if (model.lead == null || model.lead == undefined) {
+    return Q.fcall(() => { return model; });
   }
 
-  return User.findOne({_id: department.lead._id})
-  .then((user) => { return department; });
+  return User.findOne({_id: model.lead._id})
+  .then((user) => { return model; });
 };
 
-var addTeams = function(department) {
+/**
+ * Update fields of team or department using another instance.
+ * @param from
+ * @param to
+ * @return to
+ */
+var updateModel = function(from, to) {
+  to.color = from.color;
+  to.phone = from.phone;
+  to.description = from.description;
+  to.lead = from.lead;
+
+  if (to instanceof Department && from instanceof Department) {
+    to.teams = from.teams;
+  }
+
+  return to;
+};
+
+/**
+ * Handle only one team.
+ * Team must be unique in Teams model.
+ * And team can't be more then one department.
+ * @param team
+ * @return Q.Promise
+ */
+var addTeam = function(team, departmentId) {
+  return addLead(team)
+  .then(() => {
+    return Team.findOne({name: team.name})
+  })
+  .then ((model) => {
+    if (model) {
+      return Department.findOne({teams: {$elemMatch: {name: team.name}}})
+    } else {
+      return team.save();
+    }
+  })
+  .then((model) => {
+    if (model instanceof Team) {
+      return updateModel(team, model).save();
+    } else if (model == null) {
+      return team;
+    } else {
+      logger.error('[APIDepartments::addTeam] model is Department = ' + (model instanceof Department)
+          + " and departmentId = " + departmentId + " and model._id = " + model._id
+          + " and deprtmentId == model._id = " + (model._id == departmentId)
+          + " and type of model._id = " + typeof model._id + " and type of departmentId = " + typeof departmentId
+          + " and equals = " + model._id.equals(departmentId));
+      if (model instanceof Department && model._id.equals(departmentId)) {
+        logger.error('[APIDepartments::addTeam] Condition success, start updating team');
+        return updateTeamInCurrentDepartment(team);
+      } else {
+        logger.error('[APIDepartments::addTeam] Condition fails, throwing error');
+        throw new Error();
+      }
+    }
+  })
+  .catch((err) => {
+    logger.error('[APIDepartments::addTeam] Exception message = ' + err.message);
+    throw new Error("Team '" + team.name + "' already exists");
+  });
+};
+
+/**
+ * @param team
+ */
+var updateTeamInCurrentDepartment = function(team) {
+  return Team.findOne({name: team.name})
+    .then((model) => { return updateModel(team, model).save(); });
+};
+
+/**
+ * Adding teams to department.
+ * @param department
+ * @param departmentId
+ * @return Q.Promise
+ */
+var addTeams = function(department, departmentId) {
   var methods = [];
 
   var teams = department.teams;
@@ -52,14 +135,14 @@ var addTeams = function(department) {
   teams.forEach(function(item) {
     var team = new Team(item);
 
-    methods.push(team.save().then((model) => { return model; }));
+    methods.push(addTeam(team, departmentId));
   });
 
   return Q.all(methods);
 };
 
 /**
- * All with Q
+ * Create department and teams in it. All with Q.
  * @todo: Create simple department model
  * @todo: add teams
  * @todo: add lead
@@ -96,6 +179,9 @@ var postDepartment = function(req, res, next) {
   }
 };
 
+/**
+ * Get department by id.
+ */
 var getDepartment = function(req, res, next) {
   var required = [{
     name: 'id',
@@ -113,57 +199,38 @@ var getDepartment = function(req, res, next) {
   }
 };
 
+/**
+ * Updating of department.
+ * Same logic like in post department, but on existing instance.
+ */
 var updateDepartment = function(req, res, next) {
   try {
     var params = helper.getParams(Department.updateRequired(), req);
 
-    Department.findOne({'_id': params.id})
-    .then((department) => {
-        return User.find({department: department})
-        .then((users) => {
+    var department = new Department(params);
 
-          return department.updateDepartment(params)
-          .then((department) => {
+    Department.findOne({_id: params.id})
+    .then((model) => { return addLead(updateModel(department, model)); })
+    .then((model) => {
+      department = model;
+      return addTeams(model, department._id);
+    })
+    .then((results) => {
+      results.forEach(function(team) {
+        department.teams.push(team);
+      });
 
-            if (params.lead) {
-              User.findOne({_id: params.lead._id})
-              .then((user) => {
-                if (user) {
-                  department.lead = user;
-                }
-              })
-              .catch((err) => { helper.handleError(res, err); });
-            }
+      return true;
+    })
+    .then(() => {
+      if (req.files) {
+        var file = req.files.file;
 
-            var send = function(department) {
-              var methods = [];
-              users.forEach((user) => {
-                user.department = department;
-                methods.push(user.save());
-              });
-
-              return Q.all(methods)
-              .then(() => { res.send(department); });
-            };
-
-            if (req.files) {
-              var file = req.files.file;
-
-              upload.departmentLogo(file, department)
-              .then(function(result) {
-                if (result !== false) {
-                  send(result);
-                } else {
-                  send(result);
-                }
-              });
-            } else {
-              send(department);
-            }
-          });
-        })
-        .catch((err) => { helper.handleError(res, err); });
-     })
+        return upload.departmentLogo(file, department);
+      }
+    })
+    .then(() => { return department.save(); })
+    .then(() => { res.send(department); })
     .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
     helper.handleError(res, err);
