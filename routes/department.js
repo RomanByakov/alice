@@ -20,6 +20,7 @@ var helper = require('../modules/api-helper');
 // models
 var Department = require('../models/department');
 var User = require('../models/user');
+var Team = require('../models/team');
 
 var getDepartments = function(req, res, next) {
   try {
@@ -33,57 +34,62 @@ var getDepartments = function(req, res, next) {
   }
 };
 
+var addLead = function(department) {
+  if (department.lead == null) {
+    return Q.fcall(() => { return department; });
+  }
+
+  return User.findOne({_id: department.lead._id})
+  .then((user) => { return department; });
+};
+
+var addTeams = function(department) {
+  var methods = [];
+
+  var teams = department.teams;
+  department.teams = [];
+
+  teams.forEach(function(item) {
+    var team = new Team(item);
+
+    methods.push(team.save().then((model) => { return model; }));
+  });
+
+  return Q.all(methods);
+};
+
+/**
+ * All with Q
+ * @todo: Create simple department model
+ * @todo: add teams
+ * @todo: add lead
+ */
 var postDepartment = function(req, res, next) {
-  var required = [{
-    name: 'name',
-    status: true
-  }, {
-    name: 'teams',
-    status: true
-  }, {
-    name: 'color',
-    status: false
-  }, {
-    name: 'description',
-    status: false
-  }, {
-    name: 'phone',
-    status: false
-  }, {
-    name: 'lead',
-    status: false
-  }];
-
   try {
-    var params = helper.getParams(required, req);
+    var params = helper.getParams(Department.postRequired(), req);
 
-    Department.createDepartment(params)
-    .then((department) => {
-      if (params.lead) {
-        User.findOne({_id: params.lead._id})
-        .then((user) => {
-          if (user) {
-            department.lead = user;
-          }
-        })
-        .catch((err) => { helper.handleError(res, err); });
-      }
+    var department = new Department(params);
 
+    addLead(department)
+    .then(() => {
+      return addTeams(department);
+    })
+    .then((results) => {
+      results.forEach(function(team) {
+        department.teams.push(team);
+      });
+
+      return true;
+    })
+    .then(() => {
       if (req.files) {
         var file = req.files.file;
 
-        upload.departmentLogo(file, department)
-        .then(function(result) {
-          if (result !== false) {
-            res.send(result);
-          } else {
-            res.send(result);
-          }
-        });
-      } else {
-        res.send(department);
+        return upload.departmentLogo(file, department);
       }
     })
+    .then(() => { return department.save(); })
+    .then(() => { res.send(department); })
     .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
     helper.handleError(res, err);
@@ -108,31 +114,8 @@ var getDepartment = function(req, res, next) {
 };
 
 var updateDepartment = function(req, res, next) {
-  var required = [{
-    name: 'name',
-    status: true
-  }, {
-    name: 'teams',
-    status: true
-  }, {
-    name: 'color',
-    status: false
-  }, {
-    name: 'description',
-    status: false
-  }, {
-    name: 'phone',
-    status: false
-  }, {
-    name: 'lead',
-    status: false
-  }, {
-    name: 'id',
-    status: true
-  }];
-
   try {
-    var params = helper.getParams(required, req);
+    var params = helper.getParams(Department.updateRequired(), req);
 
     Department.findOne({'_id': params.id})
     .then((department) => {
