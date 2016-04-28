@@ -40,13 +40,50 @@ var postDepartment = function(req, res, next) {
   }, {
     name: 'teams',
     status: true
+  }, {
+    name: 'color',
+    status: false
+  }, {
+    name: 'description',
+    status: false
+  }, {
+    name: 'phone',
+    status: false
+  }, {
+    name: 'lead',
+    status: false
   }];
 
   try {
     var params = helper.getParams(required, req);
 
-    Department.createDepartment(params.name, params.teams)
-    .then((department) => { res.send(department); })
+    Department.createDepartment(params)
+    .then((department) => {
+      if (params.lead) {
+        User.findOne({_id: params.lead._id})
+        .then((user) => {
+          if (user) {
+            department.lead = user;
+          }
+        })
+        .catch((err) => { helper.handleError(res, err); });
+      }
+
+      if (req.files) {
+        var file = req.files.file;
+
+        upload.departmentLogo(file, department)
+        .then(function(result) {
+          if (result !== false) {
+            res.send(result);
+          } else {
+            res.send(result);
+          }
+        });
+      } else {
+        res.send(department);
+      }
+    })
     .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
     helper.handleError(res, err);
@@ -78,6 +115,18 @@ var updateDepartment = function(req, res, next) {
     name: 'teams',
     status: true
   }, {
+    name: 'color',
+    status: false
+  }, {
+    name: 'description',
+    status: false
+  }, {
+    name: 'phone',
+    status: false
+  }, {
+    name: 'lead',
+    status: false
+  }, {
     name: 'id',
     status: true
   }];
@@ -87,8 +136,50 @@ var updateDepartment = function(req, res, next) {
 
     Department.findOne({'_id': params.id})
     .then((department) => {
-        return department.updateDepartment(params.name, params.teams)
-        .then((department) => { res.send(department); });
+        return User.find({department: department})
+        .then((users) => {
+
+          return department.updateDepartment(params)
+          .then((department) => {
+
+            if (params.lead) {
+              User.findOne({_id: params.lead._id})
+              .then((user) => {
+                if (user) {
+                  department.lead = user;
+                }
+              })
+              .catch((err) => { helper.handleError(res, err); });
+            }
+
+            var send = function(department) {
+              var methods = [];
+              users.forEach((user) => {
+                user.department = department;
+                methods.push(user.save());
+              });
+
+              return Q.all(methods)
+              .then(() => { res.send(department); });
+            };
+
+            if (req.files) {
+              var file = req.files.file;
+
+              upload.departmentLogo(file, department)
+              .then(function(result) {
+                if (result !== false) {
+                  send(result);
+                } else {
+                  send(result);
+                }
+              });
+            } else {
+              send(department);
+            }
+          });
+        })
+        .catch((err) => { helper.handleError(res, err); });
      })
     .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
@@ -109,7 +200,7 @@ var deleteDepartment = function(req, res, next) {
     .then((department) => {
       User.findOne({'department': department})
       .then((user) => {
-        if (user) throw new Error('Department used by users'); 
+        if (user) throw new Error('Department used by users');
       })
       .catch((err) => { helper.handleError(res, err); })
 
@@ -127,14 +218,14 @@ router.route('/', function (req, res, next) {
   next();
 })
   .get(getDepartments)
-  .post(postDepartment);
+  .post(multipartyMiddleware, postDepartment);
 
 router.route('/:id', function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 })
   .get(getDepartment)
-  .put(updateDepartment)
+  .put(multipartyMiddleware, updateDepartment)
   .delete(deleteDepartment);
 
 module.exports = router;

@@ -14,6 +14,12 @@ angular.module('aliceApp')
                     $scope.update = function(index) {
                         $scope.user.department = $scope.departments[index].name;
                         $scope.teams = $scope.departments[index].teams;
+
+
+                        $('#userTeams').dropdown('set visible');
+                        $('#userTeams').dropdown('set active');
+                        $('#userTeamsMenu').dropdown('set visible');
+                        $('#userTeamsMenu').dropdown('set active');
                     }
 
                     $scope.addTeamToModel = function(team) {
@@ -46,9 +52,7 @@ angular.module('aliceApp')
                                     site: $scope.user.site,
                                     githib: $scope.user.github,
                                     telegram: $scope.user.telegram,
-                                    skype: $scope.user.skype,
-                                    jobapplydate: $scope.user.jobapplydate,
-                                    info: $scope.user.info
+                                    skype: $scope.user.skype
                                 },
                                 headers: {
                                     'x-access-token': $cookies.get('token')
@@ -70,13 +74,15 @@ angular.module('aliceApp')
 
                 $(function() {
 
-                    $('input[name="datetowork"]').daterangepicker({
+                    $('input[name="datetime"]').daterangepicker({
                         singleDatePicker: true,
                         showDropdowns: true,
                         locale: {
-                          format: 'MM-DD-YYYY'
+                        format: 'MM-DD-YYYY'
                         }
                     });
-                  });
+
+
+                  })
 
             })
