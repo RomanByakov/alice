@@ -92,13 +92,13 @@ var addTeam = function(team, departmentId) {
     } else if (model == null) {
       return team;
     } else {
-      logger.error('[APIDepartments::addTeam] model is Department = ' + (model instanceof Department)
+      logger.debug('[APIDepartments::addTeam] model is Department = ' + (model instanceof Department)
           + " and departmentId = " + departmentId + " and model._id = " + model._id
           + " and deprtmentId == model._id = " + (model._id == departmentId)
           + " and type of model._id = " + typeof model._id + " and type of departmentId = " + typeof departmentId
           + " and equals = " + model._id.equals(departmentId));
       if (model instanceof Department && model._id.equals(departmentId)) {
-        logger.error('[APIDepartments::addTeam] Condition success, start updating team');
+        logger.debug('[APIDepartments::addTeam] Condition success, start updating team');
         return updateTeamInCurrentDepartment(team);
       } else {
         logger.error('[APIDepartments::addTeam] Condition fails, throwing error');
