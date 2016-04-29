@@ -14,6 +14,12 @@ angular.module('aliceApp')
                     $scope.update = function(index) {
                         $scope.user.department = $scope.departments[index].name;
                         $scope.teams = $scope.departments[index].teams;
+
+
+                        $('#userTeams').dropdown('set visible');
+                        $('#userTeams').dropdown('set active');
+                        $('#userTeamsMenu').dropdown('set visible');
+                        $('#userTeamsMenu').dropdown('set active');
                     }
 
                     $scope.addTeamToModel = function(team) {
