@@ -5,11 +5,17 @@ angular.module('aliceApp')
 
             $scope.deleteRole = function(role) {
                 role.$delete().then(function() {
+                    $('.role-delete-modal.modal').modal('hide');
                     $state.go('roles', {}, {
                         reload: true
                     });
                 });
             }
+
+            $scope.showPopup = function(role) {
+              $scope.roleForDelete = role;
+                $('.role-delete-modal.modal').modal('show');
+            };
 
         })
     });
