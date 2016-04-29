@@ -7,7 +7,7 @@
       <div class="header" ng-bind="department.name" ui-sref="viewDepartment({id:department._id})"></div>
       <div class="meta">Department teams</div>
       <div class="description">
-        <a ui-sref="viewDepartment({id:department._id})" ng-bind="team.name" ng-repeat="team in department.teams" class="ui tag label"></a>
+        <a ui-sref="viewDepartment({id:department._id})" ng-bind="team.name" ng-repeat="team in department.teams" ng-class="teal" class="ui label"></a>
       </div>
     </div>
     <div class="extra content" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">

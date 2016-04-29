@@ -187,6 +187,8 @@ body,html
 .user-cards .card
 {
   margin-bottom: 8px !important;
+  display: none;
+  visibility: hidden;
 }
 
 .user-cards_img
@@ -246,6 +248,16 @@ body,html
   margin: 17px 10px 17px 0 !important;
 }
 
+.department-cards .description
+{
+
+}
+
+.department-cards .description a
+{
+  margin: 0 10px 10px 0;
+}
+
 
 /* Form */
 
@@ -257,7 +269,7 @@ body,html
 {
   padding: 40px;
 }
-    
+
 .hidden
 {
   display: none !important;
@@ -314,6 +326,25 @@ form .progress {
     -webkit-transform: none !important;
     transform: none !important;
     margin-left: 260px !important;
+}
+
+
+/* Department form */
+
+.department-form
+{
+  padding: 30px;
+  max-width: 600px;
+}
+
+.department-form_team-list
+{
+
+}
+
+.department-form_team-list_item
+{
+  margin-bottom: 7px !important;
 }
 
 /* User details */

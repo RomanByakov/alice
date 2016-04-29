@@ -24,6 +24,8 @@ angular.module('aliceApp')
                 $('.user-delete-modal.modal').modal('show');
             };
 
+            // attach events to buttons
+
             $('.message .close')
             .on('click', function() {
               $(this)
@@ -32,10 +34,30 @@ angular.module('aliceApp')
               ;
             })
           ;
-          // attach events to buttons
 
+          var userCardsMessage = function(){
+            $('.user-cards_message').transition({
+              animation : 'scale in',
+              duration : '1s'
+            });
+          }
+
+          setTimeout(userCardsMessage, 1500);
+
+          $scope.testCards = function() {
+            //alert('scope on rendered');
+            $('.user-cards .card').transition({
+              animation : 'scale',
+              reverse   : 'auto', // default setting
+              interval  : 200
+            });
+          };
 
         });
+
+
+
+
 
         // // $('.user-delete-modal.modal')
         // //   .modal('attach events', '.user-delete-modal_show')
@@ -45,3 +67,15 @@ angular.module('aliceApp')
         //   $('.user-delete-modal.modal').modal('show');
         // });
     })
+    .directive('userRepeatDirective', function() {
+      return function (scope, element, attrs) {
+        if (scope.$last) {
+          $('.user-cards .card').transition({
+            animation : 'scale in',
+            reverse   : 'auto', // default setting
+            interval  : 300,
+            duration : '0.5s'
+          });
+        }
+      };
+    });

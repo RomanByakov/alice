@@ -230,7 +230,7 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
             });
         }
     });
-}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
+}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User) {
     $rootScope.checkAccess($cookies, $state, function() {
         $scope.updateDepartment = function() {
             $scope.department.$update(function() {
@@ -248,13 +248,39 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
         };
 
         $scope.loadDepartment();
-
-
+        $scope.users = User.query();
+        $('.ui.dropdown.multiple')
+          .dropdown({
+            direction: 'downward'
+          })
+        ;
+        $('.ui.dropdown.fluid')
+          .dropdown({
+            direction: 'downward'
+          })
+        ;
+        $('.ui.dropdown.icon')
+          .dropdown({
+            direction: 'upward'
+          })
+        ;
     });
 });
 
 module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {
     $scope.user = new Login();
+    var helloBox = function(){
+      $('.hello-box').transition({
+        animation : 'scale in',
+        duration : '2s'
+      });
+
+      $('.login-form').transition({
+        animation : 'scale in',
+        duration : '1s'
+      });
+    }
+    setTimeout(helloBox, 500);
 
     $scope.login = function() {
         $scope.user.$save(function(response) {

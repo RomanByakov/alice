@@ -40,9 +40,12 @@
         </div>
         <div class="field">
           <label>Avatar</label>
-          <input type="file" ngf-select ng-model="avatar" name="file"
+          <button class="ui basic button" type="file" ngf-select ng-model="avatar" name="file"
                    accept="image/*" ngf-max-size="2MB"
                    ngf-model-invalid="errorFile" id="avatar-input">
+                   <i class="icon file image outline"></i>
+                   Select image
+          </button>
         </div>
 
         <h4 class="ui dividing header">About work</h4>
@@ -77,11 +80,11 @@
 
           <div class="ui field">
             <label>Team</label>
-            <div class="ui selection dropdown">
+            <div class="ui selection dropdown transition" id="userTeams">
               <input type="hidden" name="gender">
               <i class="dropdown icon"></i>
               <div class="default text">Team</div>
-              <div class="menu">
+              <div class="menu transition" id="userTeamsMenu">
                 <div ng-repeat="team in teams" ng-click="addTeamToModel(team)" ng-model="user.team" class="item" data-value="{{team.name}}" ng-bind="team.name"></div>
               </div>
             </div>
