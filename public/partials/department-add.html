@@ -1,3 +1,140 @@
 <form class="form-horizontal" role="form" ng-submit="addDepartment()">
-    <div ng-include="'partials/_form_department.html'"></div>
+    <div class="ui piled segment department-form">
+        <h3 class="ui heading">Department form</h3>
+        <div class="ui form">
+            <div class="two fields">
+                <div class="field">
+                    <label>Name</label>
+                    <input placeholder="Type department name... " ng-model="department.name" type="text">
+                </div>
+                <div class="field">
+                    <label>Phone</label>
+                    <input placeholder="Type department phone... " ng-model="department.phone" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea placeholder="Tell about department.." rows="2" ng-model="department.description"></textarea>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Department leader</label>
+                    <div class="ui fluid selection dropdown">
+                        <input type="hidden" name="user">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select department leader</div>
+                        <div class="menu">
+                            <div class="item" data-value="jenny" ng-repeat="user in users" ng-click="addLead(user)">
+                                <img class="ui mini avatar image" ng-src="{{user.avatar}}">
+                                <span ng-bind="user.name"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Department color</label>
+                    <div class="ui dropdown icon white button">
+                        <span class="text">Department color</span>
+                        <div class="menu">
+                            <div class="item" ng-repeat="color in colors" ng-click="addColor($index)">
+                                <div class="ui empty circular label" ng-class="color"></div>
+                                {{color}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Logo</label>
+                <button class="ui basic button" type="file" ngf-select ng-model="avatar" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile" id="avatar-input">
+                    <i class="icon file image outline"></i> Select image
+                </button>
+            </div>
+            <h4 class="ui dividing header">Department Teams</h4>
+            <div class="field department-form_team-list">
+                <a class="ui label department-form_team-list_item" ng-repeat="team in department.teams" ng-class="colors[team.color]" teams-directive>
+            {{team.name}}
+            <i class="delete icon" ng-click="deleteTeam($index)"></i>
+          </a>
+            </div>
+            <div class="field">
+                <button type="button" class="ui small button icon" ng-click="newTeam()">
+                    <i class="icon plus"></i> Add
+            </div>
+        </div>
+        <div class="ui inverted segment">
+            <div class="ui inverted form">
+                <h4 class="header">Add new Team</h4>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Name</label>
+                        <input placeholder="Type team name... " ng-model="currentTeam.name" type="text">
+                    </div>
+                    <div class="field">
+                        <label>Phone</label>
+                        <input placeholder="Type team phone... " ng-model="currentTeam.phone" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <textarea placeholder="Tell about department.." rows="2" ng-model="currentTeam.description"></textarea>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Team leader</label>
+                        <div class="ui fluid selection dropdown">
+                            <input type="hidden" name="user">
+                            <i class="dropdown  icon"></i>
+                            <div class="default text">Select team leader</div>
+                            <div class="menu">
+                                <div class="item" data-value="jenny" ng-repeat="user in users" ng-click="addTeamLead(user)">
+                                    <img class="ui mini avatar image" ng-src="{{user.avatar}}">
+                                    <span ng-bind="user.name"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Team color</label>
+                        <div class="ui dropdown icon white button">
+                            <span id="defaultTeamText" class="text">Team color</span>
+                            <div class="menu">
+                                <div class="item" ng-repeat="color in colors" ng-click="addTeamColor($index)">
+                                    <div class="ui empty circular label" ng-class="color"></div>
+                                    {{color}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="button" class="ui button teal" ng-click="addTeam()">Add Team</button>
+                </div>
+            </div>
+        </div>
+        <button class="ui button primary">Save Department</button>
+    </div>
+    </div>
+
+    <!-- <div class="form-group">
+    <label for="name" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="department.name" class="form-control" id="name" placeholder="name" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="team" class="col-sm-2 control-label">Teams</label>
+    <div class="col-sm-8">
+      <tags-input ng-model="department.teams" display-property="name"></tags-input>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-primary" value="Save" />
+    </div>
+  </div> -->
+    <pre>
+      {{ department | json }}
+  </pre>
+
 </form>

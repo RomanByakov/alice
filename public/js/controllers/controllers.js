@@ -219,17 +219,6 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
         id: $stateParams.id
     });
 
-}).controller('DepartmentCreateController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
-    $rootScope.checkAccess($cookies, $state, function() {
-        $scope.department = new Department();
-        $scope.department.teams = [];
-
-        $scope.addDepartment = function() {
-            $scope.department.$save(function() {
-                $state.go('departments');
-            });
-        }
-    });
 }).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User) {
     $rootScope.checkAccess($cookies, $state, function() {
         $scope.updateDepartment = function() {
