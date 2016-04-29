@@ -1,5 +1,4 @@
-var restful = require('node-restful');
-var mongoose = restful.mongoose;
+var mongoose = require('mongoose');
 var logger = require('../modules/alice-logger');
 var Q = require('q');
 
@@ -12,7 +11,8 @@ var roleSchema = new mongoose.Schema({
   child: {
     type: mongoose.Schema.Types.Mixed,
     default: null
-  }
+  },
+  actions: [String]
 });
 
 roleSchema.statics.createRole = function(name, child) {
