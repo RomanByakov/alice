@@ -15,19 +15,21 @@ var roleSchema = new mongoose.Schema({
   actions: [String]
 });
 
-roleSchema.statics.createRole = function(name, child) {
+roleSchema.statics.createRole = function(name, actions, child) {
   logger.debug('[Role::createRole] call with ' + name + ', ' + child);
   var role = new Role({
-    name: name
+    name: name,
+    actions: actions
   });
 
   return setChildAndSave(role, child)
   logger.debug('[Role::createRole] end');
 };
 
-roleSchema.methods.updateRole = function(name, child) {
+roleSchema.methods.updateRole = function(name, actions, child) {
   logger.debug('[Role::updateRole] call with ' + name + ', ' + child);
   this.name = name;
+  this.actions = actions;
 
   return setChildAndSave(this, child);
   logger.debug('[Role::updateRole] call end');

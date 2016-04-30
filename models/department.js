@@ -1,6 +1,4 @@
 // dependencies
-//var restful = require('node-restful');
-//var mongoose = restful.mongoose;
 var mongoose = require('mongoose');
 var Team = require('./team');
 var User = require('./user');
