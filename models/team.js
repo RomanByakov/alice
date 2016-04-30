@@ -12,7 +12,7 @@ var teamSchema = new mongoose.Schema({
   },
   logo: {
     type: String,
-    default: '../img/empty-img.jpg'
+    default: '../img/empty-img.png'
   },
   color: {
     type: String,
@@ -29,7 +29,7 @@ var teamSchema = new mongoose.Schema({
     default: null
   },
   lead: {
-    type: [mongoose.Schema.Types.Mixed]
+    type: mongoose.Schema.Types.Mixed
   }
 });
 

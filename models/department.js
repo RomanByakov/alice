@@ -18,7 +18,7 @@ var departmentSchema = new mongoose.Schema({
   },
   logo: {
     type: String,
-    default: '../img/empty-img.jpg'
+    default: '../img/empty-img.png'
   },
   teams:[mongoose.Schema.Types.Mixed],
   color: {
