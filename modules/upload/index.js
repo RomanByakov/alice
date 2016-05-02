@@ -1,13 +1,14 @@
-var fs = require('fs');
-var Q = require('q');
-var logger = require('../alice-logger');
-var easyimg = require('easyimage');
+'use strict';
+let fs = require('fs');
+let Q = require('q');
+let logger = require('../alice-logger');
+let easyimg = require('easyimage');
 
 /**
  * @todo: REFACTOR
  */
 
-var uploadAvatar = function (file, user) {
+let uploadAvatar = function (file, user) {
   logger.debug('[upload::uploadAvatar] call');
   if (!file || !file.avatar) {
     logger.debug('[upload::uploadAvatar] avatar missing');
@@ -15,13 +16,13 @@ var uploadAvatar = function (file, user) {
   }
 
   //todo: extension
-  var extension = ".png";
+  let extension = ".png";
 
-  var path = __dirname + "/../../public/img/avatars/" + user._id + extension;
+  let path = __dirname + "/../../public/img/avatars/" + user._id + extension;
 
   return easyimg.info(file.avatar.path)
   .then(function(info) {
-    var size;
+    let size;
 
     if (info.height < info.width) {
       size = 224 + (info.width - info.height);
@@ -60,7 +61,7 @@ var uploadAvatar = function (file, user) {
   .catch((err) => { return err; });
 };
 
-var uploadDepartemntLogo = function (file, department) {
+let uploadDepartemntLogo = function (file, department) {
   logger.debug('[upload::uploadDepartemntLogo] call');
   if (!file || !file.logo) {
     logger.debug('[upload::uploadDepartemntLogo] logo missing');
@@ -68,13 +69,13 @@ var uploadDepartemntLogo = function (file, department) {
   }
 
   //todo: extension
-  var extension = ".png";
+  let extension = ".png";
 
-  var path = __dirname + "/../../public/img/logos/departemtns/" + department._id + extension;
+  let path = __dirname + "/../../public/img/logos/departemtns/" + department._id + extension;
 
   return easyimg.info(file.logo.path)
   .then(function(info) {
-    var size;
+    let size;
 
     if (info.height < info.width) {
       size = 224 + (info.width - info.height);
@@ -113,7 +114,7 @@ var uploadDepartemntLogo = function (file, department) {
   .catch((err) => { return err; });
 };
 
-var uploadTeamLogo = function (file, team) {
+let uploadTeamLogo = function (file, team) {
   logger.debug('[upload::uploadTeamLogo] call');
   if (!file || !file.logo) {
     logger.debug('[upload::uploadTeamLogo] logo missing');
@@ -121,13 +122,13 @@ var uploadTeamLogo = function (file, team) {
   }
 
   //todo: extension
-  var extension = ".png";
+  let extension = ".png";
 
-  var path = __dirname + "/../../public/img/logos/teams/" + team._id + extension;
+  let path = __dirname + "/../../public/img/logos/teams/" + team._id + extension;
 
   return easyimg.info(file.logo.path)
   .then(function(info) {
-    var size;
+    let size;
 
     if (info.height < info.width) {
       size = 224 + (info.width - info.height);

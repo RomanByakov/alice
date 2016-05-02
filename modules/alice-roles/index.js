@@ -1,17 +1,17 @@
 'use strict';
-var Role = require('../../models/role');
-var Actions;
-var RouteActionPairs;
+let Role = require('../../models/role');
+let Actions;
+let RouteActionPairs;
 
-var util = require('util');
-var Q = require('q');
+let util = require('util');
+let Q = require('q');
 
 /**
  * Initialize alice roles with actions array and route-action pairs.
  * @throws Error - invalid config.
  * @param config
  */
-var init = (config) => {
+let init = (config) => {
   try {
     if (util.isString(config)) {
       init(require(config));
@@ -31,7 +31,7 @@ var init = (config) => {
  * @param role - valid role
  * @return Q.Promise
  */
-var handleRequest = (method, url, role) => {
+let handleRequest = (method, url, role) => {
   return checkAccess(RouteActionPairs[constructRoute(method, url)], role);
 };
 
@@ -42,10 +42,10 @@ var handleRequest = (method, url, role) => {
  * @throws Error - InvalidRoute
  * @return String
  */
-var constructRoute = (method, url) => {
+let constructRoute = (method, url) => {
   method = method.toUpper();
 
-  var chunks = url.split('/')
+  let chunks = url.split('/')
   if (chunks.length == 3) {
     return method + " /" + chunks[0] + "/" + chunks[1] + "/:id";
   } else if (chunks.length == 2) {
@@ -62,7 +62,7 @@ var constructRoute = (method, url) => {
  * @throws Error - Access Denied
  * @return Q.Promise
  */
-var checkAccess = (action, role) => {
+let checkAccess = (action, role) => {
   logger.debug("[AliceRoles::checkAccess] action = " + action);
   if (action == null || role == null) {
     return Q.fcall(() => {
@@ -102,7 +102,7 @@ var checkAccess = (action, role) => {
 /**
  * Middleware for api.
  */
-var getActions = (req, res, next) => {
+let getActions = (req, res, next) => {
   res.send(Actions);
 };
 

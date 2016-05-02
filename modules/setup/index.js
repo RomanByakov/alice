@@ -1,13 +1,14 @@
-var mongoose = require('mongoose');
+'use strict';
+let mongoose = require('mongoose');
 
-var User = require('../../models/user');
-var Team = require('../../models/team');
-var Department = require('../../models/department');
-var Role = require('../../models/role');
+let User = require('../../models/user');
+let Team = require('../../models/team');
+let Department = require('../../models/department');
+let Role = require('../../models/role');
 
-var helper = require('../api-helper');
+let helper = require('../api-helper');
 
-var Q = require('q');
+let Q = require('q');
 
 module.exports.drop = function(req, res, next) {
   //clear db
@@ -42,7 +43,7 @@ module.exports.drop = function(req, res, next) {
 
 //todo: refactor
 module.exports.init = function(req, res, next) {
-  var roleUser = new Role({
+  let roleUser = new Role({
     name: 'User',
     child: null,
     actions: [
@@ -54,7 +55,7 @@ module.exports.init = function(req, res, next) {
 
   return roleUser.save()
     .then((roleUser) => {
-      var roleAdmin = new Role({
+      let roleAdmin = new Role({
         name: 'Admin',
         child: roleUser,
         actions: [
@@ -69,7 +70,7 @@ module.exports.init = function(req, res, next) {
       return roleAdmin.save();
     })
     .then((roleAdmin) => {
-      var roleGod = new Role({
+      let roleGod = new Role({
         name: 'God',
         child: roleAdmin,
         actions: [
@@ -84,7 +85,7 @@ module.exports.init = function(req, res, next) {
       return roleGod.save();
     })
     .then(() => {
-      var params = {
+      let params = {
         name: "Alice",
         lastname: "Simpson",
         username: "Alice",
@@ -103,11 +104,11 @@ module.exports.init = function(req, res, next) {
 };
 
 module.exports.fillUsers = function(req, res, next) {
-  var methods = [];
+  let methods = [];
   for(var i = 0; i < 1000; i++) {
-    var name = 'GENERATED' + i;
+    let name = 'GENERATED' + i;
 
-    var params = {
+    let params = {
       name: name,
       lastname: name,
       username: name,

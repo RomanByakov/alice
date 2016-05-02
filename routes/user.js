@@ -1,28 +1,29 @@
+'use strict';
 // dependencies
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var fs = require('fs');
+let fs = require('fs');
 
-var upload = require('../modules/upload');
+let upload = require('../modules/upload');
 
-var multiparty = require('connect-multiparty');
-var multipartyMiddleware = multiparty({
+let multiparty = require('connect-multiparty');
+let multipartyMiddleware = multiparty({
   uploadDir: __dirname + "/../public/img/tmp/"
 });
 
-var Q = require('q');
+let Q = require('q');
 
 //Helpers
-var logger = require('../modules/alice-logger');
-var helper = require('../modules/api-helper');
+let logger = require('../modules/alice-logger');
+let helper = require('../modules/api-helper');
 
 // models
-var User = require('../models/user');
-var Department = require('../models/department');
+let User = require('../models/user');
+let Department = require('../models/department');
 
 
-var getUsers = function(req, res, next) {
+let getUsers = function(req, res, next) {
   // var required = [{
   //   name: 'select',
   //   status: true
@@ -42,14 +43,14 @@ var getUsers = function(req, res, next) {
   }
 };
 
-var getUser = function(req, res, next) {
+let getUser = function(req, res, next) {
   try {
-    required = [{
+    let required = [{
       name: 'id',
       status: true
     }];
 
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     User.findOne({'_id': params.id})
     .then(function(user) {
@@ -62,8 +63,8 @@ var getUser = function(req, res, next) {
   }
 };
 
-var postUser = function(req, res, next) {
-  var required = [{
+let postUser = function(req, res, next) {
+  let required = [{
     name: 'name',
     status: true
   }, {
@@ -120,14 +121,14 @@ var postUser = function(req, res, next) {
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     //logger.debug('Params: ' + JSON.stringify(params));
 
     User.createUser(params)
     .then(function(user) {
       if (req.files) {
-        var file = req.files.file;
+        let file = req.files.file;
 
         upload.avatar(file, user)
         .then(function(result) {
@@ -150,11 +151,11 @@ var postUser = function(req, res, next) {
   }
 };
 
-var updateUser = function(req, res, next) {
+let updateUser = function(req, res, next) {
   //logger.debug('[User::PUT] Department is ' + req.body.department);
   logger.debug(req.body);
 
-  var required = [{
+  let required = [{
     name: 'id',
     status: true
   } ,{
@@ -214,7 +215,7 @@ var updateUser = function(req, res, next) {
   }];
 
   try {
-    var params = helper.getParams(required, req)
+    let params = helper.getParams(required, req)
 
     logger.debug('PARAMS: ' + JSON.stringify(params));
 
@@ -248,14 +249,14 @@ var updateUser = function(req, res, next) {
   }
 };
 
-var deleteUser = function(req, res, next) {
-  var required = [{
+let deleteUser = function(req, res, next) {
+  let required = [{
     name: 'id',
     status: true
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     User.remove({'_id': params.id})
     .then(() => { res.json({sucess: true}); })

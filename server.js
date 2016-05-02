@@ -1,37 +1,39 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var Q = require('q');
+'use strict';
+let express = require('express');
+let mongoose = require('mongoose');
+let bodyParser = require('body-parser');
+let Q = require('q');
 
 mongoose.Promise = Q.Promise;
 
-var path = require('path');
-var connectDomain = require('connect-domain');
-var url = require('url');
-var accessConfig = require('./access-config');
+let path = require('path');
+let connectDomain = require('connect-domain');
+let url = require('url');
+let accessConfig = require('./access-config');
 
-var setup = require('./modules/setup');
+let setup = require('./modules/setup');
 
-var jwt = require('jsonwebtoken');
+let jwt = require('jsonwebtoken');
 
 // models
-var User = require('./models/user');
-var Department = require('./models/department');
-var Team = require('./models/team');
-var Role = require('./models/role');
+let User = require('./models/user');
+let Department = require('./models/department');
+let Team = require('./models/team');
+let Role = require('./models/role');
 
-var app = express();
+let app = express();
 
+let config;
 if (app.get('env') === 'development') {
-  var config = require('./config');
+  config = require('./config');
 } else {
-  var config = require('./config-prod');
+  config = require('./config-prod');
 }
 
 mongoose.connect(config.database);
 
-var aliceRoles = require('./modules/alice-roles');
-var logger = require('./modules/alice-logger');
+let aliceRoles = require('./modules/alice-roles');
+let logger = require('./modules/alice-logger');
 
 process.on('SIGINT', function() {
   mongoose.connection.close(function () {
@@ -51,8 +53,8 @@ app.set('apliceSecret', config.token.secret);
 app.use("/", express.static(path.join(__dirname, 'public')));
 
 app.use('/', function(req, res, next) {
-  var parsedUrl = url.parse(req.url, true);
-  var pathname = parsedUrl.pathname;
+  let parsedUrl = url.parse(req.url, true);
+  let pathname = parsedUrl.pathname;
 
   // if (pathname == '/favicon.ico') {
   //   res.json({favicon: empty});
@@ -80,14 +82,14 @@ app.use('/auth', require('./routes/auth'));
 
 //check token
 app.use(function(req, res, next) {
-  var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+  let token = req.body.token || req.param('token') || req.headers['x-access-token'];
 
   if (token) {
     try {
-      var decoded = jwt.verify(token, app.get('apliceSecret'));
+      let decoded = jwt.verify(token, app.get('apliceSecret'));
 
-      var parsedUrl = url.parse(req.url, true);
-      var pathname = parsedUrl.pathname;
+      let parsedUrl = url.parse(req.url, true);
+      let pathname = parsedUrl.pathname;
       logger.debug('Pathname: ' + pathname);
       req.decoded = decoded;
       req.currentUser = decoded._doc;

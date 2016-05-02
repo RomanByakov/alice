@@ -1,18 +1,19 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
-var Role = require('./role');
-var Team = require('./team');
-var Department = require('./department');
+let Role = require('./role');
+let Team = require('./team');
+let Department = require('./department');
 
-var crypto = require('crypto');
-var util = require('util');
+let crypto = require('crypto');
+let util = require('util');
 
-var Q = require('q');
-var logger = require('../modules/alice-logger');
-var validators = require('../modules/validators');
+let Q = require('q');
+let logger = require('../modules/alice-logger');
+let validators = require('../modules/validators');
 
-var userSchema = new Schema({
+let userSchema = new Schema({
   name: {
     type: String,
     default: 'Unnamed'
@@ -108,7 +109,7 @@ userSchema.statics.checkAccess = function(userRole, role, callback) {
 };
 
 userSchema.statics.createUser = function(params) {
-  var user = new User({
+  let user = new User({
     name: params.name,
     lastname: params.lastname,
     username: params.username,
@@ -140,7 +141,7 @@ userSchema.statics.createUser = function(params) {
 
 userSchema.methods.updateUser = function(params) {
   //logger.debug('[User::updateUser] call with ' + department + ', ' + team + ', ' + role);
-  var user = this;
+  let user = this;
 
   user.username = (params.username == null || params.username == undefined) ? user.username : params.username;
   user.name = params.name;
@@ -172,7 +173,7 @@ userSchema.methods.updateUser = function(params) {
 
 userSchema.methods.setDepartment = function(department, team) {
   logger.debug('[User::setDepartment] call with ' + department + ', ' + team);
-  var self = this;
+  let self = this;
 
   return Department.findOne({name: department})
   .then(function(model) {
@@ -192,7 +193,7 @@ userSchema.methods.setDepartment = function(department, team) {
 userSchema.methods.setTeam = function(team) {
   logger.debug('[User::setTeam] call with ' + team);
 
-  var self = this;
+  let self = this;
 
   self.department.teams.forEach(function(item) {
     //console.log(item);
@@ -209,7 +210,7 @@ userSchema.methods.setTeam = function(team) {
 userSchema.methods.setRole = function(role) {
     logger.debug('[User::setRole] call with ' + role);
 
-    var self = this;
+    let self = this;
 
     return Role.findOne({name: role})
     .then(function(model) {
@@ -239,6 +240,6 @@ userSchema.statics.populateRecords = function(users) {
   });
 };
 
-var User = mongoose.model('User', userSchema);
+let User = mongoose.model('User', userSchema);
 
 module.exports = User;
