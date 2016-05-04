@@ -71,7 +71,7 @@ let uploadDepartemntLogo = function (file, department) {
   //todo: extension
   let extension = ".png";
 
-  let path = __dirname + "/../../public/img/logos/departemtns/" + department._id + extension;
+  let path = __dirname + "/../../public/img/logos/departments/" + department._id + extension;
 
   return easyimg.info(file.logo.path)
   .then(function(info) {
@@ -103,9 +103,9 @@ let uploadDepartemntLogo = function (file, department) {
       .then(function(model) {
         return model;
       })
-      .catch(function(err) {
-        return false;
-      });
+      // .catch(function(err) {
+      //   return false;
+      // });
     }, function (err) {
       logger.debug(err);
     });

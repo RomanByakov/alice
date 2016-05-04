@@ -104,6 +104,7 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
 
         //Правильно прописать модели и можно без этой протыни из каждого поля ъхуярить, а отправлять целиком. Ну это работа для фронтендщика.
         $scope.updateUser = function(avatar) {
+            alert('blya');
             //alert($scope.user.department.name);
             if (avatar) {
                 avatar.upload = Upload.upload({

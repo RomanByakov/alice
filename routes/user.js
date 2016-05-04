@@ -64,64 +64,8 @@ let getUser = function(req, res, next) {
 };
 
 let postUser = function(req, res, next) {
-  let required = [{
-    name: 'name',
-    status: true
-  }, {
-    name: 'lastname',
-    status: true
-  }, {
-    name: 'username',
-    status: true
-  }, {
-    name: 'password',
-    status: true
-  }, {
-    name: 'team',
-    status: false
-  }, {
-    name: 'department',
-    status: false
-  }, {
-    name: 'role',
-    status: false
-  }, {
-    name: 'phone',
-    status: false
-  }, {
-    name: 'telegram',
-    status: false
-  }, {
-    name: 'skype',
-    status: false
-  }, {
-    name: 'email',
-    status: false
-  }, {
-    name: 'site',
-    status: false
-  }, {
-    name: 'github',
-    status: false
-  }, {
-    name: 'position',
-    status: false
-  }, {
-    name: 'jobapplydate',
-    status: false
-  }, {
-    name: 'info',
-    status: false
-  }, {
-    name: 'workphone',
-    status: false
-  }, {
-    name: 'birthday',
-    status: false
-  }];
-
   try {
-    let params = helper.getParams(required, req);
+    let params = helper.getParams(User.postRequired(), req);
 
     //logger.debug('Params: ' + JSON.stringify(params));
 
@@ -154,68 +98,9 @@ let postUser = function(req, res, next) {
 let updateUser = function(req, res, next) {
   //logger.debug('[User::PUT] Department is ' + req.body.department);
   logger.debug(req.body);
-
-  let required = [{
-    name: 'id',
-    status: true
-  } ,{
-    name: 'name',
-    status: true
-  }, {
-    name: 'lastname',
-    status: true
-  }, {
-    name: 'username',
-    status: false
-  }, {
-    name: 'password',
-    status: false
-  }, {
-    name: 'team',
-    status: false
-  }, {
-    name: 'department',
-    status: false
-  }, {
-    name: 'role',
-    status: false
-  }, {
-    name: 'phone',
-    status: false
-  }, {
-    name: 'telegram',
-    status: false
-  }, {
-    name: 'skype',
-    status: false
-  }, {
-    name: 'email',
-    status: false
-  }, {
-    name: 'site',
-    status: false
-  }, {
-    name: 'github',
-    status: false
-  }, {
-    name: 'position',
-    status: false
-  }, {
-    name: 'jobapplydate',
-    status: false
-  }, {
-    name: 'info',
-    status: false
-  }, {
-    name: 'workphone',
-    status: false
-  }, {
-    name: 'birthday',
-    status: false
-  }];
-
+  
   try {
-    let params = helper.getParams(required, req)
+    let params = helper.getParams(user.updateRequired(), req)
 
     logger.debug('PARAMS: ' + JSON.stringify(params));
 

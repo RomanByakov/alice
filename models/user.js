@@ -58,11 +58,6 @@ let userSchema = new Schema({
     default: null,
     validate: validators.phoneValidator
   },
-  workphone: {
-    type: String,
-    default: null,
-    validate: validators.phoneValidator
-  },
   telegram: {
     type: String,
     default: null
@@ -120,7 +115,6 @@ userSchema.statics.createUser = function(params) {
     github: params.github,
     telegram: params.telegram,
     phone: params.phone,
-    workphone: params.workphone,
     position: params.position,
     jobapplydate: new Date(params.jobapplydate),
     info: params.info,
@@ -153,7 +147,6 @@ userSchema.methods.updateUser = function(params) {
   user.github = params.github;
   user.telegram = params.telegram;
   user.phone = params.phone;
-  user.workphone = params.workphone;
   user.position = params.position;
   user.jobapplydate = new Date(params.jobapplydate);
   user.info = params.info;
@@ -238,6 +231,119 @@ userSchema.statics.populateRecords = function(users) {
   users.forEach(function(user) {
     user.populate();
   });
+};
+
+userSchema.statics.postRequired = () => {
+  return [{
+    name: 'name',
+    status: true
+  }, {
+    name: 'lastname',
+    status: true
+  }, {
+    name: 'username',
+    status: true
+  }, {
+    name: 'password',
+    status: true
+  }, {
+    name: 'team',
+    status: false
+  }, {
+    name: 'department',
+    status: false
+  }, {
+    name: 'role',
+    status: false
+  }, {
+    name: 'phone',
+    status: false
+  }, {
+    name: 'telegram',
+    status: false
+  }, {
+    name: 'skype',
+    status: false
+  }, {
+    name: 'email',
+    status: false
+  }, {
+    name: 'site',
+    status: false
+  }, {
+    name: 'github',
+    status: false
+  }, {
+    name: 'position',
+    status: false
+  }, {
+    name: 'jobapplydate',
+    status: false
+  }, {
+    name: 'info',
+    status: false
+  }, {
+    name: 'birthday',
+    status: false
+  }];
+};
+
+userSchema.statics.updateRequired = () => {
+  return [{
+    name: 'id',
+    status: true
+  } ,{
+    name: 'name',
+    status: true
+  }, {
+    name: 'lastname',
+    status: true
+  }, {
+    name: 'username',
+    status: false
+  }, {
+    name: 'password',
+    status: false
+  }, {
+    name: 'team',
+    status: false
+  }, {
+    name: 'department',
+    status: false
+  }, {
+    name: 'role',
+    status: false
+  }, {
+    name: 'phone',
+    status: false
+  }, {
+    name: 'telegram',
+    status: false
+  }, {
+    name: 'skype',
+    status: false
+  }, {
+    name: 'email',
+    status: false
+  }, {
+    name: 'site',
+    status: false
+  }, {
+    name: 'github',
+    status: false
+  }, {
+    name: 'position',
+    status: false
+  }, {
+    name: 'jobapplydate',
+    status: false
+  }, {
+    name: 'info',
+    status: false
+  }, {
+    name: 'birthday',
+    status: false
+  }];
 };
 
 let User = mongoose.model('User', userSchema);
