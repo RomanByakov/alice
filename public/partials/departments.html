@@ -1,7 +1,7 @@
 
 <h3 class="ui header">All Departments</h3>
 <div class="ui cards department-cards">
-  <div class="card" ng-repeat="department in departments">
+  <div class="card" ng-repeat="department in departments" ng-class="getColor(department)">
     <div class="content">
       <img class="right floated mini ui image" src="../img/empty-img.jpg">
       <div class="header" ng-bind="department.name" ui-sref="viewDepartment({id:department._id})"></div>

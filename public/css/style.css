@@ -211,11 +211,10 @@ body,html
 .user-cards_about span
 {
   display: block;
-  white-space: nowrap; /* Запрещаем перенос строк */
-  overflow: hidden; /* Обрезаем все, что не помещается в область */
-   /* Цвет фона */
-   /* Поля вокруг текста */
-  text-overflow: ellipsis; /* Добавляем многоточие */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .user-cards_message
@@ -256,6 +255,13 @@ body,html
 .department-cards .description a
 {
   margin: 0 10px 10px 0;
+}
+
+/* Department view */
+
+.teams-list .description
+{
+  word-break: break-word;
 }
 
 
