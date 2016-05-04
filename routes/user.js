@@ -98,9 +98,9 @@ let postUser = function(req, res, next) {
 let updateUser = function(req, res, next) {
   //logger.debug('[User::PUT] Department is ' + req.body.department);
   logger.debug(req.body);
-  
+
   try {
-    let params = helper.getParams(user.updateRequired(), req)
+    let params = helper.getParams(User.updateRequired(), req)
 
     logger.debug('PARAMS: ' + JSON.stringify(params));
 
@@ -126,7 +126,7 @@ let updateUser = function(req, res, next) {
           res.send(user);
         }
       })
-      .catch((err) => { throw err;});
+      .catch((err) => { helper.handleError(res, err); });
     })
     .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
