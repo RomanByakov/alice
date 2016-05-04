@@ -235,42 +235,7 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
         }
 
     });
-}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User) {
-    $rootScope.checkAccess($cookies, $state, function() {
-        $scope.updateDepartment = function() {
-            $scope.department.$update(function() {
-                $state.go('departments');
-            });
-        };
-
-        $scope.loadDepartment = function() {
-            $scope.department = Department.get({
-                id: $stateParams.id
-            }, function() {
-                $('.ui.dropdown').dropdown();
-            });
-
-        };
-
-        $scope.loadDepartment();
-        $scope.users = User.query();
-        $('.ui.dropdown.multiple')
-          .dropdown({
-            direction: 'downward'
-          })
-        ;
-        $('.ui.dropdown.fluid')
-          .dropdown({
-            direction: 'downward'
-          })
-        ;
-        $('.ui.dropdown.icon')
-          .dropdown({
-            direction: 'upward'
-          })
-        ;
-    });
-});
+})
 
 module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {
     $scope.user = new Login();
