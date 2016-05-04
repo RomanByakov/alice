@@ -39,7 +39,7 @@
     <div class="item">
       <h3 class="ui header">Teams</h3>
       <div class="ui cards">
-        <div ng-repeat="team in department.teams" class="card" ng-class="getColor(team)">
+        <div ng-repeat="team in department.teams" class="card teams-list" ng-class="getColor(team)">
           <div class="content">
             <img class="right floated mini ui image" ng-src="{{team.logo}}">
             <div class="header" ng-bind="team.name"></div>
