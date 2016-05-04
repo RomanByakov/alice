@@ -19,6 +19,17 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
         }
     };
 
+    $rootScope.colors = {
+        'B03060': 'red',
+        '0E6EB8': 'blue',
+        '000000': 'black',
+        'B413EC': 'purple',
+        'FE9A76': 'orange',
+        'FFD700': 'yellow',
+        'FF1493': 'pink',
+        '016936': 'green'
+    };
+
     //what is this?
     $scope.user = {
         showTooltip: false,
@@ -212,23 +223,6 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
             // }
         }
 
-    });
-}).controller('DepartmentViewController', function($scope, $cookies, $stateParams, Department) {
-    checkAccess($cookies, $state);
-    $scope.department = Department.get({
-        id: $stateParams.id
-    });
-
-}).controller('DepartmentCreateController', function($rootScope, $scope, $state, $cookies, $stateParams, Department) {
-    $rootScope.checkAccess($cookies, $state, function() {
-        $scope.department = new Department();
-        $scope.department.teams = [];
-
-        $scope.addDepartment = function() {
-            $scope.department.$save(function() {
-                $state.go('departments');
-            });
-        }
     });
 }).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User) {
     $rootScope.checkAccess($cookies, $state, function() {

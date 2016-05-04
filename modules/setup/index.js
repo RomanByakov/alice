@@ -5,6 +5,8 @@ var Team = require('../../models/team');
 var Department = require('../../models/department');
 var Role = require('../../models/role');
 
+var helper = require('../api-helper');
+
 var Q = require('q');
 
 module.exports.drop = function(req, res, next) {
@@ -42,94 +44,62 @@ module.exports.drop = function(req, res, next) {
 module.exports.init = function(req, res, next) {
   var roleUser = new Role({
     name: 'User',
-    child: null
+    child: null,
+    actions: [
+      "manageOwn",
+      "getUsers",
+      "getDepartments"
+    ]
   });
 
-  roleUser.save(function(err) {
-    if (err) {
-      throw err;
-    }
+  return roleUser.save()
+    .then((roleUser) => {
+      var roleAdmin = new Role({
+        name: 'Admin',
+        child: roleUser,
+        actions: [
+          "createUser",
+          "updateUser",
+          "getRoles",
+          "createDepartment",
+          "updateDepartment"
+        ]
+      });
 
-    roleAdmin = new Role({
-      name: 'Admin',
-      child: roleUser
-    });
-
-    roleAdmin.save(function(err) {
-      if (err) {
-        throw err;
-      }
-
-      roleGod = new Role({
+      return roleAdmin.save();
+    })
+    .then((roleAdmin) => {
+      var roleGod = new Role({
         name: 'God',
-        child: roleAdmin
+        child: roleAdmin,
+        actions: [
+          "deleteUser",
+          "createRole",
+          "updateRole",
+          "deleteRole",
+          "deleteDepartment"
+        ]
       });
 
-      roleGod.save(function(err) {
-        if (err) {
-          throw err;
-        }
+      return roleGod.save();
+    })
+    .then(() => {
+      var params = {
+        name: "Alice",
+        lastname: "Simpson",
+        username: "Alice",
+        password: "Sochno",
+        department: null,
+        team: null,
+        role: "God"
+      };
 
-        // User.createUser("Alice", "Simpson", "Alice", "Sochno", null, null, roleGod, function(err, next) {
-        //   if (err) {
-        //     throw err;
-        //   }
-        //
-        //   res.json({success:true});
-        // });
-
-        var params = {
-          name: "Alice",
-          lastname: "Simpson",
-          username: "Alice",
-          password: "Sochno",
-          department: null,
-          team: null,
-          role: "God"
-        };
-
-        User.createUser(params)
-        .then(function() {
-          res.json({success: true});
-        });
-      });
-    });
-  });
-};
-
-module.exports.checkAccessTest = function(req, res, next) {
-  console.log('check-access');
-  User.findOne({username: "test1"}, function (err, user) {
-    if (err) throw err;
-
-    if (user != null) {
-      console.log('user = ' + user.name);
-
-      user.checkAccess("Admin", function (err) {
-        if (err) throw err;
-        else {
-          console.log("access granted");
-          res.json({success: true});
-        }
-      });
-    }
-  });
-
-  User.findOne({username: "test3"}, function (err, user) {
-    if (err) throw err;
-
-    if (user != null) {
-      console.log('user = ' + user.name);
-
-      user.checkAccess("Admin", function (err) {
-        if (err) throw err;
-        else {
-          console.log("access granted");
-          res.json({success: true});
-        }
-      });
-    }
-  });
+      return User.createUser(params);
+    })
+    ,then((alice) => {
+      return res.json({success: true});
+    })
+    .catch((err) => { helper.handleError(res, err); });
 };
 
 module.exports.fillUsers = function(req, res, next) {
@@ -152,5 +122,5 @@ module.exports.fillUsers = function(req, res, next) {
 
   Q.all(methods)
   .then(() => { res.json({success: true}); })
-  .catch(() => { res.json({success: false}); });
+  .catch((err) => { helper.handleError(res, err); });
 };

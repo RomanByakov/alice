@@ -30,6 +30,9 @@ if (app.get('env') === 'development') {
 
 mongoose.connect(config.database);
 
+var aliceRoles = require('./modules/alice-roles');
+var logger = require('./modules/alice-logger');
+
 process.on('SIGINT', function() {
   mongoose.connection.close(function () {
     console.log('Mongoose default connection disconnected through app termination');
@@ -69,9 +72,10 @@ if (app.get('env') === 'development') {
   app.use('/drop', setup.drop);
   app.use('/setup', setup.init);
   app.use('/fill', setup.fillUsers);
-  app.get('/check-access-test', setup.checkAccessTest);
+  //app.get('/check-access-test', setup.checkAccessTest);
 }
 
+app.use('/api/actions', aliceRoles.getActions);
 app.use('/auth', require('./routes/auth'));
 
 //check token
@@ -84,6 +88,7 @@ app.use(function(req, res, next) {
 
       var parsedUrl = url.parse(req.url, true);
       var pathname = parsedUrl.pathname;
+      logger.debug('Pathname: ' + pathname);
       req.decoded = decoded;
       req.currentUser = decoded._doc;
 
