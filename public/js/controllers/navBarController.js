@@ -11,7 +11,8 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
         $('.top-bar_user .teal').popup({
           popup: $('.user-menu'),
           on: 'click',
-          position: 'bottom left'
+          position: 'bottom left',
+          movePopup: false
         });
 
 
