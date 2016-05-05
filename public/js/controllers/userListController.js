@@ -30,28 +30,34 @@ angular.module('aliceApp')
             .on('click', function() {
               $(this)
                 .closest('.message')
-                .transition('scale')
-              ;
+                .transition('scale');
+
+              $cookies.put('messageBoxShown', true);
             })
           ;
 
+
           var userCardsMessage = function(){
-            $('.user-cards_message').transition({
-              animation : 'scale in',
-              duration : '1s'
-            });
+            if(!$cookies.get('messageBoxShown'))
+            {
+              $('.user-cards_message').transition({
+                animation : 'scale in',
+                duration : '1s'
+              });
+            }
+
           }
 
           setTimeout(userCardsMessage, 1500);
 
-          $scope.testCards = function() {
-            //alert('scope on rendered');
-            $('.user-cards .card').transition({
-              animation : 'scale',
-              reverse   : 'auto', // default setting
-              interval  : 200
-            });
-          };
+          // $scope.testCards = function() {
+          //   //alert('scope on rendered');
+          //   $('.user-cards .card').transition({
+          //     animation : 'scale',
+          //     reverse   : 'auto', // default setting
+          //     interval  : 200
+          //   });
+          // };
 
         });
 
@@ -74,7 +80,7 @@ angular.module('aliceApp')
             animation : 'scale in',
             reverse   : 'auto', // default setting
             interval  : 300,
-            duration : '0.5s'
+            duration : '0.2s'
           });
         }
       };

@@ -3,11 +3,15 @@
 <div class="ui cards department-cards">
   <div class="card" ng-repeat="department in departments" ng-class="getColor(department)">
     <div class="content">
-      <img class="right floated mini ui image" ng-src="{{department.logo}}">
-      <div class="header" ng-bind="department.name" ui-sref="viewDepartment({id:department._id})"></div>
+      <a ui-sref="viewDepartment({id:department._id})">
+        <img class="right floated mini ui image" ng-src="{{department.logo}}">
+      </a>
+      <div class="header">
+        <a ui-sref="viewDepartment({id:department._id})" ng-bind="department.name"></a>
+      </div>
       <div class="meta">Department teams</div>
       <div class="description">
-        <a ui-sref="viewDepartment({id:department._id})" ng-bind="team.name" ng-repeat="team in department.teams" ng-class="teal" class="ui label"></a>
+        <a ui-sref="viewDepartment({id:department._id})" ng-bind="team.name" ng-repeat="team in department.teams" ng-class="getColor(team)" class="ui label"></a>
       </div>
     </div>
     <div class="extra content" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">

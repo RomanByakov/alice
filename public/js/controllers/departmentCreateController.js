@@ -81,7 +81,7 @@ angular.module('aliceApp')
               if ($scope.isNewTeam) {
                 $scope.department.teams.push($scope.currentTeam);
               }
-              
+
               $scope.currentTeam = {};
               $('.ui.dropdown.icon').dropdown("restore defaults");
               $('.ui.dropdown.icon').dropdown("set text", "Team color");
@@ -117,7 +117,7 @@ angular.module('aliceApp')
                     direction: 'upward'
                 });
 
-
+            
         });
     }).directive('teamsDirective', function() {
         return function(scope, element, attrs) {

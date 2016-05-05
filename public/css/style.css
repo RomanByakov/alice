@@ -318,6 +318,11 @@ form .progress {
     width: 0;
 }
 
+.add-image-button
+{
+  margin: 0 0 0 23px !important;
+}
+
 
 /* login form */
 

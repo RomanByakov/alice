@@ -66,6 +66,7 @@ angular.module('aliceApp')
             }
 
             $scope.addTeam = () => {
+
               if ($scope.isNewTeam) {
                 $scope.department.teams.push($scope.currentTeam);
               }
@@ -76,7 +77,98 @@ angular.module('aliceApp')
               $scope.currentTeam = {};
               $('.ui.dropdown.icon').dropdown("restore defaults");
               $('.ui.dropdown.icon').dropdown("set text", "Team color");
+
             }
+
+            //Teams validation
+            var teamsFormVR =
+            {
+
+              name: {
+                identifier: 'team-name',
+                rules: [
+                  {
+                    type   : 'empty',
+                    prompt : 'Please enter your name'
+                  },
+                  {
+                    type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{3,16}$/]',
+                    prompt : 'Please enter a 3-16 letter name'
+                  }
+                ]
+              },
+              phone: {
+                identifier: 'team-phone',
+                rules: [
+                  {
+                    type   : 'exactLength[11]',
+                    prompt : 'Telephone number must be 11 characters long'
+                  },
+                  {
+                    type   : 'number',
+                    prompt : 'Please enter valid phone number'
+                  }
+                ]
+              }
+
+            }
+
+            var teamsFormSettings =
+            {
+              onSuccess: function () {
+
+                $scope.$apply(() => {
+                  $scope.addTeam();
+                });
+
+
+              }
+            }
+
+            $('.teams-form').form(teamsFormVR, teamsFormSettings);
+
+            //Department validation
+
+            var departmentFormVR =
+            {
+
+              name: {
+                identifier: 'department-name',
+                rules: [
+                  {
+                    type   : 'empty',
+                    prompt : 'Please enter your name'
+                  },
+                  {
+                    type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{2,16}$/]',
+                    prompt : 'Please enter a 3-16 letter name'
+                  }
+                ]
+              },
+              phone: {
+                identifier: 'department-phone',
+                rules: [
+                  {
+                    type   : 'exactLength[11]',
+                    prompt : 'Telephone number must be 11 characters long'
+                  },
+                  {
+                    type   : 'number',
+                    prompt : 'Please enter valid phone number'
+                  }
+                ]
+              }
+
+            }
+
+            var departmentFormSettings =
+            {
+              onSuccess: function () {
+                  $scope.updateDepartment();
+              }
+            }
+
+            $('.department-form').form(departmentFormVR, departmentFormSettings);
 
             $scope.colors = {
                 'B03060': 'red',

@@ -1,9 +1,10 @@
+
 <div class="user-form">
   <div class="ui piled segment">
     <h4 class="ui header">Edit user card</h4>
-    <form role="form" class="ui form" ng-submit="updateUser(avatar)">
+    <form role="form" class="ui form">
         <!-- <div ng-include="'partials/_form.html'"></div> -->
-        <div class="ui inverted segment">
+        <!-- <div class="ui inverted segment">
           <div class="ui inverted form">
             <div class="two fields">
               <div class="field">
@@ -16,16 +17,16 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <h4 class="ui dividing header">About you</h4>
         <div class="three fields">
           <div class="field">
             <label>First name</label>
-            <input type="text" name="" ng-model="user.name" placeholder="First Name">
+            <input type="text" id="first-name" ng-model="user.name" placeholder="First Name">
           </div>
           <div class="field">
             <label>Second name</label>
-            <input type="text" name="" ng-model="user.lastname" placeholder="Last Name">
+            <input type="text" id="second-name" ng-model="user.lastname" placeholder="Last Name">
           </div>
           <div class="field">
             <label>Birthday</label>
@@ -38,15 +39,21 @@
         <div class="field">
           <textarea rows="2" ng-model="user.info" placeholder="Tell about yourself..."></textarea>
         </div>
-        <div class="field">
-          <label>Avatar</label>
-          <button class="ui basic button" type="file" ngf-select ng-model="avatar" name="file"
-                   accept="image/*" ngf-max-size="2MB"
-                   ngf-model-invalid="errorFile" id="avatar-input">
-                   <i class="icon file image outline"></i>
-                   Select image
-          </button>
+        <div class="two fields">
+          <div class="field">
+            <label>Avatar</label>
+            <div class="ui middle aligned tiny circular image">
+              <img ng-src="{{user.avatar}}" alt="{{user.name}}" />
+            </div>
+            <button class="ui basic button add-image-button" type="file" ngf-select ng-model="avatar" name="file"
+                     accept="image/*" ngf-max-size="2MB"
+                     ngf-model-invalid="errorFile" id="avatar-input">
+                     <i class="icon file image outline"></i>
+                     Select image
+            </button>
+          </div>
         </div>
+
 
         <h4 class="ui dividing header">About work</h4>
         <div class="two fields">
@@ -60,7 +67,7 @@
           <div class="field">
             <label>Position</label>
             <div class="ui left icon input">
-              <input type="text" name="shipping[first-name]" ng-model="user.position" placeholder="Position">
+              <input type="text" name="shipping[first-name]" id="position" ng-model="user.position" placeholder="Position">
               <i class="paw icon"></i>
             </div>
           </div>
@@ -68,8 +75,8 @@
         <div class="three fields">
           <div class="field">
             <label>Departments</label>
-            <div class="ui selection dropdown">
-              <input type="hidden" name="gender">
+            <div class="ui selection dropdown" id="department">
+              <input type="hidden">
               <i class="dropdown icon"></i>
               <div class="default text">Department</div>
               <div class="menu">
@@ -81,7 +88,7 @@
           <div class="ui field">
             <label>Team</label>
             <div class="ui selection dropdown transition" id="userTeams">
-              <input type="hidden" name="gender">
+              <input type="hidden">
               <i class="dropdown icon"></i>
               <div class="default text">Team</div>
               <div class="menu transition" id="userTeamsMenu">
@@ -91,7 +98,7 @@
           </div>
           <div class="field">
             <label>Role</label>
-            <div class="ui selection dropdown">
+            <div class="ui selection dropdown" id="role">
               <input type="hidden" name="gender">
               <i class="dropdown icon"></i>
               <div class="default text" >Role</div>
@@ -107,14 +114,14 @@
             <div class="field">
               <label>Phone</label>
               <div class="ui left icon input">
-                <input type="text" ng-model="user.phone" placeholder="You phone number...">
+                <input type="text" ng-model="user.phone" id="phone" placeholder="You phone number...">
                 <i class="text telephone icon"></i>
               </div>
             </div>
             <div class="field">
               <label>Email</label>
               <div class="ui left icon input">
-                <input type="text" ng-model="user.email" placeholder="You email...">
+                <input type="text" ng-model="user.email" id="email" placeholder="You email...">
                 <i class="text at icon"></i>
               </div>
             </div>
@@ -123,14 +130,14 @@
             <div class="field">
               <label>Site</label>
               <div class="ui left icon input">
-                <input type="text" ng-model="user.site" placeholder="You site...">
+                <input type="text" ng-model="user.site" id="url" placeholder="You site...">
                 <i class="text linkify icon"></i>
               </div>
             </div>
             <div class="field">
               <label>Github</label>
               <div class="ui left icon input">
-                <input type="text" ng-model="user.github" placeholder="Github user link...">
+                <input type="text" ng-model="user.github" id="github" placeholder="Github user link...">
                 <i class="text github icon"></i>
               </div>
             </div>
@@ -151,11 +158,11 @@
               </div>
             </div>
           </div>
-
+          <div class="ui message error"></div>
           <div class="form-group">
-            <button type="submit" class="ui teal medium button">Save</button>
+            <a class="ui teal medium button submit">Save</a>
           </div>
       </form>
     </div>
   </div>
-  <pre>{{user | json}}</pre>
+  <!-- <pre>{{user | json}}</pre> -->
