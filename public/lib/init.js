@@ -57,19 +57,5 @@
       }
 
     });
-
-    
-
-
-
-    // $document.scroll(function() {
-    //   if ($document.scrollTop() >= 70) {
-    //
-    //     $('.wrapper-block').removeClass('pushable');
-    //   } else {
-    //     $('.wrapper-block').addClass('pushable');
-    //   }
-    // });
-
-  }); // end of document ready
-})(jQuery); // end of jQuery name space
+  });
+})(jQuery);
