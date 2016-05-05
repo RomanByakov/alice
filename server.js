@@ -70,4 +70,4 @@ app.use('/api/roles', require('./routes/role'));
 
 // start server
 app.listen(config.port);
-logger.debug('alice is running on port ' + config.port);
+logger.info(`Alice is running on port ${config.port}`);
