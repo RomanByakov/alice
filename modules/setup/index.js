@@ -97,7 +97,7 @@ module.exports.init = function(req, res, next) {
 
       return User.createUser(params);
     })
-    ,then((alice) => {
+    .then((alice) => {
       return res.json({success: true});
     })
     .catch((err) => { helper.handleError(res, err); });

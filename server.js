@@ -28,6 +28,8 @@ if (app.get('env') === 'development') {
 mongoose.connect(config.database);
 
 let aliceRoles = require('./modules/alice-roles');
+aliceRoles.init(require('./new-access-config'));
+
 let logger = require('./modules/alice-logger');
 
 process.on('SIGINT', function() {
