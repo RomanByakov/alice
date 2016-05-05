@@ -57,6 +57,7 @@ angular.module('aliceApp')
             }
 
             $scope.isNewTeam = true;
+            //$scope.currentIndex = null;
             $scope.currentTeam = {};
 
             $scope.newTeam = function() {
@@ -64,11 +65,17 @@ angular.module('aliceApp')
                 $scope.currentTeam = {};
             }
 
-            $scope.addTeam = function() {
+            $scope.addTeam = () => {
+              if ($scope.isNewTeam) {
                 $scope.department.teams.push($scope.currentTeam);
-                $scope.currentTeam = {};
-                $('.ui.dropdown.icon').dropdown("restore defaults");
-                $('.ui.dropdown.icon').dropdown("set text", "Team color");
+              }
+              // } else {
+              //   $scope.department.teams[$scope.currentIndex] = $scope.currentTeam;
+              // }
+
+              $scope.currentTeam = {};
+              $('.ui.dropdown.icon').dropdown("restore defaults");
+              $('.ui.dropdown.icon').dropdown("set text", "Team color");
             }
 
             $scope.colors = {
@@ -88,7 +95,12 @@ angular.module('aliceApp')
                 }, function() {
                     $('.ui.dropdown').dropdown();
                 });
+            };
 
+            $scope.editTeam = (team) => {
+              $scope.currentTeam = team;
+              //$scope.currentIndex = index;
+              $scope.isNewTeam = false;
             };
 
             $scope.loadDepartment();
