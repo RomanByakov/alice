@@ -22,16 +22,10 @@ let helper = require('../modules/api-helper');
 let User = require('../models/user');
 let Department = require('../models/department');
 
+let checkToken = require('../modules/alice-check-token').checkToken;
 
 let getUsers = function(req, res, next) {
-  // var required = [{
-  //   name: 'select',
-  //   status: true
-  // }];
-
   try {
-    // var params = helper.getParams(required, req.query);
-
     User.find()
     .then(function(users) {
       User.populateRecords(users);
@@ -154,19 +148,13 @@ let deleteUser = function(req, res, next) {
 
 
 
-router.route('/', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getUsers)
-  .post(multipartyMiddleware, postUser);
+router.route('/')
+  .get(checkToken, getUsers)
+  .post(checkToken, multipartyMiddleware, postUser);
 
-router.route('/:id', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getUser)
-  .put(multipartyMiddleware, updateUser)
-  .delete(deleteUser);
+router.route('/:id')
+  .get(checkToken, getUser)
+  .put(checkToken, multipartyMiddleware, updateUser)
+  .delete(checkToken, deleteUser);
 
 module.exports = router;

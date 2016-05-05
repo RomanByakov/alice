@@ -1,13 +1,15 @@
 'use strict';
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var logger = require('../modules/alice-logger');
-var helper = require('../modules/api-helper');
+let logger = require('../modules/alice-logger');
+let helper = require('../modules/api-helper');
 
-var Role = require('../models/role');
+let Role = require('../models/role');
 
-var getRoles = function(req, res, next) {
+let checkToken = require('../modules/alice-check-token').checkToken;
+
+let getRoles = function(req, res, next) {
   try {
     Role.find()
     .then((roles) => { res.send(roles); })
@@ -17,8 +19,8 @@ var getRoles = function(req, res, next) {
   }
 };
 
-var postRole = function(req, res, next) {
-  var required = [{
+let postRole = function(req, res, next) {
+  let required = [{
     name: 'name',
     status: true
   }, {
@@ -27,7 +29,7 @@ var postRole = function(req, res, next) {
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     Role.createRole(params.name, params.child)
     .then((role) => { res.send(role); })
@@ -38,14 +40,14 @@ var postRole = function(req, res, next) {
   }
 };
 
-var getRole = function(req, res, next) {
-  var required = [{
+let getRole = function(req, res, next) {
+  let required = [{
     name: 'id',
     status: true
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     Role.findOne({'_id': params.id})
     .then((role) => { res.send(role); })
@@ -55,8 +57,8 @@ var getRole = function(req, res, next) {
   }
 };
 
-var updateRole = function(req, res, next) {
-  var required = [{
+let updateRole = function(req, res, next) {
+  let required = [{
     name: 'id',
     status: true
   }, {
@@ -68,7 +70,7 @@ var updateRole = function(req, res, next) {
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     Role.findOne()
     .then((role) => {
@@ -84,14 +86,14 @@ var updateRole = function(req, res, next) {
 };
 
 //todo: stop deleting if role is using as child by other roles
-var deleteRole = function(req, res, next) {
-  var required = [{
+let deleteRole = function(req, res, next) {
+  let required = [{
     name: 'id',
     status: true
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     Role.remove({'_id': params.id})
     .then(() => {
@@ -103,19 +105,13 @@ var deleteRole = function(req, res, next) {
   }
 };
 
-router.route('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getRoles)
-  .post(postRole);
+router.route('/')
+  .get(checkToken, getRoles)
+  .post(checkToken, postRole);
 
-router.route('/:id', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getRole)
-  .put(updateRole)
-  .delete(deleteRole);
+router.route('/:id')
+  .get(checkToken, getRole)
+  .put(checkToken, updateRole)
+  .delete(checkToken, deleteRole);
 
 module.exports = router;

@@ -1,29 +1,31 @@
 'use strict';
 // dependencies
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var fs = require('fs');
+let fs = require('fs');
 
-var upload = require('../modules/upload');
+let upload = require('../modules/upload');
 
-var multiparty = require('connect-multiparty');
-var multipartyMiddleware = multiparty({
+let multiparty = require('connect-multiparty');
+let multipartyMiddleware = multiparty({
   uploadDir: __dirname + "/../public/img/tmp/"
 });
 
-var Q = require('q');
+let Q = require('q');
 
 //Helpers
-var logger = require('../modules/alice-logger');
-var helper = require('../modules/api-helper');
+let logger = require('../modules/alice-logger');
+let helper = require('../modules/api-helper');
 
 // models
-var Department = require('../models/department');
-var User = require('../models/user');
-var Team = require('../models/team');
+let Department = require('../models/department');
+let User = require('../models/user');
+let Team = require('../models/team');
 
-var getDepartments = function(req, res, next) {
+let checkToken = require('../modules/alice-check-token').checkToken;
+
+let getDepartments = function(req, res, next) {
   try {
     Department.find()
     .then(function(departments) {
@@ -40,7 +42,7 @@ var getDepartments = function(req, res, next) {
  * @param model
  * @return Q.Promise
  */
-var addLead = function(model) {
+let addLead = function(model) {
   if (model.lead == null || model.lead == undefined) {
     return Q.fcall(() => { return model; });
   }
@@ -55,7 +57,7 @@ var addLead = function(model) {
  * @param to
  * @return to
  */
-var updateModel = function(from, to) {
+let updateModel = function(from, to) {
   to.color = from.color;
   to.phone = from.phone;
   to.description = from.description;
@@ -75,7 +77,7 @@ var updateModel = function(from, to) {
  * @param team
  * @return Q.Promise
  */
-var addTeam = function(team, departmentId) {
+let addTeam = function(team, departmentId) {
   return addLead(team)
   .then(() => {
     return Team.findOne({name: team.name})
@@ -116,7 +118,7 @@ var addTeam = function(team, departmentId) {
 /**
  * @param team
  */
-var updateTeamInCurrentDepartment = function(team) {
+let updateTeamInCurrentDepartment = function(team) {
   return Team.findOne({name: team.name})
     .then((model) => { return updateModel(team, model).save(); });
 };
@@ -127,14 +129,14 @@ var updateTeamInCurrentDepartment = function(team) {
  * @param departmentId
  * @return Q.Promise
  */
-var addTeams = function(department, departmentId) {
-  var methods = [];
+let addTeams = function(department, departmentId) {
+  let methods = [];
 
-  var teams = department.teams;
+  let teams = department.teams;
   department.teams = [];
 
   teams.forEach(function(item) {
-    var team = new Team(item);
+    let team = new Team(item);
 
     methods.push(addTeam(team, departmentId));
   });
@@ -148,11 +150,11 @@ var addTeams = function(department, departmentId) {
  * @todo: add teams
  * @todo: add lead
  */
-var postDepartment = function(req, res, next) {
+let postDepartment = function(req, res, next) {
   try {
-    var params = helper.getParams(Department.postRequired(), req);
+    let params = helper.getParams(Department.postRequired(), req);
 
-    var department = new Department(params);
+    let department = new Department(params);
 
     addLead(department)
     .then(() => {
@@ -183,14 +185,14 @@ var postDepartment = function(req, res, next) {
 /**
  * Get department by id.
  */
-var getDepartment = function(req, res, next) {
-  var required = [{
+let getDepartment = function(req, res, next) {
+  let required = [{
     name: 'id',
     status: true
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     Department.findOne({'_id': params.id})
     .then((department) => { res.send(department); })
@@ -204,11 +206,11 @@ var getDepartment = function(req, res, next) {
  * Updating of department.
  * Same logic like in post department, but on existing instance.
  */
-var updateDepartment = function(req, res, next) {
+let updateDepartment = function(req, res, next) {
   try {
-    var params = helper.getParams(Department.updateRequired(), req);
+    let params = helper.getParams(Department.updateRequired(), req);
 
-    var department = new Department(params);
+    let department = new Department(params);
 
     Department.findOne({_id: params.id})
     .then((model) => { return addLead(updateModel(department, model)); })
@@ -238,14 +240,14 @@ var updateDepartment = function(req, res, next) {
   }
 };
 
-var deleteDepartment = function(req, res, next) {
-  var required = [{
+let deleteDepartment = function(req, res, next) {
+  let required = [{
     name: 'id',
     status: true
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     Department.findOne({'_id': params.id})
     .then((department) => {
@@ -264,19 +266,13 @@ var deleteDepartment = function(req, res, next) {
   }
 };
 
-router.route('/', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getDepartments)
-  .post(multipartyMiddleware, postDepartment);
+router.route('/')
+  .get(checkToken, getDepartments)
+  .post(checkToken, multipartyMiddleware, postDepartment);
 
-router.route('/:id', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getDepartment)
-  .put(multipartyMiddleware, updateDepartment)
-  .delete(deleteDepartment);
+router.route('/:id')
+  .get(checkToken, getDepartment)
+  .put(checkToken, multipartyMiddleware, updateDepartment)
+  .delete(checkToken, deleteDepartment);
 
 module.exports = router;
