@@ -6,7 +6,7 @@ echo Alice app starts
 echo Pull from repository
 git pull
 echo NPM install call
-npm install
+npm install --loglevel=error
 
 echo Setting mode
 NODE_ENV = $mode
