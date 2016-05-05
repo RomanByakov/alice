@@ -78,11 +78,20 @@ angular.module('aliceApp')
             }
 
             $scope.addTeam = function() {
+              if ($scope.isNewTeam) {
                 $scope.department.teams.push($scope.currentTeam);
-                $scope.currentTeam = {};
-                $('.ui.dropdown.icon').dropdown("restore defaults");
-                $('.ui.dropdown.icon').dropdown("set text", "Team color");
+              }
+              
+              $scope.currentTeam = {};
+              $('.ui.dropdown.icon').dropdown("restore defaults");
+              $('.ui.dropdown.icon').dropdown("set text", "Team color");
             }
+
+            $scope.editTeam = (team) => {
+              $scope.currentTeam = team;
+              //$scope.currentIndex = index;
+              $scope.isNewTeam = false;
+            };
 
             $scope.colors = {
                 'B03060': 'red',
