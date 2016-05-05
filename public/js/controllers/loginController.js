@@ -17,7 +17,8 @@ angular.module('aliceApp').controller('LoginController', function($scope, $state
         $scope.user.$save(function(response) {
             $cookies.put('token', response.token);
             $cookies.put('user', JSON.stringify(response.user));
-            $state.go('users');
+            //$state.go('users');
+            window.location.href = '/';
         }, function(err) {
             $scope.error = err.data.message;
         });
