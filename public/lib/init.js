@@ -26,6 +26,10 @@
           $('.nav-bar .top-bar_search').removeClass('hidden');
           $('.hamburger').removeClass('hidden');
 
+          $('.ui.sidebar.menu .item').click(function(){
+            $('.wrapper-block').removeClass('visible');
+          })
+
         }
       }
       else {
@@ -58,7 +62,8 @@
 
     });
 
-    
+
+
 
 
 

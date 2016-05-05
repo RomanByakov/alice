@@ -3,7 +3,7 @@
     <h4 class="ui header">Edit user card</h4>
     <form role="form" class="ui form" ng-submit="updateUser(avatar)">
         <!-- <div ng-include="'partials/_form.html'"></div> -->
-        <div class="ui inverted segment">
+        <!-- <div class="ui inverted segment">
           <div class="ui inverted form">
             <div class="two fields">
               <div class="field">
@@ -16,7 +16,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <h4 class="ui dividing header">About you</h4>
         <div class="three fields">
           <div class="field">
@@ -38,15 +38,21 @@
         <div class="field">
           <textarea rows="2" ng-model="user.info" placeholder="Tell about yourself..."></textarea>
         </div>
-        <div class="field">
-          <label>Avatar</label>
-          <button class="ui basic button" type="file" ngf-select ng-model="avatar" name="file"
-                   accept="image/*" ngf-max-size="2MB"
-                   ngf-model-invalid="errorFile" id="avatar-input">
-                   <i class="icon file image outline"></i>
-                   Select image
-          </button>
+        <div class="two fields">
+          <div class="field">
+            <label>Avatar</label>
+            <div class="ui middle aligned tiny circular image">
+              <img ng-src="{{user.avatar}}" alt="{{user.name}}" />
+            </div>
+            <button class="ui basic button add-image-button" type="file" ngf-select ng-model="avatar" name="file"
+                     accept="image/*" ngf-max-size="2MB"
+                     ngf-model-invalid="errorFile" id="avatar-input">
+                     <i class="icon file image outline"></i>
+                     Select image
+            </button>
+          </div>
         </div>
+
 
         <h4 class="ui dividing header">About work</h4>
         <div class="two fields">
@@ -158,4 +164,4 @@
       </form>
     </div>
   </div>
-  <pre>{{user | json}}</pre>
+  <!-- <pre>{{user | json}}</pre> -->

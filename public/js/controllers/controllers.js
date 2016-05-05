@@ -234,6 +234,14 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
             // }
         }
 
+        $scope.getColor = (model) => {
+          if (model.color) {
+            return $rootScope.colors[model.color];
+          }
+
+          return $rootScope.colors['016936'];
+        };
+
     });
 })
 
