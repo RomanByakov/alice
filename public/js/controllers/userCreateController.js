@@ -84,4 +84,142 @@ angular.module('aliceApp')
                         }
                     });
                   });
+                  // Validation Semantic UI
+                  var formValidationRules =
+                  {
+                    username: {
+                      identifier: 'username',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please enter username'
+                        },
+                        {
+                          type   : 'regExp[/^[a-zA-Z]{3,16}$/]',
+                          prompt : 'Please enter a 3-16 letter username without numbers'
+                        }
+                      ]
+                    },
+                    password: {
+                      identifier: 'password',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please enter password'
+                        }
+                      ]
+                    },
+                    name: {
+                      identifier: 'first-name',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please enter your name'
+                        },
+                        {
+                          type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{3,16}$/]',
+                          prompt : 'Please enter a 3-16 letter name'
+                        }
+                      ]
+                    },
+                    secondname: {
+                      identifier: 'second-name',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please enter your second name'
+                        },
+                        {
+                          type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{3,16}$/]',
+                          prompt : 'Please enter a 3-16 letter last name'
+                        }
+                      ]
+                    },
+                    position: {
+                      identifier: 'position',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please enter your position'
+                        }
+                      ]
+                    },
+                    department: {
+                      identifier: 'department',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please select department'
+                        }
+                      ]
+                    },
+                    teams: {
+                      identifier: 'userTeams',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please select team'
+                        }
+                      ]
+                    },
+                    role: {
+                      identifier: 'role',
+                      rules: [
+                        {
+                          type   : 'empty',
+                          prompt : 'Please select role'
+                        }
+                      ]
+                    },
+                    phone: {
+                      identifier: 'phone',
+                      rules: [
+                        {
+                          type   : 'exactLength[11]',
+                          prompt : 'Telephone number must be 11 characters long'
+                        },
+                        {
+                          type   : 'number',
+                          prompt : 'Please enter valid phone number'
+                        }
+                      ]
+                    },
+                    email: {
+                      identifier: 'email',
+                      rules: [
+                        {
+                          type   : 'email',
+                          prompt : 'Please enter a valid e-mail'
+                        }
+                      ]
+                    },
+                    url: {
+                      identifier  : 'url',
+                      rules: [
+                        {
+                          type   : 'url',
+                          prompt : 'Please enter a valid url'
+                        }
+                      ]
+                    },
+                    github: {
+                      identifier  : 'guthub',
+                      rules: [
+                        {
+                          type   : 'regExp[https:\/\/github.com\/.{1}.*]',
+                          prompt : 'Please enter a valid github url'
+                        }
+                      ]
+                    }
+                  }
+
+                  var formSettings =
+                  {
+                  	onSuccess: function () {
+                      $scope.addUser($scope.avatar);
+
+                  	}
+                  }
+
+                  $('.user-form .ui.form').form(formValidationRules, formSettings);
             });

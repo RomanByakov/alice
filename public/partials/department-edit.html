@@ -1,15 +1,15 @@
-<form class="form-horizontal" role="form" ng-submit="updateDepartment()">
+<form class="form-horizontal" role="form">
     <div class="ui piled segment department-form">
         <h3 class="ui heading">Department form</h3>
         <div class="ui form">
             <div class="two fields">
                 <div class="field">
                     <label>Name</label>
-                    <input placeholder="Type department name... " ng-model="department.name" type="text">
+                    <input placeholder="Type department name... " id="department-name" ng-model="department.name" type="text">
                 </div>
                 <div class="field">
                     <label>Phone</label>
-                    <input placeholder="Type department phone... " ng-model="department.phone" type="text">
+                    <input placeholder="Type department phone... " id="department-phone" ng-model="department.phone" type="text">
                 </div>
             </div>
             <div class="field">
@@ -63,16 +63,16 @@
             </div>
         </div>
         <div class="ui inverted segment">
-            <div class="ui inverted form">
-                <h4 class="header">Add new Team</h4>
+            <div class="ui inverted teams-form form">
+                <h4 class="header">Add or edit team</h4>
                 <div class="two fields">
                     <div class="field">
                         <label>Name</label>
-                        <input placeholder="Type team name... " ng-model="currentTeam.name" type="text">
+                        <input placeholder="Type team name... " id="team-name" ng-model="currentTeam.name" type="text">
                     </div>
                     <div class="field">
                         <label>Phone</label>
-                        <input placeholder="Type team phone... " ng-model="currentTeam.phone" type="text">
+                        <input placeholder="Type team phone... " id="team-phone" ng-model="currentTeam.phone" type="text">
                     </div>
                 </div>
                 <div class="field">
@@ -108,11 +108,11 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button type="button" class="ui button teal" ng-click="addTeam()">Add Team</button>
+                    <button type="button" class="ui button teal submit">Add Team</button>
                 </div>
             </div>
         </div>
-        <button class="ui button primary">Save Department</button>
+        <button type="button" class="ui button primary submit">Save Department</button>
     </div>
     </div>
     <pre>
