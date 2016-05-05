@@ -52,7 +52,7 @@
             </div>
             <h4 class="ui dividing header">Department Teams</h4>
             <div class="field department-form_team-list">
-                <a class="ui label department-form_team-list_item" ng-repeat="team in department.teams" ng-class="colors[team.color]" teams-directive>
+                <a class="ui label department-form_team-list_item" ng-repeat="team in department.teams" ng-class="colors[team.color]" teams-directive ng-click="editTeam(team, $index)">
             {{team.name}}
             <i class="delete icon" ng-click="deleteTeam($index)"></i>
           </a>

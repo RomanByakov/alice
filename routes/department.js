@@ -62,6 +62,7 @@ let updateModel = function(from, to) {
   to.phone = from.phone;
   to.description = from.description;
   to.lead = from.lead;
+  to.name = from.name;
 
   if (to instanceof Department && from instanceof Department) {
     to.teams = from.teams;
@@ -83,8 +84,8 @@ let addTeam = function(team, departmentId) {
     return Team.findOne({name: team.name})
   })
   .then ((model) => {
-    if (model) {
-      return Department.findOne({teams: {$elemMatch: {name: team.name}}})
+    if (model || team._id) {
+      return Department.findOne({teams: {$elemMatch: {_id: team._id}}})
     } else {
       return team.save();
     }
@@ -119,7 +120,7 @@ let addTeam = function(team, departmentId) {
  * @param team
  */
 let updateTeamInCurrentDepartment = function(team) {
-  return Team.findOne({name: team.name})
+  return Team.findOne({_id: team._id})
     .then((model) => { return updateModel(team, model).save(); });
 };
 
