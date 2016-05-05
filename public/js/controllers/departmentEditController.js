@@ -1,25 +1,12 @@
 angular.module('aliceApp')
-    .controller('DepartmentCreateController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User, Upload, $timeout) {
+    .controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User, Upload, $timeout) {
         $rootScope.checkAccess($cookies, $state, function() {
-            $scope.department = new Department();
-            $scope.department.teams = [];
-
-            $scope.users = User.query();
-
-            $scope.departmentLogo = null;
-
-            let removeHashKey = (models) => {
-              return models.map((item) => {
-                delete item['$hashKey'];
-                return item;
-              });
-            };
-
-            $scope.addDepartment = function() {
+            $scope.updateDepartment = function() {
               if ($scope.departmentLogo) {
                 $scope.departmentLogo.upload = Upload.upload({
-                    url: '/api/departments/',
+                    url: '/api/departments/' + $scope.department._id,
                     data: {
+                        id: $scope.department._id,
                         name: $scope.department.name,
                         phone: $scope.department.phone,
                         description: $scope.department.description,
@@ -33,7 +20,7 @@ angular.module('aliceApp')
                     file: {
                         logo: $scope.departmentLogo
                     },
-                    method: 'POST'
+                    method: 'PUT'
                 });
 
                 $scope.departmentLogo.upload.then(function(response) {
@@ -43,11 +30,11 @@ angular.module('aliceApp')
                     });
                   });
               } else {
-                $scope.department.$save(function() {
+                $scope.department.$update(function() {
                     $state.go('departments');
                 });
               }
-            }
+            };
 
             $scope.addLead = function(user) {
                 $scope.department.lead = user;
@@ -95,28 +82,37 @@ angular.module('aliceApp')
                 '016936': 'green'
             };
 
+            $scope.loadDepartment = function() {
+                $scope.department = Department.get({
+                    id: $stateParams.id
+                }, function() {
+                    $('.ui.dropdown').dropdown();
+                });
+
+            };
+
+            $scope.loadDepartment();
+            $scope.users = User.query();
             $('.ui.dropdown.multiple')
-                .dropdown({
-                    direction: 'downward'
-                });
+              .dropdown({
+                direction: 'downward'
+              });
             $('.ui.dropdown.fluid')
-                .dropdown({
-                    direction: 'downward'
-                });
+              .dropdown({
+                direction: 'downward'
+              });
             $('.ui.dropdown.icon')
-                .dropdown({
-                    direction: 'upward'
-                });
-
-
+              .dropdown({
+                direction: 'upward'
+              });
         });
-    }).directive('teamsDirective', function() {
-        return function(scope, element, attrs) {
-            if (scope.$last) {
-                $(element).transition({
-                    animation: 'scale in',
-                    duration: 300
-                });
-            }
-        };
-    });
+      }).directive('teamsDirective', function() {
+          return function(scope, element, attrs) {
+              if (scope.$last) {
+                  $(element).transition({
+                      animation: 'scale in',
+                      duration: 300
+                  });
+              }
+          };
+      });

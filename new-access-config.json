@@ -15,18 +15,18 @@
     "deleteRole"
   ],
   "routeActionPairs": {
-    "manageOwn": "PUT /api/users/:id",
-    "getUsers": "GET /api/users",
-    "createUser": "POST /api/users",
-    "updateUser": "PUT /api/users/:id",
-    "deleteUser": "DELETE /api/users/:id",
-    "getDepartments": "GET /api/departments",
-    "createDepartment": "POST /api/departments",
-    "updateDepartment": "PUT /api/departments/:id",
-    "deleteDepartment": "DELETE /api/departments/:id",
-    "getRoles": "GET /api/roles",
-    "createRole": "POST /api/roles",
-    "updateRole": "PUT /api/roles/:id",
-    "deleteRole": "DELETE /api/roles/:id"
+    "PUT /api/users/:id": "manageOwn",
+    "GET /api/users": "getUsers",
+    "POST /api/users": "createUser",
+    "PUT /api/users/:id": "updateUser",
+    "DELETE /api/users/:id": "deleteUser",
+    "GET /api/departments": "getDepartments",
+    "POST /api/departments": "createDepartment",
+    "PUT /api/departments/:id": "updateDepartment",
+    "DELETE /api/departments/:id": "deleteDepartment",
+    "GET /api/roles": "getRoles",
+    "POST /api/roles": "createRole",
+    "PUT /api/roles/:id": "updateRole",
+    "DELETE /api/roles/:id": "deleteRole"
   }
 }

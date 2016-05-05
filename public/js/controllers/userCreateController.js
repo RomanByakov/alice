@@ -50,9 +50,12 @@ angular.module('aliceApp')
                                     phone: $scope.user.phone,
                                     email: $scope.user.email,
                                     site: $scope.user.site,
-                                    githib: $scope.user.github,
+                                    github: $scope.user.github,
                                     telegram: $scope.user.telegram,
-                                    skype: $scope.user.skype
+                                    skype: $scope.user.skype,
+                                    birthday: $scope.user.birthday,
+                                    jobapplydate: $scope.user.jobapplydate,
+                                    info: $scope.user.info
                                 },
                                 headers: {
                                     'x-access-token': $cookies.get('token')
@@ -73,7 +76,6 @@ angular.module('aliceApp')
                 });
 
                 $(function() {
-
                     $('input[name="datetime"]').daterangepicker({
                         singleDatePicker: true,
                         showDropdowns: true,
@@ -81,8 +83,5 @@ angular.module('aliceApp')
                         format: 'MM-DD-YYYY'
                         }
                     });
-
-
-                  })
-
-            })
+                  });
+            });

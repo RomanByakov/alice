@@ -1,18 +1,19 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
-var Role = require('./role');
-var Team = require('./team');
-var Department = require('./department');
+let Role = require('./role');
+let Team = require('./team');
+let Department = require('./department');
 
-var crypto = require('crypto');
-var util = require('util');
+let crypto = require('crypto');
+let util = require('util');
 
-var Q = require('q');
-var logger = require('../modules/alice-logger');
-var validators = require('../modules/validators');
+let Q = require('q');
+let logger = require('../modules/alice-logger');
+let validators = require('../modules/validators');
 
-var userSchema = new Schema({
+let userSchema = new Schema({
   name: {
     type: String,
     default: 'Unnamed'
@@ -53,11 +54,6 @@ var userSchema = new Schema({
     default: null
   },
   phone: {
-    type: String,
-    default: null,
-    validate: validators.phoneValidator
-  },
-  workphone: {
     type: String,
     default: null,
     validate: validators.phoneValidator
@@ -108,7 +104,7 @@ userSchema.statics.checkAccess = function(userRole, role, callback) {
 };
 
 userSchema.statics.createUser = function(params) {
-  var user = new User({
+  let user = new User({
     name: params.name,
     lastname: params.lastname,
     username: params.username,
@@ -119,7 +115,6 @@ userSchema.statics.createUser = function(params) {
     github: params.github,
     telegram: params.telegram,
     phone: params.phone,
-    workphone: params.workphone,
     position: params.position,
     jobapplydate: new Date(params.jobapplydate),
     info: params.info,
@@ -140,7 +135,7 @@ userSchema.statics.createUser = function(params) {
 
 userSchema.methods.updateUser = function(params) {
   //logger.debug('[User::updateUser] call with ' + department + ', ' + team + ', ' + role);
-  var user = this;
+  let user = this;
 
   user.username = (params.username == null || params.username == undefined) ? user.username : params.username;
   user.name = params.name;
@@ -152,7 +147,6 @@ userSchema.methods.updateUser = function(params) {
   user.github = params.github;
   user.telegram = params.telegram;
   user.phone = params.phone;
-  user.workphone = params.workphone;
   user.position = params.position;
   user.jobapplydate = new Date(params.jobapplydate);
   user.info = params.info;
@@ -172,7 +166,7 @@ userSchema.methods.updateUser = function(params) {
 
 userSchema.methods.setDepartment = function(department, team) {
   logger.debug('[User::setDepartment] call with ' + department + ', ' + team);
-  var self = this;
+  let self = this;
 
   return Department.findOne({name: department})
   .then(function(model) {
@@ -192,7 +186,7 @@ userSchema.methods.setDepartment = function(department, team) {
 userSchema.methods.setTeam = function(team) {
   logger.debug('[User::setTeam] call with ' + team);
 
-  var self = this;
+  let self = this;
 
   self.department.teams.forEach(function(item) {
     //console.log(item);
@@ -209,7 +203,7 @@ userSchema.methods.setTeam = function(team) {
 userSchema.methods.setRole = function(role) {
     logger.debug('[User::setRole] call with ' + role);
 
-    var self = this;
+    let self = this;
 
     return Role.findOne({name: role})
     .then(function(model) {
@@ -239,6 +233,119 @@ userSchema.statics.populateRecords = function(users) {
   });
 };
 
-var User = mongoose.model('User', userSchema);
+userSchema.statics.postRequired = () => {
+  return [{
+    name: 'name',
+    status: true
+  }, {
+    name: 'lastname',
+    status: true
+  }, {
+    name: 'username',
+    status: true
+  }, {
+    name: 'password',
+    status: true
+  }, {
+    name: 'team',
+    status: false
+  }, {
+    name: 'department',
+    status: false
+  }, {
+    name: 'role',
+    status: false
+  }, {
+    name: 'phone',
+    status: false
+  }, {
+    name: 'telegram',
+    status: false
+  }, {
+    name: 'skype',
+    status: false
+  }, {
+    name: 'email',
+    status: false
+  }, {
+    name: 'site',
+    status: false
+  }, {
+    name: 'github',
+    status: false
+  }, {
+    name: 'position',
+    status: false
+  }, {
+    name: 'jobapplydate',
+    status: false
+  }, {
+    name: 'info',
+    status: false
+  }, {
+    name: 'birthday',
+    status: false
+  }];
+};
+
+userSchema.statics.updateRequired = () => {
+  return [{
+    name: 'id',
+    status: true
+  } ,{
+    name: 'name',
+    status: true
+  }, {
+    name: 'lastname',
+    status: true
+  }, {
+    name: 'username',
+    status: false
+  }, {
+    name: 'password',
+    status: false
+  }, {
+    name: 'team',
+    status: false
+  }, {
+    name: 'department',
+    status: false
+  }, {
+    name: 'role',
+    status: false
+  }, {
+    name: 'phone',
+    status: false
+  }, {
+    name: 'telegram',
+    status: false
+  }, {
+    name: 'skype',
+    status: false
+  }, {
+    name: 'email',
+    status: false
+  }, {
+    name: 'site',
+    status: false
+  }, {
+    name: 'github',
+    status: false
+  }, {
+    name: 'position',
+    status: false
+  }, {
+    name: 'jobapplydate',
+    status: false
+  }, {
+    name: 'info',
+    status: false
+  }, {
+    name: 'birthday',
+    status: false
+  }];
+};
+
+let User = mongoose.model('User', userSchema);
 
 module.exports = User;

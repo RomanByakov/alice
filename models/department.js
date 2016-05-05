@@ -1,13 +1,14 @@
+'use strict';
 // dependencies
-var mongoose = require('mongoose');
-var Team = require('./team');
-var User = require('./user');
+let mongoose = require('mongoose');
+let Team = require('./team');
+let User = require('./user');
 
-var Q = require('q');
-var logger = require('../modules/alice-logger');
-var validators = require('../modules/validators');
+let Q = require('q');
+let logger = require('../modules/alice-logger');
+let validators = require('../modules/validators');
 
-var departmentSchema = new mongoose.Schema({
+let departmentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -39,9 +40,9 @@ var departmentSchema = new mongoose.Schema({
   }
 });
 
-var setTeams = function(teams, dep) {
-  for (var i = 0; i < teams.length; i++) {
-    var team = new Team(teams[i]);
+let setTeams = function(teams, dep) {
+  for (let i = 0; i < teams.length; i++) {
+    let team = new Team(teams[i]);
 
     team.save();
     dep.teams.push(team);
@@ -63,7 +64,7 @@ departmentSchema.methods.updateDepartment = function(params) {
 };
 
 departmentSchema.methods.deleteDepartment = function() {
-  var methods = [];
+  let methods = [];
 
   this.teams.forEach(function(team) {
     if (team != null) {
@@ -78,8 +79,7 @@ departmentSchema.methods.deleteDepartment = function() {
 };
 
 departmentSchema.statics.createDepartment = function(params) {
-  "use strict";
-  var department = new Department({
+  let department = new Department({
     name: params.name,
     color: params.color,
     phone: params.phone,
@@ -140,7 +140,7 @@ departmentSchema.statics.updateRequired = function() {
   }];
 };
 
-var Department = mongoose.model('Departments', departmentSchema);
+let Department = mongoose.model('Departments', departmentSchema);
 //Department.findOne = Q.nbind(Department.findOne.bind(Department));
 
 module.exports = Department;

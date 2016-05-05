@@ -109,11 +109,11 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                 avatar.upload = Upload.upload({
                     url: '/api/users/' + $scope.user._id,
                     data: {
-                        _id: $scope.user._id,
+                        id: $scope.user._id,
                         name: $scope.user.name,
                         lastname: $scope.user.lastname,
-                        username: $scope.user.username,
-                        password: $scope.user.password,
+                        // username: $scope.user.username,
+                        // password: $scope.user.password,
                         department: $scope.user.department,
                         team: $scope.user.team,
                         role: $scope.user.role,
@@ -121,9 +121,12 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                         phone: $scope.user.phone,
                         email: $scope.user.email,
                         site: $scope.user.site,
-                        githib: $scope.user.github,
+                        github: $scope.user.github,
                         telegram: $scope.user.telegram,
-                        skype: $scope.user.skype
+                        skype: $scope.user.skype,
+                        birthday: $scope.user.birthday,
+                        jobapplydate: $scope.user.jobapplydate,
+                        info: $scope.user.info
                     },
                     headers: {
                         'x-access-token': $cookies.get('token')
@@ -137,6 +140,7 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                 avatar.upload.then(function(response) {
                     $timeout(function() {
                         $scope.result = response.data;
+                        $state.go('users');
                     });
                 }, function(responce) {
                     if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
@@ -144,13 +148,12 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                     $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
                 });
             } else {
-
                 $scope.user.$update({
-                    _id: $scope.user._id,
+                    id: $scope.user._id,
                     name: $scope.user.name,
                     lastname: $scope.user.lastname,
-                    username: $scope.user.username,
-                    password: $scope.user.password,
+                    // username: $scope.user.username,
+                    // password: $scope.user.password,
                     department: $scope.user.department,
                     team: $scope.user.team,
                     role: $scope.user.role,
@@ -158,14 +161,22 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                     phone: $scope.user.phone,
                     email: $scope.user.email,
                     site: $scope.user.site,
-                    githib: $scope.user.github,
+                    github: $scope.user.github,
                     telegram: $scope.user.telegram,
-                    skype: $scope.user.skype
+                    skype: $scope.user.skype,
+                    birthday: $scope.user.birthday,
+                    jobapplydate: $scope.user.jobapplydate,
+                    info: $scope.user.info
                 }, function() {
                     $state.go('users');
                 });
             }
         };
+
+        // let parseDate = (date) => {
+        //   // return `${obj.getMonth() + 1}-${obj.getDay()}-${obj.getFullYear()}`;
+        //   return new Date(date).format('MM-DD-YYYY');
+        // };
 
         $scope.loadUser = function() {
             $scope.user = User.get({
@@ -180,6 +191,8 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                 // $($('.ui.dropdown').get(1)).dropdown('set selected',$scope.user.team);
                 $($('.ui.dropdown').get(2)).dropdown('set selected', $scope.user.role);
                 //$scope.teams = $scope.user.department.teams;
+
+                //$('input[name="datetime"]').val(parseDate($scope.user.birthday));
             });
         };
 
@@ -187,8 +200,7 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
         $scope.loadUser();
 
         $(function() {
-
-            $('input[name="datetowork"]').daterangepicker({
+            $('input[name="datetime"]').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
                 locale: {
@@ -196,7 +208,6 @@ module.controller('NavBarController', function($rootScope, $scope, $state, $wind
                 }
             });
           });
-
     });
 
 });
@@ -224,42 +235,7 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
         }
 
     });
-}).controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User) {
-    $rootScope.checkAccess($cookies, $state, function() {
-        $scope.updateDepartment = function() {
-            $scope.department.$update(function() {
-                $state.go('departments');
-            });
-        };
-
-        $scope.loadDepartment = function() {
-            $scope.department = Department.get({
-                id: $stateParams.id
-            }, function() {
-                $('.ui.dropdown').dropdown();
-            });
-
-        };
-
-        $scope.loadDepartment();
-        $scope.users = User.query();
-        $('.ui.dropdown.multiple')
-          .dropdown({
-            direction: 'downward'
-          })
-        ;
-        $('.ui.dropdown.fluid')
-          .dropdown({
-            direction: 'downward'
-          })
-        ;
-        $('.ui.dropdown.icon')
-          .dropdown({
-            direction: 'upward'
-          })
-        ;
-    });
-});
+})
 
 module.controller('LoginController', function($scope, $state, $stateParams, $cookies, Login, User) {
     $scope.user = new Login();
@@ -286,36 +262,4 @@ module.controller('LoginController', function($scope, $state, $stateParams, $coo
         });
 
     }
-
-    // Form Validation
-
-    //   $('.ui.form')
-    //   .form({
-    //     fields: {
-    //       name: {
-    //         identifier: 'login',
-    //         rules: [
-    //           {
-    //             type   : 'empty',
-    //             prompt : 'Please enter your login'
-    //           }
-    //         ]
-    //       },
-    //       password: {
-    //         identifier: 'password',
-    //         rules: [
-    //           {
-    //             type   : 'empty',
-    //             prompt : 'Please enter a password'
-    //           },
-    //           {
-    //             type   : 'minLength[6]',
-    //             prompt : 'Your password must be at least {ruleValue} characters'
-    //           }
-    //         ]
-    //       },
-    //     }
-    //   })
-    // ;
-
 });

@@ -1,1 +1,1 @@
-var logger = require('../alice-logger');
+let logger = require('../alice-logger');

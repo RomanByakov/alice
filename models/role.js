@@ -1,8 +1,9 @@
-var mongoose = require('mongoose');
-var logger = require('../modules/alice-logger');
-var Q = require('q');
+'use strict';
+let mongoose = require('mongoose');
+let logger = require('../modules/alice-logger');
+let Q = require('q');
 
-var roleSchema = new mongoose.Schema({
+let roleSchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
@@ -17,7 +18,7 @@ var roleSchema = new mongoose.Schema({
 
 roleSchema.statics.createRole = function(name, actions, child) {
   logger.debug('[Role::createRole] call with ' + name + ', ' + child);
-  var role = new Role({
+  let role = new Role({
     name: name,
     actions: actions
   });
@@ -35,7 +36,7 @@ roleSchema.methods.updateRole = function(name, actions, child) {
   logger.debug('[Role::updateRole] call end');
 };
 
-var setChildAndSave = function(role, child) {
+let setChildAndSave = function(role, child) {
   logger.debug('[Role::setChildAndSave] call');
   if (child != null) {
     return Role.findOne({name: child})
@@ -75,6 +76,6 @@ roleSchema.statics.checkAccess = function(userRole, checkingRole) {
   });
 };
 
-var Role = mongoose.model('Roles', roleSchema);
+let Role = mongoose.model('Roles', roleSchema);
 
 module.exports = Role;

@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+'use strict';
+let mongoose = require('mongoose');
+let validators = require('../modules/validators');
 
-var validators = require('../modules/validators');
-
-var teamSchema = new mongoose.Schema({
+let teamSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -33,7 +33,7 @@ var teamSchema = new mongoose.Schema({
 });
 
 teamSchema.statics.createTeam = function(name, callback) {
-  var team = new Team({
+  let team = new Team({
     name: name
   });
 
@@ -46,6 +46,6 @@ teamSchema.statics.createTeam = function(name, callback) {
   });
 };
 
-var Team = mongoose.model('Teams', teamSchema);
+let Team = mongoose.model('Teams', teamSchema);
 
 module.exports = Team;

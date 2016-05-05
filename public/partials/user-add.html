@@ -53,14 +53,14 @@
           <div class="field">
             <label>First working day </label>
             <div class="ui left icon input">
-              <input type="text" ng-model="user.jopapplydate" name="datetime" value="08-25-2014" placeholder="08-25-2014" />
+              <input type="text" ng-model="user.jobapplydate" name="datetime" value="08-25-2014" placeholder="08-25-2014" />
               <i class="calendar icon"></i>
             </div>
           </div>
           <div class="field">
             <label>Position</label>
             <div class="ui left icon input">
-              <input type="text" name="shipping[first-name]" ng-model="user.position" placeholder="Position">
+              <input type="text" ng-model="user.position" placeholder="Position">
               <i class="paw icon"></i>
             </div>
           </div>
@@ -158,23 +158,4 @@
       </form>
     </div>
   </div>
-  <pre>{{departments | json}}</pre>
-  <pre>{{roles | json}}</pre>
-    <!-- <button ngf-select ng-model="picFile" accept="image/*">
-            Select Picture</button>
-        <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
-             class="cropArea">
-            <img-crop image="picFile  | ngfDataUrl"
-            result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
-            </img-crop>
-        </div>
-        <div>
-            <img ng-src="{{croppedDataUrl}}" />
-        </div>
-        <button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>
-
-        <span class="progress" ng-show="progress >= 0">
-          <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-        </span>
-        <span ng-show="result">Upload Successful</span>
-        <span class="err" ng-show="errorMsg">{{errorMsg}}</span> -->
+  <pre>{{user | json}}</pre>

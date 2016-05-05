@@ -19,6 +19,7 @@
     "winston": "*",
     "q": "1.0.1",
     "imagemagick": "*",
-    "easyimage": "*"
+    "easyimage": "*",
+    "cluster": "*"
   }
 }
