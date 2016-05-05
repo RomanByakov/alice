@@ -117,7 +117,13 @@ angular.module('aliceApp')
                     direction: 'upward'
                 });
 
-            
+            $scope.getTeamHeader = () => {
+              if (!$scope.isNewTeam) {
+                return 'Update Team';
+              }
+
+              return 'Add New Team';
+            };
         });
     }).directive('teamsDirective', function() {
         return function(scope, element, attrs) {
