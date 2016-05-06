@@ -69,6 +69,7 @@ app.use('/api/users', require('./routes/user'));
 app.use('/api/departments', require('./routes/department'));
 //app.use('/api/teams', require('./routes/team'));
 app.use('/api/roles', require('./routes/role'));
+app.use('/api/hg-logs', require('./routes/giraffe-logs'));
 
 // start server
 app.listen(config.port);
