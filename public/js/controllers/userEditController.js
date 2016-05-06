@@ -105,10 +105,10 @@ angular.module('aliceApp').controller('UserEditController', function($rootScope,
                 //$scope.user.department = $scope.user.department.name;
                 //$scope.user.team = $scope.user.team.name;
 
-                $(".ui.dropdown").dropdown("refresh");
+                //$(".ui.dropdown").dropdown("refresh");
                 // $($('.ui.dropdown').get(0)).dropdown('set selected',$scope.user.department.name);
                 // $($('.ui.dropdown').get(1)).dropdown('set selected',$scope.user.team);
-                $($('.ui.dropdown').get(2)).dropdown('set selected', $scope.user.role);
+                //$($('.ui.dropdown').get(2)).dropdown('set selected', $scope.user.role);
                 //$scope.teams = $scope.user.department.teams;
 
                 //$('input[name="datetime"]').val(parseDate($scope.user.birthday));
@@ -216,4 +216,11 @@ angular.module('aliceApp').controller('UserEditController', function($rootScope,
           $('.user-form .ui.form').form(formValidationRules);
     });
 
+}).directive('departmentRepeatEnd', function() {
+  return function (scope, element, attrs, controller) {
+    if (scope.$last) {
+      //alert(JSON.stringify(controller));
+      //$('#department').dropdown('set selected', scope.user.department.name);
+    }
+  };
 });

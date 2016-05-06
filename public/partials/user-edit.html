@@ -80,7 +80,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">Department</div>
               <div class="menu">
-                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name"></div>
+                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name" department-repeat-end></div>
               </div>
             </div>
           </div>
