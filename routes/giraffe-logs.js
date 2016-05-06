@@ -43,7 +43,7 @@ let getRoles = function(req, res, next) {
       level: params.level,
       tag: params.tag
     }, (error, response, data) => {
-      res.send(response);
+      res.send(response.body);
     });
   } catch (err) {
     helper.handleError(res, err);
