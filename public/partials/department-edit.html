@@ -63,7 +63,7 @@
                     <i class="icon plus"></i> Add
             </div>
         </div>
-        <div class="ui inverted segment">
+        <div class="ui inverted segment team-form">
             <div class="ui inverted form">
                 <h4 class="header" ng-bind="getTeamHeader()"></h4>
                 <div class="two fields">
@@ -109,11 +109,11 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button type="button" class="ui button teal submit">Add Team</button>
+                    <a type="button" class="ui button teal" ng-click="addTeam()">Add Team</a>
                 </div>
             </div>
         </div>
-        <button type="button" class="ui button primary submit">Save Department</button>
+        <a type="button" class="ui button primary" ng-click="updateDepartment()">Save Department</a>
     </div>
     </div>
     <pre>
