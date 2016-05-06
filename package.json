@@ -21,6 +21,7 @@
     "imagemagick": "*",
     "easyimage": "*",
     "cluster": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "request": "*"
   }
 }

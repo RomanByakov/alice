@@ -7,6 +7,8 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
   // });
   //$urlRouterProvider.otherwise("/users");
 
+  $httpProvider.defaults.useXDomain = true;
+
   $stateProvider
   // users
     .state('users', {

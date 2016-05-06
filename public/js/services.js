@@ -60,3 +60,9 @@ service.factory('Login', function($resource) {
       }
   });
 });
+
+service.factory('Log', function($resource, $cookies) {
+  return $resource('/api/hg-logs', {
+    token: function() { return $cookies.get('token'); }
+  });
+});
