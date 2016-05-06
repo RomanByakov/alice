@@ -37,11 +37,13 @@ let getRoles = function(req, res, next) {
     let params = helper.getParams(required, req);
     request.get({
       url: `${params.url}${params.version}${route}`,
-      'per-page': params['per-page'],
-      page: params.page,
-      order: params.order,
-      level: params.level,
-      tag: params.tag
+      qs: {
+        'per-page': params['per-page'],
+        page: params.page,
+        order: params.order,
+        level: params.level,
+        tag: params.tag
+      }
     }, (error, response, data) => {
       res.send(response.body);
     });

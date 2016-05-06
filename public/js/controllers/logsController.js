@@ -46,5 +46,15 @@ angular.module('aliceApp').controller('LogsController', function($scope, $state,
     $scope.formatMessage = (message) => {
       return JSON.stringify(message);
     };
+
+    $scope.changeDomain = (url) => {
+      $scope.url = url;
+      $scope.makeRequest();
+    };
+
+    $scope.changeLevel = (level) => {
+      $scope.level = level;
+      $scope.makeRequest();
+    };
   });
 });
