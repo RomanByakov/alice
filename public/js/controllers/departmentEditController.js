@@ -2,9 +2,7 @@ angular.module('aliceApp')
     .controller('DepartmentEditController', function($rootScope, $scope, $state, $cookies, $stateParams, Department, User, Upload, $timeout) {
         $rootScope.checkAccess($cookies, $state, function() {
             $scope.updateDepartment = function() {
-              alert('asd');
               if (!($('.department-form').form('is valid'))) {
-                alert('asd');
                 return false;
               }
 
