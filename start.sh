@@ -9,7 +9,7 @@ echo NPM install call
 npm install --loglevel=error
 
 echo Setting mode
-NODE_ENV = $mode
+export NODE_ENV=$mode
 
 echo Starting nodemon
 nodemon app.js
