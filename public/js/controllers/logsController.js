@@ -8,6 +8,14 @@ angular.module('aliceApp').controller('LogsController', function($scope, $state,
       'http://ntest.happy-giraffe.ru/'
     ];
 
+    $scope.levels = [
+      'verbose',
+      'info',
+      'debug',
+      'warning',
+      'error'
+    ];
+
     $scope.page = 1;
     $scope.order = null;
     $scope.level = null;
@@ -30,5 +38,13 @@ angular.module('aliceApp').controller('LogsController', function($scope, $state,
     };
 
     $scope.makeRequest();
+
+    $scope.getUserUrl = (id) => {
+      return `${$scope.url}user/${id}/`;
+    };
+
+    $scope.formatMessage = (message) => {
+      return JSON.stringify(message);
+    };
   });
 });

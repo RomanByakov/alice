@@ -1,57 +1,17 @@
 <h3 class="ui header">Logs</h3>
 <div class="ui secondary pointing menu">
-  <a class="item active">
-    All
-  </a>
-  <a class="item">
-    happy-giraffe.ru
-  </a>
-  <a class="item">
-    giraffe.code-geek.ru
-  </a>
-  <a class="item">
-    ntest.happy-giraffe.ru
-  </a>
+  <a class="item" ng-repeat="url in urls" ng-class="$index == 0 ? 'active' : ''" ng-bind="url"></a>
   <div class="right menu">
     <div class="item">
       <div class="ui floating labeled icon dropdown">
         <i class="paw icon"></i>
-        <span class="text">Filter 1</span>
+        <span class="text">Level</span>
         <div class="menu">
           <div class="header">
             <i class="tags icon"></i>
-            Filter by tag
+            Filter by level
           </div>
-          <div class="item">
-            Important
-          </div>
-          <div class="item">
-            Announcement
-          </div>
-          <div class="item">
-            Discussion
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <div class="ui floating labeled icon dropdown">
-        <i class="filter icon"></i>
-        <span class="text">Filter 2</span>
-        <div class="menu">
-          <div class="header">
-            <i class="tags icon"></i>
-            Filter by tag
-          </div>
-          <div class="item">
-            Important
-          </div>
-          <div class="item">
-            Announcement
-          </div>
-          <div class="item">
-            Discussion
-          </div>
+          <div class="item" ng-repeat="level in levels" ng-bind="level" ng-model="level"></div>
         </div>
       </div>
     </div>
@@ -65,44 +25,20 @@
 </div>
 
 <div class="ui feed">
-  <div class="event">
+  <div class="event" ng-repeat="log in logs">
     <div class="label">
-      <a class="ui green circular label">users</a>
+      <a class="ui circular label" ng-class="log.level" ng-bind="log.level"></a>
     </div>
     <div class="content">
       <div class="summary">
-        <a>Joe Henderson</a> posted on his page
-        <div class="date">
-          3 days ago
-        </div>
+        <a href="{{getUserUrl(log.userId)}}" target="blank">User</a> post a log
+        <div class="date" ng-bind="log.time.sec"></div>
       </div>
-      <div class="text">
-        Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even if we don't run extra laps that day, we surely will come back for more of the same another day soon.
-      </div>
+      <div class="text" ng-bind="formatMessage(log.message)"></div>
       <div class="meta">
         <a class="like">
-          <i class="location arrow icon"></i> happy-giraffe.ru
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="event">
-    <div class="label">
-      <a class="ui blue circular label">posts</a>
-    </div>
-    <div class="content">
-      <div class="summary">
-        <a>Joe Henderson</a> posted on his page
-        <div class="date">
-          3 days ago
-        </div>
-      </div>
-      <div class="text">
-        Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even if we don't run extra laps that day, we surely will come back for more of the same another day soon.
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="location arrow icon"></i> ntest.happy-giraffe.ru
+          <i class="location arrow icon"></i>
+          <span ng-bind="url"></span>
         </a>
       </div>
     </div>
