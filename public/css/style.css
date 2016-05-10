@@ -394,6 +394,10 @@ form .progress {
 /*******************************
          Logs colors
 *******************************/
+.logs .feed a.label
+{
+  color: white !important;
+}
 
 .color-verbose
 {
@@ -413,6 +417,11 @@ form .progress {
 .color-error
 {
   background-color: #db2828 !important;
+}
+
+.color-info
+{
+  background-color: #16ab39 !important;
 }
 
 
