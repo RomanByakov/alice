@@ -130,7 +130,6 @@ body,html
 .content-block
 {
   padding: 30px !important;
-  max-width: 1280px;
 }
 
 .content-block h3
@@ -422,6 +421,11 @@ form .progress {
 .color-info
 {
   background-color: #16ab39 !important;
+}
+
+.logs .event .label
+{
+  margin: 0 20px 0 0;
 }
 
 

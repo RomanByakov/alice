@@ -1,3 +1,8 @@
+<div class="user-add-button ui fixed bottom sticky" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
+  <button ui-sref="newRole" class="circular teal ui icon button addpopup">
+    <i class="icon plus big"></i>
+  </button>
+</div>
 <div class="ui small basic modal role-delete-modal">
   <div class="ui icon header">
     <i class="archive icon"></i>
@@ -31,7 +36,4 @@
       <a class="right floated star role-delete-button" ng-click="showPopup(role)"><i class="delete icon"></i> Delete </a>
     </div>
   </div>
-</div>
-<div style="margin: 20px 0 0 0;">
-  <button class="ui button teal" ui-sref="newRole">Add New role</button>
 </div>
