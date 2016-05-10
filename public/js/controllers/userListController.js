@@ -48,7 +48,14 @@ angular.module('aliceApp')
 
           }
 
+
           setTimeout(userCardsMessage, 1500);
+
+          // Add Button animation
+          $('.user-add-button').transition({
+            animation : 'scale in',
+            duration  : 500
+          });
 
           // $scope.testCards = function() {
           //   //alert('scope on rendered');

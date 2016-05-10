@@ -18,6 +18,7 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
             movePopup:false
           });
 
+
         var $document = $(document),
             $element = $('#some-element'),
             className = 'hasScrolled';
@@ -25,7 +26,7 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
         function adaptive()
         {
           var width = $(window).width(), height = $(window).height();
-          if (width <= 1023) {
+          if (width <= 1280) {
             if($('.wrapper-block').hasClass('visible'))
             {
               $('.wrapper-block').transition('fade right');

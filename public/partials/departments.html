@@ -1,4 +1,8 @@
-
+<div class="user-add-button ui fixed bottom sticky " ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
+  <button ui-sref="newDepartment" class="circular teal ui icon button addpopup">
+    <i class="icon plus big"></i>
+  </button>
+</div>
 <div class="ui small basic modal department-delete-modal">
   <div class="ui icon header">
     <i class="archive icon"></i>
@@ -41,7 +45,4 @@
       </div>
     </div>
   </div>
-</div>
-<div class="ui department-button" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
-  <button ui-sref="newDepartment" class="ui teal button">Add New Department</button>
 </div>

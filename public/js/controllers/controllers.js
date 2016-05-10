@@ -25,6 +25,12 @@ module.controller('DepartmentListController', function($rootScope, $scope, $stat
 
         $scope.currentUser = JSON.parse($cookies.get('user'));
 
+        // Add Button animation
+        $('.user-add-button').transition({
+          animation : 'scale in',
+          duration  : 500
+        });
+
         $scope.showPopup = function(department) {
           $scope.departmentForDelete = department;
             $('.department-delete-modal.modal').modal('show');
