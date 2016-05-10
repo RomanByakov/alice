@@ -31,6 +31,10 @@ angular.module('aliceApp')
                     };
 
                     $scope.addUser = function(avatar) {
+                        if (!($('.user-form .ui.form').form('is valid'))) {
+                          return false;
+                        }
+
                         if (avatar == null) {
                             $scope.user.$save(function() {
                                 $state.go('users');
@@ -50,9 +54,12 @@ angular.module('aliceApp')
                                     phone: $scope.user.phone,
                                     email: $scope.user.email,
                                     site: $scope.user.site,
-                                    githib: $scope.user.github,
+                                    github: $scope.user.github,
                                     telegram: $scope.user.telegram,
-                                    skype: $scope.user.skype
+                                    skype: $scope.user.skype,
+                                    birthday: $scope.user.birthday,
+                                    jobapplydate: $scope.user.jobapplydate,
+                                    info: $scope.user.info
                                 },
                                 headers: {
                                     'x-access-token': $cookies.get('token')
@@ -73,7 +80,6 @@ angular.module('aliceApp')
                 });
 
                 $(function() {
-
                     $('input[name="datetime"]').daterangepicker({
                         singleDatePicker: true,
                         showDropdowns: true,
@@ -81,8 +87,108 @@ angular.module('aliceApp')
                         format: 'MM-DD-YYYY'
                         }
                     });
+                  });
+                  // Validation Semantic UI
+                  var formValidationRules = {
+                    fields: {
+                    username: {
+                      identifier: 'username',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please enter username'
+                        }, {
+                          type   : 'regExp[/^[a-zA-Z]{3,16}$/]',
+                          prompt : 'Please enter a 3-16 letter username without numbers'
+                        }]
+                    },
+                    password: {
+                      identifier: 'password',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please enter password'
+                        }]
+                    },
+                    name: {
+                      identifier: 'first-name',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please enter your name'
+                        }, {
+                          type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{3,16}$/]',
+                          prompt : 'Please enter a 3-16 letter name'
+                        }]
+                    },
+                    secondname: {
+                      identifier: 'second-name',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please enter your second name'
+                        }, {
+                          type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{3,16}$/]',
+                          prompt : 'Please enter a 3-16 letter last name'
+                        }]
+                    },
+                    position: {
+                      identifier: 'position',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please enter your position'
+                        }]
+                    },
+                    department: {
+                      identifier: 'department',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please select department'
+                        }]
+                    },
+                    teams: {
+                      identifier: 'userTeams',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please select team'
+                        }]
+                    },
+                    role: {
+                      identifier: 'role',
+                      rules: [{
+                          type   : 'empty',
+                          prompt : 'Please select role'
+                        }]
+                    },
+                    phone: {
+                      identifier: 'phone',
+                      rules: [{
+                          type   : 'exactLength[11]',
+                          prompt : 'Telephone number must be 11 characters long'
+                        },{
+                          type   : 'number',
+                          prompt : 'Please enter valid phone number'
+                        }]
+                    },
+                    email: {
+                      identifier: 'email',
+                      rules: [{
+                          type   : 'email',
+                          prompt : 'Please enter a valid e-mail'
+                        }]
+                    },
+                    url: {
+                      identifier  : 'url',
+                      rules: [{
+                          type   : 'url',
+                          prompt : 'Please enter a valid url'
+                        }]
+                    },
+                    github: {
+                      identifier  : 'guthub',
+                      rules: [{
+                          type   : 'regExp[https:\/\/github.com\/.{1}.*]',
+                          prompt : 'Please enter a valid github url'
+                        }]
+                    }
+                  }
+                };
 
-
-                  })
-
-            })
+                  $('.user-form .ui.form').form(formValidationRules);
+            });

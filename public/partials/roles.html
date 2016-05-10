@@ -1,5 +1,23 @@
-
-<h4 class="header">All Roles</h4>
+<div class="ui small basic modal role-delete-modal">
+  <div class="ui icon header">
+    <i class="archive icon"></i>
+    Delete this role?
+  </div>
+  <div class="content">
+      <span style="font-size: 18px;">Now you want to delete a role. Are you crazy?</span>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="history icon"></i>
+      Nope
+    </div>
+    <div class="ui green basic ok inverted button" ng-click="deleteRole(roleForDelete)">
+      <i class="checkmark icon"></i>
+      Sure
+    </div>
+  </div>
+</div>
+<h3 class="ui header">All Roles</h3>
 <div class="ui cards">
   <div class="ui card" ng-repeat="role in roles">
     <div class="content">
@@ -10,7 +28,7 @@
     </div>
     <div class="extra content">
       <a class="left floated like" ui-sref="editRole({id:role._id})"><i class="edit icon"></i> Edit </a>
-      <a class="right floated star" ng-click="deleteRole(role)"><i class="delete icon"></i> Delete </a>
+      <a class="right floated star role-delete-button" ng-click="showPopup(role)"><i class="delete icon"></i> Delete </a>
     </div>
   </div>
 </div>

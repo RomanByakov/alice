@@ -1,9 +1,8 @@
-var restful = require('node-restful');
-var mongoose = restful.mongoose;
+'use strict';
+let mongoose = require('mongoose');
+let validators = require('../modules/validators');
 
-var validators = require('../modules/validators');
-
-var teamSchema = new mongoose.Schema({
+let teamSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -12,7 +11,7 @@ var teamSchema = new mongoose.Schema({
   },
   logo: {
     type: String,
-    default: '../img/empty-img.jpg'
+    default: '../img/empty-img.png'
   },
   color: {
     type: String,
@@ -29,12 +28,12 @@ var teamSchema = new mongoose.Schema({
     default: null
   },
   lead: {
-    type: [mongoose.Schema.Types.Mixed]
+    type: mongoose.Schema.Types.Mixed
   }
 });
 
 teamSchema.statics.createTeam = function(name, callback) {
-  var team = new Team({
+  let team = new Team({
     name: name
   });
 
@@ -47,6 +46,6 @@ teamSchema.statics.createTeam = function(name, callback) {
   });
 };
 
-var Team = mongoose.model('Teams', teamSchema);
+let Team = mongoose.model('Teams', teamSchema);
 
 module.exports = Team;

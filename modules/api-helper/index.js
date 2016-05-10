@@ -1,5 +1,6 @@
-var logger = require('../alice-logger');
-var util = require('util');
+'use strict';
+let logger = require('../alice-logger');
+let util = require('util');
 //var _ = require('underscore');
 
 /**
@@ -9,7 +10,7 @@ var util = require('util');
  * @throws Error
  * @return Array
  */
-var getParams = function(required, req) {
+let getParams = function(required, req) {
   logger.debug('[ApiHelper::getParams] call');
   // logger.debug('[ApiHelper::getParams] with query ' + JSON.stringify(req.query));
   // logger.debug('[ApiHelper::getParams] with params ' + JSON.stringify(req.params));
@@ -19,7 +20,7 @@ var getParams = function(required, req) {
 
   logger.debug('[ApiHelper::getParams] ' + JSON.stringify(req));
 
-  var result = {};
+  let result = {};
 
    for (var i = 0; i < required.length; i++) {
     logger.debug('[ApiHelper::getParams] item ' + required[i].name);
@@ -40,18 +41,18 @@ var getParams = function(required, req) {
  * @param Object req
  * @return Object result
  */
-var getRequestParams = function(req) {
-  var result = {};
+let getRequestParams = function(req) {
+  let result = {};
 
-  for (var attrname in req.query) {
+  for (let attrname in req.query) {
     result[attrname] = req.query[attrname];
   }
 
-  for (var attrname in req.params) {
+  for (let attrname in req.params) {
     result[attrname] = req.params[attrname];
   }
 
-  for (var attrname in req.body) {
+  for (let attrname in req.body) {
     result[attrname] = req.body[attrname];
   }
 
@@ -63,7 +64,7 @@ var getRequestParams = function(req) {
  * @param Mixed value
  * @return bool result
  */
-var isEmpty = function(value) {
+let isEmpty = function(value) {
   logger.debug('[ApiHelper::isEmpty] call with ' + value);
   // logger.debug('[ApiHelper::isEmpty] ' + value === null);
   // logger.debug('[ApiHelper::isEmpty] ' + value === undefined);
@@ -71,7 +72,7 @@ var isEmpty = function(value) {
   return value === null || value === undefined || (util.isString(value) && value.replace(/ /g,'') == '');
 }
 
-var handleError = function(res, err) {
+let handleError = function(res, err) {
   //temp
   res.status(500);
   res.json({error: {message: err.message, stack: err.stack}});

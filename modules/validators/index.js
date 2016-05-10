@@ -1,35 +1,40 @@
-var logger = require('../alice-logger');
+'use strict';
+let logger = require('../alice-logger');
+
+let isNull = (value) => {
+  return value == null || value == 'null';
+};
 
 module.exports.emailValidator = [function(val) {
   logger.debug('[Validators::emailValidator] call');
 
-  if (val == null) {
+  if (isNull(val)) {
     return true;
   }
 
-  var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  let emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   return emailRegex.test(val);
 }, 'InvalidEmail'];
 
 module.exports.githubValidator = [function(val) {
   logger.debug('[Validators::githubValidator] call');
 
-  if (val == null) {
+  if (isNull(val)) {
       return true;
   }
 
-  var githubRegex = /https:\/\/github.com\/.{1}.*/;
+  let githubRegex = /https:\/\/github.com\/.{1}.*/;
   return githubRegex.test(val);
 }, 'InvalidGithubUrl'];
 
 module.exports.phoneValidator = [function(val) {
   logger.debug('[Validators::phoneValidator] call');
 
-  if (val == null) {
+  if (isNull(val)) {
     return true;
   }
 
-  var phoneRegex = /^\d{11}$/;
+  let phoneRegex = /^\d{11}$/;
   return phoneRegex.test(val);
 
 }, 'InvalidPhone'];
@@ -37,11 +42,11 @@ module.exports.phoneValidator = [function(val) {
 module.exports.siteValidator = [function(val) {
   logger.debug('[Validators::siteValidator] call');
 
-  if (val == null) {
+  if (isNull(val)) {
     return true;
   }
 
-  var siteRegex = /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/;
+  let siteRegex = /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/;
   return siteRegex.test(val);
 
 }, 'InvalidSite'];
@@ -49,10 +54,10 @@ module.exports.siteValidator = [function(val) {
 module.exports.colorValidator = [function(val) {
   logger.debug('[Validators::colorValidator] call');
 
-  if (val == null) {
+  if (isNull(val)) {
     return true;
   }
 
-  var colorRegex = /^[0-9A-Fa-f]{6}$/;
+  let colorRegex = /^[0-9A-Fa-f]{6}$/;
   return colorRegex.test(val);
 }, 'InvalidColor'];

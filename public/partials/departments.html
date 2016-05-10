@@ -1,13 +1,17 @@
 
 <h3 class="ui header">All Departments</h3>
 <div class="ui cards department-cards">
-  <div class="card" ng-repeat="department in departments">
+  <div class="card" ng-repeat="department in departments" ng-class="getColor(department)">
     <div class="content">
-      <img class="right floated mini ui image" src="../img/empty-img.jpg">
-      <div class="header" ng-bind="department.name" ui-sref="viewDepartment({id:department._id})"></div>
+      <a ui-sref="viewDepartment({id:department._id})">
+        <img class="right floated mini ui image" ng-src="{{department.logo}}">
+      </a>
+      <div class="header">
+        <a ui-sref="viewDepartment({id:department._id})" ng-bind="department.name"></a>
+      </div>
       <div class="meta">Department teams</div>
       <div class="description">
-        <a ui-sref="viewDepartment({id:department._id})" ng-bind="team.name" ng-repeat="team in department.teams" ng-class="teal" class="ui label"></a>
+        <a ui-sref="viewDepartment({id:department._id})" ng-bind="team.name" ng-repeat="team in department.teams" ng-class="getColor(team)" class="ui label"></a>
       </div>
     </div>
     <div class="extra content" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
@@ -21,18 +25,3 @@
 <div class="ui department-button" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
   <button ui-sref="newDepartment" class="ui teal button">Add New Department</button>
 </div>
-<!--
-<table class="table movietable">
-    <tr>
-        <td><h3>All Departments</h3></td>
-        <td></td>
-    </tr>
-    <tr ng-repeat="department in departments">
-        <td ui-sref="viewDepartment({id:department._id})">{{department.name}}</td>
-        <td ui-sref="viewDepartment({id:department._id})" ng-repeat="team in department.teams">{{team.name}},</td>
-        <td>
-            <a class="btn btn-primary" ui-sref="editDepartment({id:department._id})">Edit</a>
-            <a class="btn btn-danger"  ng-click="deleteDepartment(department)">Delete</a>
-        </td>
-    </tr>
-</table> -->

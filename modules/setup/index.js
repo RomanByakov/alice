@@ -1,11 +1,14 @@
-var mongoose = require('mongoose');
+'use strict';
+let mongoose = require('mongoose');
 
-var User = require('../../models/user');
-var Team = require('../../models/team');
-var Department = require('../../models/department');
-var Role = require('../../models/role');
+let User = require('../../models/user');
+let Team = require('../../models/team');
+let Department = require('../../models/department');
+let Role = require('../../models/role');
 
-var Q = require('q');
+let helper = require('../api-helper');
+
+let Q = require('q');
 
 module.exports.drop = function(req, res, next) {
   //clear db
@@ -40,104 +43,72 @@ module.exports.drop = function(req, res, next) {
 
 //todo: refactor
 module.exports.init = function(req, res, next) {
-  var roleUser = new Role({
+  let roleUser = new Role({
     name: 'User',
-    child: null
+    child: null,
+    actions: [
+      "manageOwn",
+      "getUsers",
+      "getDepartments"
+    ]
   });
 
-  roleUser.save(function(err) {
-    if (err) {
-      throw err;
-    }
+  return roleUser.save()
+    .then((roleUser) => {
+      let roleAdmin = new Role({
+        name: 'Admin',
+        child: roleUser,
+        actions: [
+          "createUser",
+          "updateUser",
+          "getRoles",
+          "createDepartment",
+          "updateDepartment"
+        ]
+      });
 
-    roleAdmin = new Role({
-      name: 'Admin',
-      child: roleUser
-    });
-
-    roleAdmin.save(function(err) {
-      if (err) {
-        throw err;
-      }
-
-      roleGod = new Role({
+      return roleAdmin.save();
+    })
+    .then((roleAdmin) => {
+      let roleGod = new Role({
         name: 'God',
-        child: roleAdmin
+        child: roleAdmin,
+        actions: [
+          "deleteUser",
+          "createRole",
+          "updateRole",
+          "deleteRole",
+          "deleteDepartment"
+        ]
       });
 
-      roleGod.save(function(err) {
-        if (err) {
-          throw err;
-        }
+      return roleGod.save();
+    })
+    .then(() => {
+      let params = {
+        name: "Alice",
+        lastname: "Simpson",
+        username: "Alice",
+        password: "Sochno",
+        department: null,
+        team: null,
+        role: "God"
+      };
 
-        // User.createUser("Alice", "Simpson", "Alice", "Sochno", null, null, roleGod, function(err, next) {
-        //   if (err) {
-        //     throw err;
-        //   }
-        //
-        //   res.json({success:true});
-        // });
-
-        var params = {
-          name: "Alice",
-          lastname: "Simpson",
-          username: "Alice",
-          password: "Sochno",
-          department: null,
-          team: null,
-          role: "God"
-        };
-
-        User.createUser(params)
-        .then(function() {
-          res.json({success: true});
-        });
-      });
-    });
-  });
-};
-
-module.exports.checkAccessTest = function(req, res, next) {
-  console.log('check-access');
-  User.findOne({username: "test1"}, function (err, user) {
-    if (err) throw err;
-
-    if (user != null) {
-      console.log('user = ' + user.name);
-
-      user.checkAccess("Admin", function (err) {
-        if (err) throw err;
-        else {
-          console.log("access granted");
-          res.json({success: true});
-        }
-      });
-    }
-  });
-
-  User.findOne({username: "test3"}, function (err, user) {
-    if (err) throw err;
-
-    if (user != null) {
-      console.log('user = ' + user.name);
-
-      user.checkAccess("Admin", function (err) {
-        if (err) throw err;
-        else {
-          console.log("access granted");
-          res.json({success: true});
-        }
-      });
-    }
-  });
+      return User.createUser(params);
+    })
+    .then((alice) => {
+      return res.json({success: true});
+    })
+    .catch((err) => { helper.handleError(res, err); });
 };
 
 module.exports.fillUsers = function(req, res, next) {
-  var methods = [];
+  let methods = [];
   for(var i = 0; i < 1000; i++) {
-    var name = 'GENERATED' + i;
+    let name = 'GENERATED' + i;
 
-    var params = {
+    let params = {
       name: name,
       lastname: name,
       username: name,
@@ -152,5 +123,5 @@ module.exports.fillUsers = function(req, res, next) {
 
   Q.all(methods)
   .then(() => { res.json({success: true}); })
-  .catch(() => { res.json({success: false}); });
+  .catch((err) => { helper.handleError(res, err); });
 };

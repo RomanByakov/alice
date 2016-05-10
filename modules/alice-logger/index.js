@@ -1,4 +1,5 @@
-var winston = require('winston');
+'use strict';
+let winston = require('winston');
 
 module.exports = new winston.Logger({
   transports: [

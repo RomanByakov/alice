@@ -1,36 +1,31 @@
+'use strict';
 // dependencies
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var fs = require('fs');
+let fs = require('fs');
 
-var upload = require('../modules/upload');
+let upload = require('../modules/upload');
 
-var multiparty = require('connect-multiparty');
-var multipartyMiddleware = multiparty({
+let multiparty = require('connect-multiparty');
+let multipartyMiddleware = multiparty({
   uploadDir: __dirname + "/../public/img/tmp/"
 });
 
-var Q = require('q');
+let Q = require('q');
 
 //Helpers
-var logger = require('../modules/alice-logger');
-var helper = require('../modules/api-helper');
+let logger = require('../modules/alice-logger');
+let helper = require('../modules/api-helper');
 
 // models
-var User = require('../models/user');
-var Department = require('../models/department');
+let User = require('../models/user');
+let Department = require('../models/department');
 
+let checkToken = require('../modules/alice-check-token').checkToken;
 
-var getUsers = function(req, res, next) {
-  // var required = [{
-  //   name: 'select',
-  //   status: true
-  // }];
-
+let getUsers = function(req, res, next) {
   try {
-    // var params = helper.getParams(required, req.query);
-
     User.find()
     .then(function(users) {
       User.populateRecords(users);
@@ -42,14 +37,14 @@ var getUsers = function(req, res, next) {
   }
 };
 
-var getUser = function(req, res, next) {
+let getUser = function(req, res, next) {
   try {
-    required = [{
+    let required = [{
       name: 'id',
       status: true
     }];
 
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     User.findOne({'_id': params.id})
     .then(function(user) {
@@ -62,72 +57,16 @@ var getUser = function(req, res, next) {
   }
 };
 
-var postUser = function(req, res, next) {
-  var required = [{
-    name: 'name',
-    status: true
-  }, {
-    name: 'lastname',
-    status: true
-  }, {
-    name: 'username',
-    status: true
-  }, {
-    name: 'password',
-    status: true
-  }, {
-    name: 'team',
-    status: false
-  }, {
-    name: 'department',
-    status: false
-  }, {
-    name: 'role',
-    status: false
-  }, {
-    name: 'phone',
-    status: false
-  }, {
-    name: 'telegram',
-    status: false
-  }, {
-    name: 'skype',
-    status: false
-  }, {
-    name: 'email',
-    status: false
-  }, {
-    name: 'site',
-    status: false
-  }, {
-    name: 'github',
-    status: false
-  }, {
-    name: 'position',
-    status: false
-  }, {
-    name: 'jobapplydate',
-    status: false
-  }, {
-    name: 'info',
-    status: false
-  }, {
-    name: 'workphone',
-    status: false
-  }, {
-    name: 'birthday',
-    status: false
-  }];
-
+let postUser = function(req, res, next) {
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(User.postRequired(), req);
 
     //logger.debug('Params: ' + JSON.stringify(params));
 
     User.createUser(params)
     .then(function(user) {
       if (req.files) {
-        var file = req.files.file;
+        let file = req.files.file;
 
         upload.avatar(file, user)
         .then(function(result) {
@@ -150,71 +89,12 @@ var postUser = function(req, res, next) {
   }
 };
 
-var updateUser = function(req, res, next) {
+let updateUser = function(req, res, next) {
   //logger.debug('[User::PUT] Department is ' + req.body.department);
   logger.debug(req.body);
 
-  var required = [{
-    name: 'id',
-    status: true
-  } ,{
-    name: 'name',
-    status: true
-  }, {
-    name: 'lastname',
-    status: true
-  }, {
-    name: 'username',
-    status: false
-  }, {
-    name: 'password',
-    status: false
-  }, {
-    name: 'team',
-    status: false
-  }, {
-    name: 'department',
-    status: false
-  }, {
-    name: 'role',
-    status: false
-  }, {
-    name: 'phone',
-    status: false
-  }, {
-    name: 'telegram',
-    status: false
-  }, {
-    name: 'skype',
-    status: false
-  }, {
-    name: 'email',
-    status: false
-  }, {
-    name: 'site',
-    status: false
-  }, {
-    name: 'github',
-    status: false
-  }, {
-    name: 'position',
-    status: false
-  }, {
-    name: 'jobapplydate',
-    status: false
-  }, {
-    name: 'info',
-    status: false
-  }, {
-    name: 'workphone',
-    status: false
-  }, {
-    name: 'birthday',
-    status: false
-  }];
-
   try {
-    var params = helper.getParams(required, req)
+    let params = helper.getParams(User.updateRequired(), req)
 
     logger.debug('PARAMS: ' + JSON.stringify(params));
 
@@ -240,7 +120,7 @@ var updateUser = function(req, res, next) {
           res.send(user);
         }
       })
-      .catch((err) => { throw err;});
+      .catch((err) => { helper.handleError(res, err); });
     })
     .catch((err) => { helper.handleError(res, err); });
   } catch (err) {
@@ -248,14 +128,14 @@ var updateUser = function(req, res, next) {
   }
 };
 
-var deleteUser = function(req, res, next) {
-  var required = [{
+let deleteUser = function(req, res, next) {
+  let required = [{
     name: 'id',
     status: true
   }];
 
   try {
-    var params = helper.getParams(required, req);
+    let params = helper.getParams(required, req);
 
     User.remove({'_id': params.id})
     .then(() => { res.json({sucess: true}); })
@@ -268,19 +148,13 @@ var deleteUser = function(req, res, next) {
 
 
 
-router.route('/', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getUsers)
-  .post(multipartyMiddleware, postUser);
+router.route('/')
+  .get(checkToken, getUsers)
+  .post(checkToken, multipartyMiddleware, postUser);
 
-router.route('/:id', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-})
-  .get(getUser)
-  .put(multipartyMiddleware, updateUser)
-  .delete(deleteUser);
+router.route('/:id')
+  .get(checkToken, getUser)
+  .put(checkToken, multipartyMiddleware, updateUser)
+  .delete(checkToken, deleteUser);
 
 module.exports = router;
