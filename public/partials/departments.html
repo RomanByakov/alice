@@ -1,4 +1,24 @@
 
+<div class="ui small basic modal department-delete-modal">
+  <div class="ui icon header">
+    <i class="archive icon"></i>
+    Delete this department
+  </div>
+  <div class="content">
+      <span style="font-size: 18px;">Now you want to delete a department. Are you crazy?</span>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="history icon"></i>
+      Next time
+    </div>
+    <div class="ui green basic ok inverted button" ng-click="deleteDepartment(departmentForDelete)">
+      <i class="checkmark icon"></i>
+      Sure
+    </div>
+  </div>
+</div>
+
 <h3 class="ui header">All Departments</h3>
 <div class="ui cards department-cards">
   <div class="card" ng-repeat="department in departments" ng-class="getColor(department)">
@@ -17,7 +37,7 @@
     <div class="extra content" ng-show="currentUser.role.name == 'Admin' || currentUser.role.name == 'God'">
       <div class="ui two buttons">
         <button ui-sref="editDepartment({id:department._id})" class="ui basic teal button">Edit</button>
-        <button ng-click="deleteDepartment(department)" class="ui basic red button">Delete</button>
+        <button  ng-click="showPopup(department)" class="ui basic red button">Delete</button>
       </div>
     </div>
   </div>
