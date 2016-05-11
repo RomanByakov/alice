@@ -46,8 +46,15 @@
 <h3 class="ui header">All users</h3>
 <div class="ui link four stackable doubling cards user-cards">
     <div class="card" ng-repeat="user in users | filter:$root.search" user-repeat-directive>
-      <div class="image user-cards_img" ui-sref="viewUser({id:user._id})">
-       <img ng-src="{{user.avatar}}" alt="{{user.name}}">
+      <div class="ui medium dimmable image user-cards_img">
+        <div class="ui inverted dimmer">
+  				 <div class="content">
+  					 <div class="center">
+  						 <div class="ui teal button case-modal1-button" ui-sref="viewUser({id:user._id})">View</div>
+  					 </div>
+  				 </div>
+  			 </div>
+         <img ng-src="{{user.avatar}}" alt="{{user.name}}">
       </div>
       <div class="content">
         <div class="header"><span ng-bind="user.name"></span> <span ng-bind="user.lastname"></span></div>

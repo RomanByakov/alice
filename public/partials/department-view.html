@@ -3,7 +3,7 @@
     <h3 ng-bind="department.name"></h3>
     <h4 class="sub header" style="color: white !important; margin: -10px 0 0 0;">department</h4>
   </span>
-  <div class="ui horizontal list user-details_list">
+  <div class="ui horizontal list user-details_list department-page">
     <div class="item">
       <img class="ui circular small image" ng-src="{{department.logo}}">
     </div>
@@ -32,7 +32,7 @@
         <div class="header">
           About <span ng-bind="department.name"></span>
         </div>
-        <div ng-bind="department.description">
+        <div class="description" ng-bind="department.description">
         </div>
       </div>
     </div>

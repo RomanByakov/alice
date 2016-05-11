@@ -192,15 +192,18 @@ body,html
 
 .user-cards_img
 {
-  margin: 0 auto;
+  margin: 30px auto !important;
   background: none !important;
+  padding: 0 !important;
+  width: 150px !important;
+  height: 150px !important;
 }
 
 .user-cards_img img
 {
   max-width: 150px !important;
   border-radius: 100% !important;
-  margin: 30px auto;
+  /* margin: 30px auto; */
   border: 1px solid #e3dede !important;
 }
 
@@ -261,6 +264,11 @@ body,html
 .teams-list .description
 {
   word-break: break-word;
+}
+
+.department-page > .item .description
+{
+    word-break: break-word;
 }
 
 
