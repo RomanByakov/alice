@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
   <base href="/">
   <title>Alice</title>
-
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
@@ -30,6 +30,9 @@
       </a>
       <a class="item" ui-sref="roles" ng-show="user.role.name == 'Admin' || user.role.name == 'God'">
         <i class="handicap icon"></i> Roles
+      </a>
+      <a class="item" ui-sref="logs" ng-show="user.role.name == 'Admin' || user.role.name == 'God'">
+        <i class="copy icon"></i> Logs
       </a>
       <div class="item top-bar_search">
         <div class="ui icon input row">
@@ -76,32 +79,35 @@
     </div>
   </div>
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="lib/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="lib/angular.min.js"></script>
   <script src="lib/ng-tags-input.min.js"></script>
   <script src="lib/angular-cookies.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/controllers/navBarController.js"></script>
   <script type="text/javascript" src="js/controllers/controllers.js"></script>
+  <script type="text/javascript" src="js/controllers/loginController.js"></script>
   <script type="text/javascript" src="js/controllers/userListController.js"></script>
   <script type="text/javascript" src="js/controllers/departmentCreateController.js"></script>
   <script type="text/javascript" src="js/controllers/departmentViewController.js"></script>
   <script type="text/javascript" src="js/controllers/departmentEditController.js"></script>
   <script type="text/javascript" src="js/controllers/userCreateController.js"></script>
+  <script type="text/javascript" src="js/controllers/userEditController.js"></script>
   <script type="text/javascript" src="js/controllers/rolesListController.js"></script>
   <script type="text/javascript" src="js/controllers/rolesCreateController.js"></script>
   <script type="text/javascript" src="js/controllers/rolesEditController.js"></script>
+  <script type="text/javascript" src="js/controllers/logsController.js"></script>
   <script type="text/javascript" src="js/services.js"></script>
   <script type="text/javascript" src="js/filters.js"></script>
   <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
   <script type="text/javascript" src="lib/angular-resource.min.js"></script>
-  <script src="lib/init.js"></script>
   <script src="lib/ng-file-upload-shim.min.js"></script>
   <script src="lib/ng-file-upload.min.js"></script>
   <script src="lib/ng-img-crop.js"></script>
   <!-- **** For Data Picker **** -->
-  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+  <script type="text/javascript" src="lib/moment.min.js"></script>
+  <script type="text/javascript" src="lib/daterangepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
 
   <!-- **** Semantic UI **** -->
 

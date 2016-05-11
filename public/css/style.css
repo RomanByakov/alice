@@ -130,7 +130,6 @@ body,html
 .content-block
 {
   padding: 30px !important;
-  max-width: 1280px;
 }
 
 .content-block h3
@@ -389,6 +388,44 @@ form .progress {
 {
   display: none;
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.34);
+}
+
+/*******************************
+         Logs colors
+*******************************/
+.logs .feed a.label
+{
+  color: white !important;
+}
+
+.color-verbose
+{
+  background-color: #009c95 !important;
+}
+
+.color-debug
+{
+  background-color: #2185d0 !important;
+}
+
+.color-warning
+{
+  background-color: #f26202 !important;
+}
+
+.color-error
+{
+  background-color: #db2828 !important;
+}
+
+.color-info
+{
+  background-color: #16ab39 !important;
+}
+
+.logs .event .label
+{
+  margin: 0 20px 0 0;
 }
 
 

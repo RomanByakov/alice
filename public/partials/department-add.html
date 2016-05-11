@@ -1,15 +1,15 @@
-<form class="form-horizontal" role="form" ng-submit="addDepartment()">
+<form class="form-horizontal" role="form">
     <div class="ui piled segment department-form">
         <h3 class="ui heading">Department form</h3>
         <div class="ui form">
             <div class="two fields">
                 <div class="field">
                     <label>Name</label>
-                    <input placeholder="Type department name... " ng-model="department.name" type="text">
+                    <input placeholder="Type department name... " id="department-name" ng-model="department.name" type="text">
                 </div>
                 <div class="field">
                     <label>Phone</label>
-                    <input placeholder="Type department phone... " ng-model="department.phone" type="text">
+                    <input placeholder="Type department phone... " id="department-phone" ng-model="department.phone" type="text">
                 </div>
             </div>
             <div class="field">
@@ -52,7 +52,8 @@
             </div>
             <h4 class="ui dividing header">Department Teams</h4>
             <div class="field department-form_team-list">
-                <a class="ui label department-form_team-list_item" ng-repeat="team in department.teams" ng-class="colors[team.color]" teams-directive ng-click="editTeam(team, $index)">
+                <a class="ui label department-form_team-list_item {{currentTeam == team ? 'shadowUp' : ''}}" ng-repeat="team in department.teams"
+                  ng-class="colors[team.color]" teams-directive ng-click="editTeam(team, $index)">
             {{team.name}}
             <i class="delete icon" ng-click="deleteTeam($index)"></i>
           </a>
@@ -62,17 +63,17 @@
                     <i class="icon plus"></i> Add
             </div>
         </div>
-        <div class="ui inverted segment">
+        <div class="ui inverted segment team-form">
             <div class="ui inverted form">
-                <h4 class="header">Add new Team</h4>
+                <h4 class="header" ng-bind="getTeamHeader()"></h4>
                 <div class="two fields">
                     <div class="field">
                         <label>Name</label>
-                        <input placeholder="Type team name... " ng-model="currentTeam.name" type="text">
+                        <input placeholder="Type team name... " id="team-name" ng-model="currentTeam.name" type="text">
                     </div>
                     <div class="field">
                         <label>Phone</label>
-                        <input placeholder="Type team phone... " ng-model="currentTeam.phone" type="text">
+                        <input placeholder="Type team phone... " id="team-phone" ng-model="currentTeam.phone" type="text">
                     </div>
                 </div>
                 <div class="field">
@@ -108,12 +109,12 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button type="button" class="ui button teal" ng-click="addTeam()">Add Team</button>
+                    <a type="button" class="ui button teal" ng-click="addTeam()">Add Team</a>
                 </div>
             </div>
         </div>
-        <button class="ui button primary">Save Department</button>
-    </div>
+
+        <a type="button" class="ui button primary" ng-click="addDepartment()">Save Department</a>
     </div>
     <pre>
       {{ department | json }}

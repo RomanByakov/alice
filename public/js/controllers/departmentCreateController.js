@@ -16,6 +16,9 @@ angular.module('aliceApp')
             };
 
             $scope.addDepartment = function() {
+              if (!($('.department-form').form('is valid'))) {
+                return false;
+              }
               if ($scope.departmentLogo) {
                 $scope.departmentLogo.upload = Upload.upload({
                     url: '/api/departments/',
@@ -78,6 +81,9 @@ angular.module('aliceApp')
             }
 
             $scope.addTeam = function() {
+              if (!($('.team-form').form('is valid'))) {
+                return false;
+              }
               if ($scope.isNewTeam) {
                 $scope.department.teams.push($scope.currentTeam);
               }
@@ -92,6 +98,62 @@ angular.module('aliceApp')
               //$scope.currentIndex = index;
               $scope.isNewTeam = false;
             };
+
+            //Teams validation
+            var teamsFormVR = {
+              fields: {
+                name: {
+                  identifier: 'team-name',
+                  rules: [{
+                      type   : 'empty',
+                      prompt : 'Please enter your name'
+                    }, {
+                      type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{3,16}$/]',
+                      prompt : 'Please enter a 3-16 letter name'
+                    }]
+                },
+                phone: {
+                  identifier: 'team-phone',
+                  rules: [{
+                      type   : 'exactLength[11]',
+                      prompt : 'Telephone number must be 11 characters long'
+                    }, {
+                      type   : 'number',
+                      prompt : 'Please enter valid phone number'
+                    }]
+                }
+              }
+            };
+
+            $('.team-form').form(teamsFormVR);
+
+            //Department validation
+            var departmentFormVR = {
+              fields: {
+                name: {
+                  identifier: 'department-name',
+                  rules: [{
+                      type   : 'empty',
+                      prompt : 'Please enter your name'
+                    }, {
+                      type   : 'regExp[/^[a-zA-Zа-яА-Я0-9_-]{2,16}$/]',
+                      prompt : 'Please enter a 3-16 letter name'
+                    }]
+                },
+                phone: {
+                  identifier: 'department-phone',
+                  rules: [{
+                      type   : 'exactLength[11]',
+                      prompt : 'Telephone number must be 11 characters long'
+                    },{
+                      type   : 'number',
+                      prompt : 'Please enter valid phone number'
+                    }]
+                }
+              }
+            };
+
+            $('.department-form').form(departmentFormVR);
 
             $scope.colors = {
                 'B03060': 'red',
@@ -117,7 +179,13 @@ angular.module('aliceApp')
                     direction: 'upward'
                 });
 
-            
+            $scope.getTeamHeader = () => {
+              if (!$scope.isNewTeam) {
+                return 'Update Team';
+              }
+
+              return 'Add New Team';
+            };
         });
     }).directive('teamsDirective', function() {
         return function(scope, element, attrs) {

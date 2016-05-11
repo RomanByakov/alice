@@ -7,6 +7,8 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
   // });
   //$urlRouterProvider.otherwise("/users");
 
+  $httpProvider.defaults.useXDomain = true;
+
   $stateProvider
   // users
     .state('users', {
@@ -65,6 +67,12 @@ angular.module('aliceApp').config(function($stateProvider, $httpProvider, $locat
       url: 'login',
       templateUrl: 'partials/login.html',
       controller: 'LoginController'
+    })
+    //logs
+    .state('logs', {
+      url: 'logs',
+      templateUrl: 'partials/logs.html',
+      controller: 'LogsController'
     });
 }).run(function($state, $cookies) {
   if ($cookies.get('user')) {

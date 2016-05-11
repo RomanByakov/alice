@@ -12,6 +12,12 @@ angular.module('aliceApp')
                 });
             }
 
+            // Add Button animation
+            $('.user-add-button').transition({
+              animation : 'scale in',
+              duration  : 500
+            });
+            
             $scope.showPopup = function(role) {
               $scope.roleForDelete = role;
                 $('.role-delete-modal.modal').modal('show');

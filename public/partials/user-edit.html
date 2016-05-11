@@ -2,7 +2,7 @@
 <div class="user-form">
   <div class="ui piled segment">
     <h4 class="ui header">Edit user card</h4>
-    <form role="form" class="ui form">
+    <form role="form" class="ui form" ng-submit="updateUser(avatar)">
         <!-- <div ng-include="'partials/_form.html'"></div> -->
         <!-- <div class="ui inverted segment">
           <div class="ui inverted form">
@@ -80,7 +80,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">Department</div>
               <div class="menu">
-                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name"></div>
+                <div ng-repeat="department in departments" ng-click="update($index)" ng-model="user.department" class="item" data-value="{{department.name}}" ng-bind="department.name" department-repeat-end></div>
               </div>
             </div>
           </div>
@@ -160,7 +160,7 @@
           </div>
           <div class="ui message error"></div>
           <div class="form-group">
-            <a class="ui teal medium button submit">Save</a>
+            <button class="ui teal medium button">Save</button>
           </div>
       </form>
     </div>

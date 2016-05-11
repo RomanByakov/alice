@@ -52,7 +52,8 @@
             </div>
             <h4 class="ui dividing header">Department Teams</h4>
             <div class="field department-form_team-list">
-                <a class="ui label department-form_team-list_item" ng-repeat="team in department.teams" ng-class="colors[team.color]" teams-directive ng-click="editTeam(team, $index)">
+                <a class="ui label department-form_team-list_item {{currentTeam == team ? 'shadowUp' : ''}}" ng-repeat="team in department.teams"
+                  ng-class="colors[team.color]" teams-directive ng-click="editTeam(team, $index)">
             {{team.name}}
             <i class="delete icon" ng-click="deleteTeam($index)"></i>
           </a>
@@ -62,9 +63,9 @@
                     <i class="icon plus"></i> Add
             </div>
         </div>
-        <div class="ui inverted segment">
-            <div class="ui inverted teams-form form">
-                <h4 class="header">Add or edit team</h4>
+        <div class="ui inverted segment team-form">
+            <div class="ui inverted form">
+                <h4 class="header" ng-bind="getTeamHeader()"></h4>
                 <div class="two fields">
                     <div class="field">
                         <label>Name</label>
@@ -108,11 +109,11 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button type="button" class="ui button teal submit">Add Team</button>
+                    <a type="button" class="ui button teal" ng-click="addTeam()">Add Team</a>
                 </div>
             </div>
         </div>
-        <button type="button" class="ui button primary submit">Save Department</button>
+        <a type="button" class="ui button primary" ng-click="updateDepartment()">Save Department</a>
     </div>
     </div>
     <pre>
