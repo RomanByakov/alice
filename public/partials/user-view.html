@@ -1,4 +1,4 @@
-<div class="ui tall stacked segment container">
+<div class="ui tall stacked segment container view-segment">
   <span class="ui teal left ribbon label header user-details_ribbon">
     <h3 ng-bind="user.name + ' ' + user.lastname"></h3>
     <div class="sub header" style="color: #A9E4E1 !important; margin: -10px 0 0 0;" ng-bind="user.position"></div>
@@ -81,9 +81,9 @@
     </div>
     <div class="item">
       <div class="ui message">
-        <div class="header">
+        <h3 class="header">
           About <span ng-bind="user.name"></span>
-        </div>
+        </h3>
         <div class="description" ng-bind="user.info"></div>
       </div>
     </div>

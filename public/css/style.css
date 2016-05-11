@@ -107,6 +107,24 @@ body,html
  top: 0;
 }
 
+.view-segment
+{
+    padding: 57px 0 55px 0 !important;
+}
+
+.view-segment .message
+{
+    margin: 10px 0 0 0 !important;
+    background: #FBFBFB !important;
+    box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.09) inset,0 0 0 0 transparent !important;
+}
+
+.view-segment .message .header
+{
+  font-size: 21px !important;
+  font-weight: normal !important;
+}
+
 /* Content  */
 /*******************************
          Sidebar Layout
@@ -370,6 +388,11 @@ form .progress {
   margin-bottom: 7px !important;
 }
 
+.shadowUp
+{
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.24);
+}
+
 /* User details */
 
 .user-details
@@ -394,7 +417,7 @@ form .progress {
   z-index: 999;
   left: -21px !important;
   top: 28px;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.32);
+  box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.32);
 }
 
 .daterangepicker
