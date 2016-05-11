@@ -81,10 +81,10 @@ let updateModel = function(from, to) {
 let addTeam = function(team, departmentId) {
   return addLead(team)
   .then(() => {
-    return Team.findOne({name: team.name})
+    return Team.findOne({_id: team._id})
   })
   .then ((model) => {
-    if (model || team._id) {
+    if (model) {
       return Department.findOne({teams: {$elemMatch: {_id: team._id}}})
     } else {
       return team.save();
