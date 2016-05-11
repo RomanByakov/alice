@@ -32,7 +32,7 @@ let getRoles = function(req, res, next) {
     status: true
   }];
 
-  let route = '/api/logs/';
+  let route = 'api/logs/';
   try {
     let params = helper.getParams(required, req);
     request.get({
@@ -40,7 +40,7 @@ let getRoles = function(req, res, next) {
       qs: {
         'per-page': params['per-page'],
         page: params.page,
-        order: params.order,
+        order: params.order ? params.order : 'time desc',
         level: params.level,
         tag: params.tag
       }
