@@ -242,6 +242,11 @@ body,html
 
 }
 
+.user-details_list > .item .description
+{
+    word-break: break-word;
+}
+
 /* Departments */
 
 .department-cards .card
