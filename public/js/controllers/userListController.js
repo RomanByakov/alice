@@ -37,6 +37,8 @@ angular.module('aliceApp')
           ;
 
 
+
+
           var userCardsMessage = function(){
             if(!$cookies.get('messageBoxShown'))
             {
@@ -88,6 +90,10 @@ angular.module('aliceApp')
             reverse   : 'auto', // default setting
             interval  : 300,
             duration : '0.2s'
+          });
+          // Image dimmer
+          $('.user-cards_img').dimmer({
+            on: 'hover'
           });
         }
       };
