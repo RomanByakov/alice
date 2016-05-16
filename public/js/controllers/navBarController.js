@@ -8,6 +8,11 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
     };
 
     $rootScope.init = () => {
+      $rootScope.version = 'v 0.1.1';
+
+      $scope.getVersion = () => {
+        return $rootScope.version;
+      };
 
         // User popup init
         $('.top-bar_user .teal')
@@ -23,38 +28,65 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
             $element = $('#some-element'),
             className = 'hasScrolled';
 
-        let loginHideHandler = () => {
-          if($('.wrapper-block').hasClass('visible')) {
-            $('.wrapper-block').transition('fade right');
+        $rootScope.loginHideHandler = () => {
+          if (($scope.user.role == undefined || $scope.user.role.name == undefined || $scope.user.role.name == 'guest') && $('.wrapper-block').hasClass('visible')) {
+            //$('.wrapper-block').transition('fade right');
             $('.wrapper-block').removeClass('visible');
             $('.top-bar .top-bar_logo').removeClass('hidden');
             $('.nav-bar .nav-bar_logo').addClass('hidden');
             $('.top-bar .top-bar_search').addClass('hidden');
             $('.nav-bar .top-bar_search').removeClass('hidden');
-            $('.hamburger').removeClass('hidden');
-
-            $('.ui.sidebar.menu .item').click(function(){
-              $('.wrapper-block').removeClass('visible');
-            });
           } else {
             $('.wrapper-block').addClass('visible');
             $('.top-bar .top-bar_logo').addClass('hidden');
             $('.nav-bar .nav-bar_logo').removeClass('hidden');
             $('.top-bar .top-bar_search').removeClass('hidden');
             $('.nav-bar .top-bar_search').addClass('hidden');
-            $('.hamburger').addClass('hidden');
           }
+
+          $('.hamburger').addClass('hidden');
         };
 
         let hideHamburger = () => {
           $('.hamburger').addClass('hidden');
         };
 
+        $rootScope.lastWidth = $(window).width();
+        $rootScope.isAdapting = false;
         let adaptive = () => {
-          var width = $(window).width(), height = $(window).height();
-          if (width <= 1280) {
-            loginHideHandler();
+          let width = $(window).width();
+          if (width < $rootScope.lastWidth && width <= 1280 && !$rootScope.isAdapting) {
+              //$('.wrapper-block').transition('fade right');
+              $('.wrapper-block').removeClass('visible');
+              $('.top-bar .top-bar_logo').removeClass('hidden');
+              $('.nav-bar .nav-bar_logo').addClass('hidden');
+              $('.top-bar .top-bar_search').addClass('hidden');
+              $('.nav-bar .top-bar_search').removeClass('hidden');
+              $('.hamburger').removeClass('hidden');
+
+              $('.hamburger').click(function(){
+                if($('.wrapper-block').hasClass('visible')) {
+                  $('.wrapper-block').removeClass('visible');
+                } else {
+                  $('.wrapper-block').addClass('visible');
+                }
+              });
+
+              $('.ui.sidebar.menu .item').click(function(){
+                $('.wrapper-block').removeClass('visible');
+              });
+              $rootScope.isAdapting = true;
+            } else if (width > $rootScope.lastWidth && width > 1280) {
+              $('.wrapper-block').addClass('visible');
+              $('.top-bar .top-bar_logo').addClass('hidden');
+              $('.nav-bar .nav-bar_logo').removeClass('hidden');
+              $('.top-bar .top-bar_search').removeClass('hidden');
+              $('.nav-bar .top-bar_search').addClass('hidden');
+              $('.hamburger').addClass('hidden');
+              $rootScope.isAdapting = false;
           };
+
+          $rootScope.lastWidth = width;
         }
 
         $(document).ready(function(){
@@ -63,15 +95,6 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
 
         $(window).resize(function(){
           adaptive();
-        });
-
-
-        $('.hamburger').click(function(){
-          if($('.wrapper-block').hasClass('visible')) {
-            $('.wrapper-block').removeClass('visible');
-          } else {
-            $('.wrapper-block').addClass('visible');
-          }
         });
 
     $rootScope.colors = {
@@ -96,7 +119,10 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
       } else {
         $state.go('login');
       }
-    }
+
+      $rootScope.init();
+      $rootScope.loginHideHandler();
+    };
 
     $rootScope.checkAccess($cookies, $state, () => {
         $scope.logout = () => {
@@ -109,15 +135,14 @@ angular.module('aliceApp').controller('NavBarController', function($rootScope, $
           $state.go('users', {}, {
               reload: true
           });
+
+          $rootScope.init();
         };
 
         $scope.user = JSON.parse($cookies.get('user'));
     });
 
-    if ($scope.user.role == undefined) {
-      loginHideHandler();
-      hideHamburger();
-    }
+    $rootScope.loginHideHandler();
   }
 
   $rootScope.init();

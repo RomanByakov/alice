@@ -45,7 +45,7 @@
 </div>
 <h3 class="ui header">All users</h3>
 <div class="ui link four stackable doubling cards user-cards">
-    <div class="card" ng-repeat="user in users | filter:$root.search" user-repeat-directive>
+    <div class="card" ng-repeat="user in users | filter:$root.search:name" user-repeat-directive>
       <div class="ui medium dimmable image user-cards_img">
         <div class="ui inverted dimmer">
   				 <div class="content">

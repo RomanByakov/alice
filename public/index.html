@@ -19,7 +19,7 @@
 <body ng-controller="NavBarController">
   <div class="ui wrapper-block sidebar  visible left nav-bar vertical menu" ng-class="user.role.name == 'guest' ? 'background' :'inverted'">
       <div class="item nav-bar_logo">
-        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.1.1</span></a>
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span ng-bind="getVersion()"></span></a>
       </div>
       <div class="inverted">
       <a class="item" ui-sref="users" ng-show="user.role.name == 'Admin' || user.role.name == 'God'">
@@ -36,7 +36,7 @@
       </a>
       <div class="item top-bar_search">
         <div class="ui icon input row">
-          <input type="text" ng-model="$root.search" placeholder="Search..." >
+          <input type="text" ng-model="$root.search.name" placeholder="Search..." >
           <i class="search icon"></i>
         </div>
       </div>
@@ -48,11 +48,11 @@
         <i class="sidebar hamburger_icon  big icon"></i>
       </div>
       <div class="item top-bar_logo hidden">
-        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.0.1</span></a>
+        <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span ng-bind="getVersion()"></span></a>
       </div>
       <div class="item top-bar_search">
         <div class="ui icon input mobile only row">
-          <input type="text" id="search" ng-model="$root.search" placeholder="Search..." ng-hide="user.role == undefined">
+          <input type="text" id="search" ng-model="$root.search.name" placeholder="Search..." ng-hide="user.role == undefined">
           <i class="search icon"></i>
         </div>
       </div>
@@ -67,9 +67,9 @@
             <i class="setting icon teal" ng-click=""></i>
             <span class="teal" >Settings</span>
           </a>
-          <a class="item teal">
+          <a class="item teal" ng-click="logout()">
             <i class="sign out icon teal"></i>
-            <span class="teal" ng-click="logout()">Sign Out</span>
+            <span class="teal">Sign Out</span>
           </a>
         </div>
       </div>
