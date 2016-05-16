@@ -8,7 +8,7 @@
   <title>Alice</title>
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
   <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <!-- Angular Material CSS now available via Google CDN; version 0.9.4 used here -->
 
@@ -21,11 +21,11 @@
       <div class="item nav-bar_logo">
         <a id="logo-container" ng-click="test()" ui-sref="users" class="brand-logo center"><span>v 0.1.1</span></a>
       </div>
-      <div class="inverted" ng-hide="user.role.name == 'guest'">
-      <a class="item" ui-sref="users">
+      <div class="inverted">
+      <a class="item" ui-sref="users" ng-show="user.role.name == 'Admin' || user.role.name == 'God'">
         <i class="users icon"></i> Users
       </a>
-      <a class="item" ui-sref="departments">
+      <a class="item" ui-sref="departments" ng-show="user.role.name == 'Admin' || user.role.name == 'God'">
         <i class="building outline icon"></i> Departments
       </a>
       <a class="item" ui-sref="roles" ng-show="user.role.name == 'Admin' || user.role.name == 'God'">
@@ -52,11 +52,11 @@
       </div>
       <div class="item top-bar_search">
         <div class="ui icon input mobile only row">
-          <input type="text" id="search" ng-model="$root.search" placeholder="Search..." ng-hide="user.role.name == 'guest'">
+          <input type="text" id="search" ng-model="$root.search" placeholder="Search..." ng-hide="user.role == undefined">
           <i class="search icon"></i>
         </div>
       </div>
-      <div class="item top-bar_user" ng-hide="user.role.name == 'guest'">
+      <div class="item top-bar_user" ng-show="user.role">
         <a class="ui teal image label">
           <img ng-src="{{user.avatar}}" alt="Contact Person">
           <span ng-bind="user.username"></span>
