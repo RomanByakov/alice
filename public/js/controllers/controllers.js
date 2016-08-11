@@ -9,7 +9,8 @@ module.controller('UserViewController', function($rootScope, $scope, $state, $co
             var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
             $scope.days = Math.round(Math.abs((new Date(Date.now()).getTime() - new Date($scope.user.jobapplydate).getTime())/(oneDay)));
         });
-
+ 
+ 
 
     });
 });
